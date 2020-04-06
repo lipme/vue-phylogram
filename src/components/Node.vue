@@ -1,6 +1,6 @@
 <template>
 <g :class="classAttribute" :transform="transformAttribute">
-    <circle :r="size" :stroke="stroke"
+    <circle v-if="showCircle" :r="size" :stroke="stroke"
      :stroke-width="stroke_width"
      :fill="fill"/>
     <text v-if="showLabel" :dx="optionsLabel.x"
@@ -14,14 +14,6 @@ export default {
     size: {
       type: Number,
       default: 3
-    },
-    stroke: {
-      type: String,
-      default: 'grey'
-    },
-    fill: {
-      type: String,
-      default: 'white'
     },
     stroke_width: {
       type: Number,
@@ -44,7 +36,17 @@ export default {
       default: ''
     }
   },
+
   computed: {
+    showCircle () {
+      return this.type !== 'inner'
+    },
+    stroke () {
+      return this.type === 'root' ? 'yellowGreen' : '#369'
+    },
+    fill () {
+      return this.type === 'root' ? 'greenYellow' : 'steelblue'
+    },
     classAttribute () {
       return 'node ' + this.type
     },
@@ -59,6 +61,7 @@ export default {
     showLabel () {
       return this.label !== null && this.label !== '' && this.type !== 'root'
     }
+
   }
 }
 </script>
