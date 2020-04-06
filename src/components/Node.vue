@@ -1,11 +1,11 @@
 <template>
 <g :class="classAttribute" :transform="transformAttribute">
-    <circle v-if="showCircle" :r="size" :stroke="stroke"
+    <circle v-if="showCircle" :r="size/2" :stroke="stroke"
      :stroke-width="stroke_width"
      :fill="fill"/>
     <text v-if="showLabel" :dx="optionsLabel.x"
     :dy="optionsLabel.y" :text-anchor="optionsLabel['text-anchor']" :fill="optionsLabel.fill"
-    :font-family="optionsLabel['font-family']">{{this.label}}</text></g>
+    :font-family="optionsLabel['font-family']" :font-size="optionsLabel['font-size']">{{this.label}}</text></g>
 </template>
 
 <script>
@@ -13,7 +13,7 @@ export default {
   props: {
     size: {
       type: Number,
-      default: 3
+      default: 6
     },
     stroke_width: {
       type: Number,
@@ -55,8 +55,8 @@ export default {
     },
     optionsLabel () {
       return this.type === 'inner'
-        ? { x: -this.size - this.size / 4, y: -this.size / 4, 'text-anchor': 'end', 'font-size': '8px', fill: 'black', 'font-family': 'Helvetica Neue, Helvetica, sans-serif' }
-        : { x: this.size + this.size / 4, y: this.size / 4, 'text-anchor': 'start', 'font-size': '10px', fill: 'black', 'font-family': 'Helvetica Neue, Helvetica, sans-serif' }
+        ? { x: -this.size - this.size / 4, y: -this.size / 3, 'text-anchor': 'end', 'font-size': this.size + 3 + 'px', fill: 'black', 'font-family': 'Helvetica Neue, Helvetica, sans-serif' }
+        : { x: this.size + this.size / 4, y: this.size / 3, 'text-anchor': 'start', 'font-size': this.size + 3 + 'px', fill: 'black', 'font-family': 'Helvetica Neue, Helvetica, sans-serif' }
     },
     showLabel () {
       return this.label !== null && this.label !== '' && this.type !== 'root'
