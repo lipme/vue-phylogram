@@ -10,6 +10,7 @@
         :x="node.x"
         :y="node.y"
         :type="node.type"
+        :label="node.data.name"
          />
       </g>
     </svg>
@@ -45,7 +46,7 @@ export default {
       default: () => {
         return {
           top: 10,
-          right: 10,
+          right: 200,
           bottom: 10,
           left: 10
         }
@@ -112,7 +113,7 @@ export default {
      */
     d3Cluster () {
       return d3Hierarchy.cluster()
-        .size([this.height - 20, this.width - 20])
+        .size([this.height - this.margin.top, this.width - this.margin.left - this.margin.right])
         .separation(function (a, b) { return 50 })
     },
     d3Nodes () {
@@ -192,11 +193,11 @@ export default {
         console.log({ rootDists })
         return d3Scale.scaleLinear()
           .domain([0, d3Array.max(rootDists)])
-          .range([0, this.width - 20])
+          .range([0, this.width - this.margin.right])
       } else {
         return d3Scale.scaleLinear()
-          .domain([0, this.width - 20])
-          .range([0, this.width - 20])
+          .domain([0, this.width - this.margin.right])
+          .range([0, this.width - this.margin.right])
       }
     }
 
