@@ -10,6 +10,10 @@
           <input type="checkbox" v-model="branchLengths" />
           <br />
           <br />
+           <br />Display Label
+          <input type="checkbox" v-model="displayLabel" />
+          <br />
+          <br />
           Right margin:
            <input type="range" min="20" max="500" class="slider" v-model="margin.right" />
           <br />
@@ -24,6 +28,7 @@
           :right-angle="rightAngle"
           :branch-lengths="branchLengths"
           :margin="margin"
+          :displayLabel="displayLabel"
         ></Phylogram>
       </div>
     </div>
@@ -40,6 +45,7 @@ export default {
   },
   data () {
     return {
+      displayLabel: true,
       margin: {
         top: 20,
         bottom: 20,
@@ -110,7 +116,7 @@ export default {
   vertical-align: top;
   width: 25%;
   display: table-cell;
-  background-color: antiquewhite;
+  background-color: beige;
   padding:20px;
 }
 #rightbox {

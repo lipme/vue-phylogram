@@ -10,7 +10,7 @@
         :x="node.x"
         :y="node.y"
         :type="node.type"
-        :label="node.data.name"
+        :label="displayLabel ? node.data.name : ''"
          />
       </g>
     </svg>
@@ -71,11 +71,15 @@ export default {
     error: {
       type: Boolean,
       default: false
+    },
+    displayLabel: {
+      type: Boolean,
+      default: true
     }
   },
   created () {
     if (_.isEmpty(this.newick) && _.isEmpty(this.inputTree)) {
-      console.log('Needs newick or input-tree props')
+      console.error('Needs newick or input-tree props')
       this.error = true
     }
   },
@@ -96,7 +100,6 @@ export default {
       }
 
       buildNewickNodes(this.newickTree)
-      console.log({ nodes })
       return nodes
     },
     d3RootNode () {
@@ -147,8 +150,6 @@ export default {
         return 1
       })
 
-      console.log({ nodes })
-
       if (this.branchLengths === true) {
         const visitPreOrder = function (node, callback) {
           callback(node)
@@ -168,7 +169,6 @@ export default {
           node.y = yScale(node.rootDist)
         })
       }
-      console.log(nodes)
       return nodes
     },
     d3Links () {
@@ -190,7 +190,6 @@ export default {
     yScale (nodes) {
       if (this.branchLengths === true) {
         const rootDists = nodes.map(function (n) { return n.rootDist })
-        console.log({ rootDists })
         return d3Scale.scaleLinear()
           .domain([0, d3Array.max(rootDists)])
           .range([0, this.width - this.margin.right])
