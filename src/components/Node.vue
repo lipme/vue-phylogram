@@ -5,7 +5,9 @@
      :fill="fill"/>
     <text v-if="showLabel" :dx="optionsLabel.x"
     :dy="optionsLabel.y" :text-anchor="optionsLabel['text-anchor']" :fill="optionsLabel.fill"
-    :font-family="optionsLabel['font-family']" :font-size="optionsLabel['font-size']">{{this.label}}</text></g>
+    :font-family="optionsLabel['font-family']" :font-size="optionsLabel['font-size']"
+    :transform="optionsLabel.transform" >{{this.label}}
+    </text></g>
 </template>
 
 <script>
@@ -62,9 +64,19 @@ export default {
       }
     },
     optionsLabel () {
+      let transform = ''
+      let anchor = 'start'
+      let x = this.size - this.size / 4
+
+      if (this.circular && this.x > 180) {
+        transform = 'rotate(180)'
+        anchor = 'end'
+        x = -this.size - this.size / 4
+      }
+
       return this.type === 'inner'
-        ? { x: -this.size - this.size / 4, y: -this.size / 3, 'text-anchor': 'end', 'font-size': this.size + 3 + 'px', fill: 'black', 'font-family': 'Helvetica Neue, Helvetica, sans-serif' }
-        : { x: this.size + this.size / 4, y: this.size / 3, 'text-anchor': 'start', 'font-size': this.size + 3 + 'px', fill: 'black', 'font-family': 'Helvetica Neue, Helvetica, sans-serif' }
+        ? { transform: transform, x: x, y: -this.size / 3, 'text-anchor': anchor, 'font-size': this.size + 3 + 'px', fill: 'black', 'font-family': 'Helvetica Neue, Helvetica, sans-serif' }
+        : { transform: transform, x: x, y: this.size / 3, 'text-anchor': anchor, 'font-size': this.size + 3 + 'px', fill: 'black', 'font-family': 'Helvetica Neue, Helvetica, sans-serif' }
     },
     showLabel () {
       return this.label !== null && this.label !== '' && this.type !== 'root'

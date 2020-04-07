@@ -23,7 +23,7 @@
           <br />
           <br />
           Copy and paste newick:
-          <textarea v-model="newick" rows="10" cols="60" />
+          <textarea v-model="newick" rows="10" cols="40" />
 
         </form>
       </div>
