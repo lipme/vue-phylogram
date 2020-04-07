@@ -23,6 +23,10 @@ export default {
       type: Boolean,
       default: true
     },
+    circular: {
+      type: Boolean,
+      default: false
+    },
     source: {
       type: Object,
       default: () => {
@@ -44,13 +48,27 @@ export default {
   computed: {
     path () {
       if (this.rightAngle === false) {
-        return this.linkHorizontal()
+        if (this.circular === false) {
+          return this.linkHorizontal()
+        } else {
+          return this.linkRadial()
+        }
       }
+
+      const pair = { source: this.source, target: this.target }
+      if (this.circular === false) {
+        return this.rightAngleDiagonal()(pair)
+      } else {
+        return this.radialRightAngleDiagonal()(pair)
+      }
+    }
+  },
+  methods: {
+    rightAngleDiagonal () {
       /**
        * From d3.phylogram.js
        * https://gist.github.com/biovisualize/5437184
        */
-      const pair = { source: this.source, target: this.target }
       let projection = function (d) {
         return [d.y, d.x]
       }
@@ -79,10 +97,58 @@ export default {
         return diagonal
       }
 
-      return diagonal(pair)
-    }
-  },
-  methods: {
+      return diagonal
+    },
+    radialRightAngleDiagonal () {
+      const elt = this
+
+      return this.rightAngleDiagonal().path(function (pathData) {
+        const src = pathData[0]
+        const mid = pathData[1]
+        const dst = pathData[2]
+        const radius = Math.sqrt(src[0] * src[0] + src[1] * src[1])
+        const srcAngle = elt.coordinateToAngle(src, radius)
+        const midAngle = elt.coordinateToAngle(mid, radius)
+        const clockwise = Math.abs(midAngle - srcAngle) > Math.PI ? midAngle <= srcAngle : midAngle > srcAngle
+        const rotation = 0
+        const largeArc = 0
+        const sweep = clockwise ? 0 : 1
+        return 'M' + src + ' ' +
+          'A' + [radius, radius] + ' ' + rotation + ' ' + largeArc + ',' + sweep + ' ' + mid +
+          'L' + dst
+      })
+        .projection(function (d) {
+          const r = d.y; var a = (d.x - 90) / 180 * Math.PI
+          return [r * Math.cos(a), r * Math.sin(a)]
+        })
+    },
+    coordinateToAngle (coord, radius) {
+      const wholeAngle = 2 * Math.PI
+      const quarterAngle = wholeAngle / 4
+
+      const coordQuad = coord[0] >= 0 ? (coord[1] >= 0 ? 1 : 2) : (coord[1] >= 0 ? 4 : 3)
+      const coordBaseAngle = Math.abs(Math.asin(coord[1] / radius))
+
+      // Since this is just based on the angle of the right triangle formed
+      // by the coordinate and the origin, each quad will have different
+      // offsets
+      let coordAngle
+
+      switch (coordQuad) {
+        case 1:
+          coordAngle = quarterAngle - coordBaseAngle
+          break
+        case 2:
+          coordAngle = quarterAngle + coordBaseAngle
+          break
+        case 3:
+          coordAngle = 2 * quarterAngle + quarterAngle - coordBaseAngle
+          break
+        case 4:
+          coordAngle = 3 * quarterAngle + coordBaseAngle
+      }
+      return coordAngle
+    },
     linkHorizontal () {
       const o = {
         source: this.source,
@@ -96,6 +162,23 @@ export default {
         })
         .y(function (d) {
           return d.x
+        })
+
+      return link(o)
+    },
+    linkRadial () {
+      const o = {
+        source: this.source,
+        target: this.target
+      }
+
+      const link = d3Shape
+        .linkRadial()
+        .angle(function (d) {
+          return (d.x) / 180 * Math.PI
+        })
+        .radius(function (d) {
+          return d.y
         })
 
       return link(o)

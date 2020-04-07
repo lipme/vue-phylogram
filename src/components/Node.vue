@@ -34,6 +34,10 @@ export default {
     type: {
       type: String,
       default: ''
+    },
+    circular: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -51,7 +55,11 @@ export default {
       return 'node ' + this.type
     },
     transformAttribute () {
-      return 'translate(' + this.y + ' ' + this.x + ')'
+      if (this.circular === false) {
+        return 'translate(' + this.y + ' ' + this.x + ')'
+      } else {
+        return 'rotate(' + (this.x - 90) + ')translate(' + this.y + ')'
+      }
     },
     optionsLabel () {
       return this.type === 'inner'

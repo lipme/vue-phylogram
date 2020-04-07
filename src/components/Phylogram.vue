@@ -1,8 +1,9 @@
 <template>
   <div id="phylogram">
-    <svg v-if="!error" :width="width" :height="height" :transform="translationString">
+    <svg v-if="!error" :width="width" :height="height" >
+      <g :transform="translationString">
       <g transform="translate(10, 10)">
-        <Link v-for="link in d3Links" :key="link.id" :source="link.source" :target="link.target" :right-angle="rightAngle" />
+        <Link v-for="link in d3Links" :key="link.id" :source="link.source" :target="link.target" :right-angle="rightAngle" :circular="circular" />
       </g>
       <g transform="translate(10, 10)">
         <node v-for="node in d3Nodes"
@@ -11,7 +12,9 @@
         :y="node.y"
         :type="node.type"
         :label="displayLabel ? node.data.name : ''"
+        :circular="circular"
          />
+      </g>
       </g>
     </svg>
   </div>
@@ -46,11 +49,15 @@ export default {
       default: () => {
         return {
           top: 10,
-          right: 200,
+          right: 10,
           bottom: 10,
           left: 10
         }
       }
+    },
+    labelWidth: {
+      type: Number,
+      default: 200
     },
     branchLengths: {
       type: Boolean,
@@ -75,6 +82,10 @@ export default {
     displayLabel: {
       type: Boolean,
       default: true
+    },
+    circular: {
+      type: Boolean,
+      default: false
     }
   },
   created () {
@@ -85,9 +96,15 @@ export default {
   },
   mounted () {},
   computed: {
+    /**
+     * Tree computed from the newick string
+     */
     newickTree () {
       return Newick.parse(this.newick)
     },
+    /**
+     * Nodes created from the newick string
+     */
     newickNodes () {
       const nodes = []
       function buildNewickNodes (node, callback) {
@@ -102,6 +119,9 @@ export default {
       buildNewickNodes(this.newickTree)
       return nodes
     },
+    /**
+     * d3 root node
+     */
     d3RootNode () {
       return d3Hierarchy.hierarchy(this.newickTree, function (node) {
         return node.branchset
@@ -115,10 +135,19 @@ export default {
      * Cluster function
      */
     d3Cluster () {
-      return d3Hierarchy.cluster()
-        .size([this.height - this.margin.top, this.width - this.margin.left - this.margin.right])
-        .separation(function (a, b) { return 50 })
+      if (this.circular === false) {
+        return d3Hierarchy.cluster()
+          .size([this.height - this.margin.top, this.width - this.margin.left - this.margin.right - this.labelWidth])
+          .separation(function (a, b) { return 50 })
+      } else {
+        return d3Hierarchy.tree()
+          .size([360, this.width / 2 - this.labelWidth])
+          .separation(function (a, b) { return (a.parent === b.parent ? 1 : 2) / a.depth })
+      }
     },
+    /**
+     * Array of d3 nodes
+     */
     d3Nodes () {
       const root = this.d3RootNode
       let nodes = this.d3Cluster(root.sum(function (d) { return d.depth }))
@@ -171,6 +200,9 @@ export default {
       }
       return nodes
     },
+    /**
+     * Array of d3 links
+     */
     d3Links () {
       return this.d3Nodes.map(n => {
         if (n.parent) {
@@ -182,21 +214,31 @@ export default {
         } else { return null }
       }).filter((n) => n !== null)
     },
+    /**
+     * Translation string for the main svg
+     */
     translationString () {
-      return 'translate(' + this.margin.left + ',' + this.margin.top + ')'
+      if (this.circular === false) {
+        return 'translate(' + this.margin.left + ',' + this.margin.top + ')'
+      } else {
+        return 'translate(' + (this.width / 2) + ',' + (this.height / 2) + ')'
+      }
     }
   },
   methods: {
+    /**
+     * Returns yscale function
+     */
     yScale (nodes) {
       if (this.branchLengths === true) {
         const rootDists = nodes.map(function (n) { return n.rootDist })
         return d3Scale.scaleLinear()
           .domain([0, d3Array.max(rootDists)])
-          .range([0, this.width - this.margin.right])
+          .range([0, (this.circular ? this.width / 2 : this.width) - this.labelWidth])
       } else {
         return d3Scale.scaleLinear()
-          .domain([0, this.width - this.margin.right])
-          .range([0, this.width - this.margin.right])
+          .domain([0, this.width])
+          .range([0, this.width])
       }
     }
 

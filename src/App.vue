@@ -14,12 +14,17 @@
           <input type="checkbox" v-model="displayLabel" />
           <br />
           <br />
-          Right margin:
-           <input type="range" min="20" max="500" class="slider" v-model="margin.right" />
+         Label width:
+           <input type="range" min=20 max=500 class="slider" v-model="labelWidth" />
+           <br />
+          <br />
+           Circular layout:
+         <input type="checkbox" v-model="circular" />
           <br />
           <br />
           Copy and paste newick:
           <textarea v-model="newick" rows="10" cols="60" />
+
         </form>
       </div>
       <div id="rightbox">
@@ -29,6 +34,8 @@
           :branch-lengths="branchLengths"
           :margin="margin"
           :displayLabel="displayLabel"
+          :labelWidth="Number(labelWidth)"
+          :circular="circular"
         ></Phylogram>
       </div>
     </div>
@@ -46,10 +53,12 @@ export default {
   data () {
     return {
       displayLabel: true,
+      labelWidth: 200,
+      circular: false,
       margin: {
         top: 20,
         bottom: 20,
-        right: 200,
+        right: 20,
         left: 20
       },
       rightAngle: true,
