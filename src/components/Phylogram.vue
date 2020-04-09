@@ -1,7 +1,7 @@
 <template>
   <div id="phylogram">
-    <svg v-if="!error" :width="width" :height="height" >
-      <g :transform="translationString">
+    <svg id="svgphylo" v-if="!error" :width="width" :height="height" >
+      <g :transform="translationString" id="groupphylo">
       <g transform="translate(10, 10)">
         <Link v-for="link in d3Links" :key="link.id" :source="link.source" :target="link.target" :right-angle="rightAngle" :circular="circular" />
       </g>
@@ -23,9 +23,8 @@
 <script>
 import _ from 'lodash'
 import Newick from '../../public/lib/newick.js'
-import * as d3Hierarchy from 'd3-hierarchy'
-import * as d3Array from 'd3-array'
-import * as d3Scale from 'd3-scale'
+import * as d3 from 'd3'
+import * as svgPanZoom from 'svg-pan-zoom'
 
 import Node from '@/components/Node.vue'
 import Link from '@/components/Link.vue'
@@ -87,6 +86,12 @@ export default {
       type: Boolean,
       default: false
     }
+
+  },
+  data () {
+    return {
+      svg: null
+    }
   },
   created () {
     if (_.isEmpty(this.newick) && _.isEmpty(this.inputTree)) {
@@ -94,7 +99,9 @@ export default {
       this.error = true
     }
   },
-  mounted () {},
+  mounted () {
+    svgPanZoom('#svgphylo')
+  },
   computed: {
     /**
      * Tree computed from the newick string
@@ -123,12 +130,12 @@ export default {
      * d3 root node
      */
     d3RootNode () {
-      return d3Hierarchy.hierarchy(this.newickTree, function (node) {
+      return d3.hierarchy(this.newickTree, function (node) {
         return node.branchset
       })
         .sum(function (d) { return d.branchset ? 1 : 0 })
         .sort(function (a, b) {
-          return (a.value - b.value) || d3Array.descending(a.data.length, b.data.length)
+          return (a.value - b.value) || d3.descending(a.data.length, b.data.length)
         })
     },
     /**
@@ -136,11 +143,11 @@ export default {
      */
     d3Cluster () {
       if (this.circular === false) {
-        return d3Hierarchy.cluster()
+        return d3.cluster()
           .size([this.height - this.margin.top, this.width - this.margin.left - this.margin.right - this.labelWidth])
           .separation(function (a, b) { return 50 })
       } else {
-        return d3Hierarchy.tree()
+        return d3.tree()
           .size([360, this.width / 2 - this.labelWidth])
           .separation(function (a, b) { return (a.parent === b.parent ? 1 : 2) / a.depth })
       }
@@ -232,17 +239,21 @@ export default {
     yScale (nodes) {
       if (this.branchLengths === true) {
         const rootDists = nodes.map(function (n) { return n.rootDist })
-        return d3Scale.scaleLinear()
-          .domain([0, d3Array.max(rootDists)])
+        return d3.scaleLinear()
+          .domain([0, d3.max(rootDists)])
           .range([0, (this.circular ? this.width / 2 : this.width) - this.labelWidth])
       } else {
-        return d3Scale.scaleLinear()
+        return d3.scaleLinear()
           .domain([0, this.width])
           .range([0, this.width])
       }
+    },
+    zoomed () {
+      console.log('zoom')
+      this.svg.attr('transform', d3.event.transform)
     }
-
   }
+
 }
 </script>
 
