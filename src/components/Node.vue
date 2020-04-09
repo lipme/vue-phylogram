@@ -1,12 +1,16 @@
 <template>
-<g :class="classAttribute" :transform="transformAttribute"  @click="emitClick">
+<g :class="classAttribute" :transform="transformAttribute"  @click="emitClick" style="transition:transform 0.5s ease-out">
     <circle :r="type === 'inner' ? size/3 : size/2"
      :stroke-width="strokeWidth"
-     :fill="fill"/>
+     >
+      <!-- <animate attributeType="XML" attributeName="r" from="0" :to="type === 'inner' ? size/3 : size/2" dur="0.5s" /> -->
+     </circle>
     <text v-if="showLabel" :dx="optionsLabel.x"
     :dy="optionsLabel.y" :text-anchor="optionsLabel['text-anchor']"
     :font-size="optionsLabel['font-size']"
-    :transform="optionsLabel.transform" >{{this.label}}
+    :transform="optionsLabel.transform" >
+    {{this.label}}
+    <animate attributeType="XML" attributeName="font-size" from="0" :to="optionsLabel['font-size']" dur="0.8s" />
     </text></g>
 </template>
 

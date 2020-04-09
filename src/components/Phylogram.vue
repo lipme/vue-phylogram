@@ -86,16 +86,11 @@ export default {
     circular: {
       type: Boolean,
       default: false
-    },
-    zoom: {
-      type: Object,
-      default: null
     }
-
   },
   data () {
     return {
-      svg: null
+      svg: null, zoom: null
     }
   },
   created () {

@@ -1,5 +1,7 @@
 <template>
-  <path class="link" :d="path" :fill="fill" :stroke="stroke" :stroke-width="strokeWidth"></path>
+  <path class="link" :d="path" :fill="fill" :stroke="stroke" :stroke-width="strokeWidth" style="transition:d 0.5s ease-out">
+          <!-- <animate attributeType="XML" attributeName="stroke-width" from="0" :to="strokeWidth" dur="0.5s" /> -->
+  </path>
 </template>
 
 <script>
@@ -188,6 +190,19 @@ export default {
 </script>
 
 <style scoped>
+
+path{
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: dash 3s linear forwards;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
 path:hover {
   transition: all 0.5s;
   stroke: red;
