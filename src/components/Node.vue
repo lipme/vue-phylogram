@@ -105,6 +105,7 @@ export default {
 <style scoped>
 
 circle {
+  opacity: 100%;
   stroke:darkblue;
   fill:steelblue
 }
@@ -114,7 +115,12 @@ circle {
   fill: greenyellow;
 }
 
+.inner circle {
+  opacity: 0%;
+}
+
 .selected circle {
+  opacity: 100%;
   transition: all 0.5s;
   fill: red;
   stroke: brown;
