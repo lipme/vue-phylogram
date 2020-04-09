@@ -97,10 +97,8 @@ export default {
   },
   methods: {
     emitClick (e) {
-      console.log('click')
       this.selected = !this.selected
-
-      this.$emit(this.selected ? 'selectNode' : 'deselectNode', this.id)
+      this.$emit(this.selected ? 'select-node' : 'deselect-node', this.id)
     }
   }
 }

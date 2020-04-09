@@ -14,6 +14,8 @@
         :label="displayLabel ? node.data.name : ''"
         :circular="circular"
         :id="node.id.toString()"
+        @select-node="selectNode"
+        @deselect-node="deselectNode"
          />
       </g>
       </g>
@@ -90,7 +92,9 @@ export default {
   },
   data () {
     return {
-      svg: null, zoom: null
+      svg: null,
+      zoom: null,
+      selectedNodes: []
     }
   },
   created () {
@@ -249,11 +253,23 @@ export default {
       }
     },
     zoomed () {
-      console.log('zoom')
       this.svg.attr('transform', d3.event.transform)
     },
     resetZoom () {
       this.zoom.resetZoom()
+    },
+    selectNode (e) {
+      this.selectedNodes.push(e)
+    },
+    deselectNode (e) {
+      const ind = this.selectedNodes.indexOf(e)
+      this.selectedNodes.splice(ind, 1)
+    }
+
+  },
+  watch: {
+    selectedNodes (val) {
+      this.$emit('select-node', val)
     }
   }
 
