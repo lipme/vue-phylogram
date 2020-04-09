@@ -13,6 +13,7 @@
         :type="node.type"
         :label="displayLabel ? node.data.name : ''"
         :circular="circular"
+        :id="node.id.toString()"
          />
       </g>
       </g>

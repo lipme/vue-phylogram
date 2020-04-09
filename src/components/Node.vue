@@ -1,11 +1,11 @@
 <template>
-<g :class="classAttribute" :transform="transformAttribute">
-    <circle v-if="showCircle" :r="size/2" :stroke="stroke"
-     :stroke-width="stroke_width"
+<g :class="classAttribute" :transform="transformAttribute"  @click="emitClick">
+    <circle :r="type === 'inner' ? size/3 : size/2"
+     :stroke-width="strokeWidth"
      :fill="fill"/>
     <text v-if="showLabel" :dx="optionsLabel.x"
-    :dy="optionsLabel.y" :text-anchor="optionsLabel['text-anchor']" :fill="optionsLabel.fill"
-    :font-family="optionsLabel['font-family']" :font-size="optionsLabel['font-size']"
+    :dy="optionsLabel.y" :text-anchor="optionsLabel['text-anchor']"
+    :font-size="optionsLabel['font-size']"
     :transform="optionsLabel.transform" >{{this.label}}
     </text></g>
 </template>
@@ -16,10 +16,6 @@ export default {
     size: {
       type: Number,
       default: 6
-    },
-    stroke_width: {
-      type: Number,
-      default: 2
     },
     x: {
       type: Number,
@@ -40,10 +36,22 @@ export default {
     circular: {
       type: Boolean,
       default: false
+    },
+    id: {
+      type: String,
+      default: null
+    }
+  },
+  data () {
+    return {
+      selected: false
     }
   },
 
   computed: {
+    strokeWidth () {
+      return this.size / 5
+    },
     textClass () {
       if (this.circular && this.x > 180) {
         return 'reverse'
@@ -53,14 +61,8 @@ export default {
     showCircle () {
       return this.type !== 'inner'
     },
-    stroke () {
-      return this.type === 'root' ? 'yellowGreen' : '#369'
-    },
-    fill () {
-      return this.type === 'root' ? 'greenYellow' : 'steelblue'
-    },
     classAttribute () {
-      return 'node ' + this.type + ' ' + this.textClass
+      return 'node ' + this.type + ' ' + this.textClass + (this.selected ? ' selected' : '')
     },
     transformAttribute () {
       if (this.circular === false) {
@@ -72,27 +74,58 @@ export default {
     optionsLabel () {
       // const transform = ''
       let anchor = 'start'
-      let x = this.size - this.size / 4
+      let x = 1.5 * this.size
 
       if (this.circular && this.x > 180) {
         // transform = 'rotate(180)'
         anchor = 'end'
-        x = -this.size - this.size / 4
+        x = -1.5 * this.size
       }
 
       return this.type === 'inner'
-        ? { x: x, y: -this.size / 3, 'text-anchor': anchor, 'font-size': this.size + 3 + 'px', fill: 'black', 'font-family': 'Helvetica Neue, Helvetica, sans-serif' }
-        : { x: x, y: this.size / 3, 'text-anchor': anchor, 'font-size': this.size + 3 + 'px', fill: 'black', 'font-family': 'Helvetica Neue, Helvetica, sans-serif' }
+        ? { x: x, y: -this.size / 3, 'text-anchor': anchor, 'font-size': this.size + 3 + 'px' }
+        : { x: x, y: this.size / 3, 'text-anchor': anchor, 'font-size': this.size + 3 + 'px' }
     },
     showLabel () {
       return this.label !== null && this.label !== '' && this.type !== 'root'
     }
 
+  },
+  methods: {
+    emitClick (e) {
+      console.log('click')
+      this.selected = !this.selected
+
+      this.$emit(this.selected ? 'selectNode' : 'deselectNode', this.id)
+    }
   }
 }
 </script>
 
 <style scoped>
+
+circle {
+  stroke:darkblue;
+  fill:steelblue
+}
+
+.root circle {
+  stroke: yellowgreen;
+  fill: greenyellow;
+}
+
+.selected circle {
+  transition: all 0.5s;
+  fill: red;
+  stroke: brown;
+  transform: scale(1.5);
+}
+
+.selected text {
+  fill: red;
+  font-weight: bold;
+  transform: scale(1.5);
+}
 
 circle:hover {
   transition: all 0.5s;
@@ -112,4 +145,10 @@ text:hover {
 .reverse text {
   transform: rotate(180deg);
 }
+
+text {
+  fill: black;
+  font-family: 'Helvetica Neue, Helvetica, sans-serif'
+}
+
 </style>
