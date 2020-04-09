@@ -86,6 +86,10 @@ export default {
     circular: {
       type: Boolean,
       default: false
+    },
+    zoom: {
+      type: Object,
+      default: null
     }
 
   },
@@ -101,7 +105,7 @@ export default {
     }
   },
   mounted () {
-    svgPanZoom('#svgphylo')
+    this.zoom = svgPanZoom('#svgphylo')
   },
   computed: {
     /**
@@ -252,6 +256,9 @@ export default {
     zoomed () {
       console.log('zoom')
       this.svg.attr('transform', d3.event.transform)
+    },
+    resetZoom () {
+      this.zoom.resetZoom()
     }
   }
 

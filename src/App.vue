@@ -22,13 +22,16 @@
          <input type="checkbox" v-model="circular" />
           <br />
           <br />
+          <button @click="resetZoom">Reset Zoom</button>
+          <br />
+          <br />
           Copy and paste newick:
           <textarea v-model="newick" rows="10" cols="40" />
-
         </form>
       </div>
       <div id="rightbox">
         <Phylogram
+          ref="phylogram"
           :newick="newick"
           :right-angle="rightAngle"
           :branch-lengths="branchLengths"
@@ -105,6 +108,11 @@ export default {
           }
         ]
       }
+    }
+  },
+  methods: {
+    resetZoom () {
+      this.$refs.phylogram.resetZoom()
     }
   }
 }
