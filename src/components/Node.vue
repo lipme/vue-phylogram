@@ -44,6 +44,12 @@ export default {
   },
 
   computed: {
+    textClass () {
+      if (this.circular && this.x > 180) {
+        return 'reverse'
+      }
+      return 'normal'
+    },
     showCircle () {
       return this.type !== 'inner'
     },
@@ -54,7 +60,7 @@ export default {
       return this.type === 'root' ? 'greenYellow' : 'steelblue'
     },
     classAttribute () {
-      return 'node ' + this.type
+      return 'node ' + this.type + ' ' + this.textClass
     },
     transformAttribute () {
       if (this.circular === false) {
@@ -64,19 +70,19 @@ export default {
       }
     },
     optionsLabel () {
-      let transform = ''
+      // const transform = ''
       let anchor = 'start'
       let x = this.size - this.size / 4
 
       if (this.circular && this.x > 180) {
-        transform = 'rotate(180)'
+        // transform = 'rotate(180)'
         anchor = 'end'
         x = -this.size - this.size / 4
       }
 
       return this.type === 'inner'
-        ? { transform: transform, x: x, y: -this.size / 3, 'text-anchor': anchor, 'font-size': this.size + 3 + 'px', fill: 'black', 'font-family': 'Helvetica Neue, Helvetica, sans-serif' }
-        : { transform: transform, x: x, y: this.size / 3, 'text-anchor': anchor, 'font-size': this.size + 3 + 'px', fill: 'black', 'font-family': 'Helvetica Neue, Helvetica, sans-serif' }
+        ? { x: x, y: -this.size / 3, 'text-anchor': anchor, 'font-size': this.size + 3 + 'px', fill: 'black', 'font-family': 'Helvetica Neue, Helvetica, sans-serif' }
+        : { x: x, y: this.size / 3, 'text-anchor': anchor, 'font-size': this.size + 3 + 'px', fill: 'black', 'font-family': 'Helvetica Neue, Helvetica, sans-serif' }
     },
     showLabel () {
       return this.label !== null && this.label !== '' && this.type !== 'root'
@@ -96,5 +102,14 @@ circle:hover {
 text:hover {
   transition: all 0.5s;
   transform: scale(1.5);
+}
+
+.reverse text:hover {
+  transition: all 0.5s;
+  transform: scale(1.5) rotate(180deg);
+}
+
+.reverse text {
+  transform: rotate(180deg);
 }
 </style>
