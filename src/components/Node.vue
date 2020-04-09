@@ -121,6 +121,8 @@ circle {
 
 .inner circle {
   opacity: 0%;
+  fill:lightsalmon;
+  stroke: coral;
 }
 
 .selected circle {
@@ -140,6 +142,7 @@ circle {
 circle:hover {
   transition: all 0.5s;
   transform: scale(1.5);
+  opacity: 100%;
 }
 
 text:hover {
