@@ -187,5 +187,9 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+path:hover {
+  transition: all 0.5s;
+  stroke: red;
+}
 </style>
