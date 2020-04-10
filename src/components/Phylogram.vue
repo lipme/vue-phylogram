@@ -14,8 +14,8 @@
         :label="displayLabel ? node.data.name : ''"
         :circular="circular"
         :id="node.id.toString()"
-        @select-node="selectNode"
-        @deselect-node="deselectNode"
+        :selected="node.selected"
+        @click.native="clickNode($event, node)"
          />
       </g>
       </g>
@@ -114,33 +114,20 @@ export default {
       return Newick.parse(this.newick)
     },
     /**
-     * Nodes created from the newick string
-     */
-    newickNodes () {
-      const nodes = []
-      function buildNewickNodes (node, callback) {
-        nodes.push(node)
-        if (node.branchset) {
-          for (var i = 0; i < node.branchset.length; i++) {
-            buildNewickNodes(node.branchset[i])
-          }
-        }
-      }
-
-      buildNewickNodes(this.newickTree)
-      return nodes
-    },
-    /**
      * d3 root node
      */
     d3RootNode () {
-      return d3.hierarchy(this.newickTree, function (node) {
+      const rootNode = d3.hierarchy(this.newickTree, function (node) {
         return node.branchset
       })
         .sum(function (d) { return d.branchset ? 1 : 0 })
         .sort(function (a, b) {
           return (a.value - b.value) || d3.descending(a.data.length, b.data.length)
         })
+
+      rootNode.each((n) => { n.selected = false })
+
+      return rootNode
     },
     /**
      * Cluster function
@@ -258,18 +245,46 @@ export default {
     resetZoom () {
       this.zoom.resetZoom()
     },
-    selectNode (e) {
-      this.selectedNodes.push(e)
+    clickNode (e, node) {
+      if (node.selected === false) {
+        this.selectNode(node)
+      } else {
+        this.deselectNode(node)
+      }
     },
-    deselectNode (e) {
-      const ind = this.selectedNodes.indexOf(e)
-      this.selectedNodes.splice(ind, 1)
-    }
+    selectNode (node) {
+      const descendants = node.descendants()
+      descendants.forEach((n) => {
+        const ind = this.d3Nodes.indexOf(n)
+        n.selected = true
+        this.$set(this.d3Nodes, ind, n)
+        if (this.selectedNodes.indexOf(n) === -1) { this.selectedNodes.push(n) }
+      })
 
-  },
-  watch: {
-    selectedNodes (val) {
-      this.$emit('select-node', val)
+      this.$emit('select-nodes', this.selectedNodes)
+
+      // I don't knwow why but the reactivity does not work here...
+      this.$forceUpdate()
+    },
+    deselectNode (node) {
+      const descendants = node.descendants()
+      descendants.forEach((n) => {
+        let ind = this.d3Nodes.indexOf(n)
+        n.selected = false
+        this.$set(this.d3Nodes, ind, n)
+        ind = this.selectedNodes.indexOf(n)
+        this.selectedNodes.splice(ind, 1)
+      })
+
+      this.$emit('select-nodes', this.selectedNodes)
+    },
+    getD3Node (id) {
+      const elts = this.d3Nodes.filter((n) => n.id === id)
+      if (elts.length === 0) {
+        return null
+      } else {
+        return elts[0]
+      }
     }
   }
 
