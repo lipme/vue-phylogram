@@ -87,8 +87,8 @@ export default {
       }
 
       return this.type === 'inner'
-        ? { x: x, y: -this.size / 3, 'text-anchor': anchor, 'font-size': this.size + 3 + 'px' }
-        : { x: x, y: this.size / 3, 'text-anchor': anchor, 'font-size': this.size + 3 + 'px' }
+        ? { x: x, y: -this.size / 3, 'text-anchor': anchor, 'font-size': this.size * 1.5 + 'px' }
+        : { x: x, y: this.size / 3, 'text-anchor': anchor, 'font-size': this.size * 1.5 + 'px' }
     },
     showLabel () {
       return this.label !== null && this.label !== '' && this.type !== 'root'

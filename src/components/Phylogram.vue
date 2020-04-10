@@ -3,7 +3,7 @@
     <svg id="svgphylo" v-if="!error" :width="width" :height="height" >
       <g :transform="translationString" id="groupphylo">
       <g transform="translate(10, 10)">
-        <Link v-for="link in d3Links" :key="link.id" :source="link.source" :target="link.target" :right-angle="rightAngle" :circular="circular" />
+        <Link v-for="link in d3Links" :key="link.id" :source="link.source" :target="link.target" :right-angle="rightAngle" :circular="circular" :stroke-width="linkWidth" />
       </g>
       <g transform="translate(10, 10)">
         <node v-for="node in d3Nodes"
@@ -15,6 +15,7 @@
         :circular="circular"
         :id="node.id.toString()"
         :selected="node.selected"
+        :size="nodeWidth"
         @click.native="clickNode($event, node)"
          />
       </g>
@@ -221,6 +222,14 @@ export default {
       } else {
         return 'translate(' + (this.width / 2) + ',' + (this.height / 2) + ')'
       }
+    },
+    linkWidth () {
+      const scale = d3.scaleLog().domain([3, 500]).range([3, 0.01])
+      return scale(this.d3Nodes.length)
+    },
+    nodeWidth () {
+      const scale = d3.scaleLog().domain([3, 500]).range([10, 0.1])
+      return scale(this.d3Nodes.length)
     }
   },
   methods: {
@@ -286,6 +295,7 @@ export default {
         return elts[0]
       }
     }
+
   }
 
 }
