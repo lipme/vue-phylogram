@@ -1,5 +1,5 @@
 <template>
-<g :class="classAttribute" :transform="transformAttribute"  @click="emitClick" style="transition:transform 0.5s ease-out">
+<g :class="classAttribute" :transform="transformAttribute" style="transition:transform 0.5s ease-out">
     <circle :r="type === 'inner' ? size/3 : size/2"
      :stroke-width="strokeWidth"
      >
@@ -44,11 +44,10 @@ export default {
     id: {
       type: String,
       default: null
-    }
-  },
-  data () {
-    return {
-      selected: false
+    },
+    selected: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -66,6 +65,7 @@ export default {
       return this.type !== 'inner'
     },
     classAttribute () {
+      console.log('change attribute')
       return 'node ' + this.type + ' ' + this.textClass + (this.selected ? ' selected' : '')
     },
     transformAttribute () {
@@ -94,12 +94,6 @@ export default {
       return this.label !== null && this.label !== '' && this.type !== 'root'
     }
 
-  },
-  methods: {
-    emitClick (e) {
-      this.selected = !this.selected
-      this.$emit(this.selected ? 'select-node' : 'deselect-node', this.id)
-    }
   }
 }
 </script>
@@ -107,6 +101,7 @@ export default {
 <style scoped>
 
 circle {
+  transition: all 0.5s;
   opacity: 100%;
   stroke:darkblue;
   fill:steelblue
