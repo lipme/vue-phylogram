@@ -22,7 +22,7 @@
          <input type="checkbox" v-model="circular" />
           <br />
           <br />
-          <button @click="resetZoom">Reset Zoom</button>
+          <button @click.prevent="resetZoom">Reset Zoom</button>
           <br />
           <br />
           Copy and paste newick:

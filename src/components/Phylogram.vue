@@ -252,7 +252,7 @@ export default {
       this.svg.attr('transform', d3.event.transform)
     },
     resetZoom () {
-      this.zoom.resetZoom()
+      this.zoom.reset()
     },
     clickNode (e, node) {
       if (node.selected === false) {
