@@ -1,5 +1,5 @@
 <template>
-  <path class="link" :d="path" :fill="fill" :stroke="stroke" :stroke-width="strokeWidth" style="transition:d 0.5s ease-out">
+  <path class="link" :d="path" fill="none" :stroke="stroke" :stroke-width="strokeWidth" style="transition:d 0.5s ease-out">
           <!-- <animate attributeType="XML" attributeName="stroke-width" from="0" :to="strokeWidth" dur="0.5s" /> -->
   </path>
 </template>
@@ -9,17 +9,13 @@ import * as d3Shape from 'd3-shape'
 
 export default {
   props: {
-    fill: {
-      type: String,
-      default: 'none'
-    },
     stroke: {
       type: String,
-      default: '#aaa'
+      default: 'black'
     },
     strokeWidth: {
       type: Number,
-      default: 2
+      default: 0.3
     },
     rightAngle: {
       type: Boolean,
