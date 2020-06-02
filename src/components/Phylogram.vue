@@ -6,12 +6,26 @@
           <Link v-for="link in d3Links" :key="link.id" :source="link.source" :target="link.target" :right-angle="rightAngle" :circular="circular" :stroke-width="linkWidth" />
         </g>
         <g transform="translate(10, 10)">
-          <node v-for="node in d3Nodes"
+          <Node v-for="node in d3Nodes"
           :key="node.id"
           :x="node.x"
           :y="node.y"
           :type="node.type"
           :label="displayLabel ? node.data.name : ''"
+          :circular="circular"
+          :id="node.id.toString()"
+          :selected="node.selected"
+          :size="nodeWidth"
+          @click.native="clickNode($event, node)"
+          />
+        </g>
+         <g v-show="displayLabel" transform="translate(10, 10)">
+          <Label v-for="node in d3Nodes"
+          :key="node.id"
+          :x="node.x"
+          :y="node.y"
+          :type="node.type"
+          :label="node.data.name"
           :circular="circular"
           :id="node.id.toString()"
           :selected="node.selected"
@@ -32,11 +46,13 @@ import * as svgPanZoom from 'svg-pan-zoom'
 
 import Node from '@/components/Node.vue'
 import Link from '@/components/Link.vue'
+import Label from '@/components/Label.vue'
 
 export default {
   components: {
     Node,
-    Link
+    Link,
+    Label
   },
   props: {
     width: {
