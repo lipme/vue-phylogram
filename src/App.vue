@@ -31,6 +31,7 @@
       </div>
       <div id="rightbox">
         <Phylogram
+        :width=1000
           ref="phylogram"
           :newick="newick"
           :right-angle="rightAngle"

@@ -2,23 +2,23 @@
   <div id="phylogram">
     <svg id="svgphylo" v-if="!error" :width="width" :height="height" >
       <g :transform="translationString" id="groupphylo">
-      <g transform="translate(10, 10)">
-        <Link v-for="link in d3Links" :key="link.id" :source="link.source" :target="link.target" :right-angle="rightAngle" :circular="circular" :stroke-width="linkWidth" />
-      </g>
-      <g transform="translate(10, 10)">
-        <node v-for="node in d3Nodes"
-        :key="node.id"
-        :x="node.x"
-        :y="node.y"
-        :type="node.type"
-        :label="displayLabel ? node.data.name : ''"
-        :circular="circular"
-        :id="node.id.toString()"
-        :selected="node.selected"
-        :size="nodeWidth"
-        @click.native="clickNode($event, node)"
-         />
-      </g>
+        <g transform="translate(10, 10)">
+          <Link v-for="link in d3Links" :key="link.id" :source="link.source" :target="link.target" :right-angle="rightAngle" :circular="circular" :stroke-width="linkWidth" />
+        </g>
+        <g transform="translate(10, 10)">
+          <node v-for="node in d3Nodes"
+          :key="node.id"
+          :x="node.x"
+          :y="node.y"
+          :type="node.type"
+          :label="displayLabel ? node.data.name : ''"
+          :circular="circular"
+          :id="node.id.toString()"
+          :selected="node.selected"
+          :size="nodeWidth"
+          @click.native="clickNode($event, node)"
+          />
+        </g>
       </g>
     </svg>
   </div>
@@ -247,9 +247,6 @@ export default {
           .domain([0, this.width])
           .range([0, this.width])
       }
-    },
-    zoomed () {
-      this.svg.attr('transform', d3.event.transform)
     },
     resetZoom () {
       this.zoom.reset()

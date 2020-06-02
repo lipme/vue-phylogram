@@ -3,7 +3,6 @@
     <circle :r="type === 'inner' ? size/3 : size/2"
      :stroke-width="strokeWidth"
      >
-      <!-- <animate attributeType="XML" attributeName="r" from="0" :to="type === 'inner' ? size/3 : size/2" dur="0.5s" /> -->
      </circle>
     <text v-if="showLabel" :dx="optionsLabel.x"
     :dy="optionsLabel.y" :text-anchor="optionsLabel['text-anchor']"
@@ -65,7 +64,6 @@ export default {
       return this.type !== 'inner'
     },
     classAttribute () {
-      console.log('change attribute')
       return 'node ' + this.type + ' ' + this.textClass + (this.selected ? ' selected' : '')
     },
     transformAttribute () {
@@ -81,7 +79,6 @@ export default {
       let x = 1.5 * this.size
 
       if (this.circular && this.x > 180) {
-        // transform = 'rotate(180)'
         anchor = 'end'
         x = -1.5 * this.size
       }
