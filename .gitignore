@@ -23,4 +23,6 @@ yarn-error.log*
 __snapshots__
 coverage
 
+newick.txt
+
 
