@@ -1,36 +1,58 @@
 <template>
   <div id="phylogram">
-    <svg id="svgphylo" v-if="!error" :width="width" :height="height" >
+    <svg id="svgphylo" v-if="!error" :width="width" :height="height">
       <g :transform="translationString" id="groupphylo">
         <g transform="translate(10, 10)">
-          <Link v-for="link in d3Links" :key="link.id" :source="link.source" :target="link.target" :right-angle="rightAngle" :circular="circular" :stroke-width="linkWidth" />
-        </g>
-        <g transform="translate(10, 10)">
-          <Node v-for="node in d3Nodes"
-          :key="node.id"
-          :x="node.x"
-          :y="node.y"
-          :type="node.type"
-          :label="displayLabel ? node.data.name : ''"
-          :circular="circular"
-          :id="node.id.toString()"
-          :selected="node.selected"
-          :size="nodeWidth"
-          @click.native="clickNode($event, node)"
+          <Link
+            v-for="link in d3Links"
+            :key="link.id"
+            :source="link.source"
+            :target="link.target"
+            :right-angle="rightAngle"
+            :circular="circular"
+            :stroke-width="linkWidth"
           />
         </g>
-         <g v-show="displayLabel" transform="translate(10, 10)">
-          <Label v-for="node in d3Nodes"
-          :key="node.id"
-          :x="node.x"
-          :y="node.y"
-          :type="node.type"
-          :label="node.data.name"
-          :circular="circular"
-          :id="node.id.toString()"
-          :selected="node.selected"
-          :size="nodeWidth"
-          @click.native="clickNode($event, node)"
+        <g transform="translate(10, 10)">
+          <Node
+            v-for="node in d3Nodes"
+            :key="node.id"
+            :x="node.x"
+            :y="node.y"
+            :type="node.type"
+            :circular="circular"
+            :id="node.id.toString()"
+            :selected="node.selected"
+            :size="nodeWidth"
+            @click.native="clickNode($event, node)"
+          />
+        </g>
+        <g v-show="displayLabel" transform="translate(10, 10)">
+          <Label
+            v-for="node in d3Nodes"
+            :key="node.id"
+            :x="node.x"
+            :y="alignLabels && node.type==='leaf' ? maxY : node.y"
+            :type="node.type"
+            :label="node.data.name"
+            :circular="circular"
+            :id="node.id.toString()"
+            :selected="node.selected"
+            :size="nodeWidth"
+            @click.native="clickNode($event, node)"
+          />
+        </g>
+        <g v-show="displayLabel && alignLabels" transform="translate(10, 10)">
+          <Link
+            v-for="node in d3Leaves"
+            :key="node.id"
+            :source="{x:node.x, y:node.y+nodeWidth}"
+            :target="{x:node.x, y:maxY}"
+            :right-angle="rightAngle"
+            :circular="circular"
+            :stroke-width="linkWidth/2"
+            :dashed="true"
+            stroke="grey"
           />
         </g>
       </g>
@@ -105,6 +127,10 @@ export default {
     circular: {
       type: Boolean,
       default: false
+    },
+    alignLabels: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -134,15 +160,22 @@ export default {
      * d3 root node
      */
     d3RootNode () {
-      const rootNode = d3.hierarchy(this.newickTree, function (node) {
-        return node.branchset
-      })
-        .sum(function (d) { return d.branchset ? 1 : 0 })
+      const rootNode = d3
+        .hierarchy(this.newickTree, function (node) {
+          return node.branchset
+        })
+        .sum(function (d) {
+          return d.branchset ? 1 : 0
+        })
         .sort(function (a, b) {
-          return (a.value - b.value) || d3.descending(a.data.length, b.data.length)
+          return (
+            a.value - b.value || d3.descending(a.data.length, b.data.length)
+          )
         })
 
-      rootNode.each((n) => { n.selected = false })
+      rootNode.each(n => {
+        n.selected = false
+      })
 
       return rootNode
     },
@@ -151,13 +184,22 @@ export default {
      */
     d3Cluster () {
       if (this.circular === false) {
-        return d3.cluster()
-          .size([this.height - this.margin.top, this.width - this.margin.left - this.margin.right - this.labelWidth])
-          .separation(function (a, b) { return 50 })
+        return d3
+          .cluster()
+          .size([
+            this.height - this.margin.top,
+            this.width - this.margin.left - this.margin.right - this.labelWidth
+          ])
+          .separation(function (a, b) {
+            return 50
+          })
       } else {
-        return d3.tree()
+        return d3
+          .tree()
           .size([360, this.width / 2 - this.labelWidth])
-          .separation(function (a, b) { return (a.parent === b.parent ? 1 : 2) / a.depth })
+          .separation(function (a, b) {
+            return (a.parent === b.parent ? 1 : 2) / a.depth
+          })
       }
     },
     /**
@@ -165,7 +207,11 @@ export default {
      */
     d3Nodes () {
       const root = this.d3RootNode
-      let nodes = this.d3Cluster(root.sum(function (d) { return d.depth }))
+      let nodes = this.d3Cluster(
+        root.sum(function (d) {
+          return d.depth
+        })
+      )
         .descendants()
         .map((n, i) => {
           let type = 'leaf'
@@ -200,11 +246,12 @@ export default {
           if (node.children) {
             for (let i = node.children.length - 1; i >= 0; i--) {
               visitPreOrder(node.children[i], callback)
-            };
+            }
           }
         }
         visitPreOrder(nodes[0], function (node) {
-          node.rootDist = (node.parent ? node.parent.rootDist : 0) + (node.data.length || 0)
+          node.rootDist =
+            (node.parent ? node.parent.rootDist : 0) + (node.data.length || 0)
         })
 
         const yScale = this.yScale(nodes)
@@ -215,19 +262,26 @@ export default {
       }
       return nodes
     },
+    d3Leaves () {
+      return this.d3Nodes.filter(n => n.type === 'leaf')
+    },
     /**
      * Array of d3 links
      */
     d3Links () {
-      return this.d3Nodes.map(n => {
-        if (n.parent) {
-          return {
-            source: { x: n.parent.x, y: n.parent.y },
-            target: { x: n.x, y: n.y },
-            id: n.id
+      return this.d3Nodes
+        .map(n => {
+          if (n.parent) {
+            return {
+              source: { x: n.parent.x, y: n.parent.y },
+              target: { x: n.x, y: n.y },
+              id: n.id
+            }
+          } else {
+            return null
           }
-        } else { return null }
-      }).filter((n) => n !== null)
+        })
+        .filter(n => n !== null)
     },
     /**
      * Translation string for the main svg
@@ -236,16 +290,25 @@ export default {
       if (this.circular === false) {
         return 'translate(' + this.margin.left + ',' + this.margin.top + ')'
       } else {
-        return 'translate(' + (this.width / 2) + ',' + (this.height / 2) + ')'
+        return 'translate(' + this.width / 2 + ',' + this.height / 2 + ')'
       }
     },
     linkWidth () {
-      const scale = d3.scaleLog().domain([3, 500]).range([3, 0.01])
+      const scale = d3
+        .scaleLog()
+        .domain([3, 500])
+        .range([3, 0.02])
       return scale(this.d3Nodes.length)
     },
     nodeWidth () {
-      const scale = d3.scaleLog().domain([3, 500]).range([10, 0.1])
+      const scale = d3
+        .scaleLog()
+        .domain([3, 500])
+        .range([10, 0.1])
       return scale(this.d3Nodes.length)
+    },
+    maxY () {
+      return d3.max(this.d3Nodes.map(n => n.y))
     }
   },
   methods: {
@@ -254,12 +317,19 @@ export default {
      */
     yScale (nodes) {
       if (this.branchLengths === true) {
-        const rootDists = nodes.map(function (n) { return n.rootDist })
-        return d3.scaleLinear()
+        const rootDists = nodes.map(function (n) {
+          return n.rootDist
+        })
+        return d3
+          .scaleLinear()
           .domain([0, d3.max(rootDists)])
-          .range([0, (this.circular ? this.width / 2 : this.width) - this.labelWidth])
+          .range([
+            0,
+            (this.circular ? this.width / 2 : this.width) - this.labelWidth
+          ])
       } else {
-        return d3.scaleLinear()
+        return d3
+          .scaleLinear()
           .domain([0, this.width])
           .range([0, this.width])
       }
@@ -276,11 +346,13 @@ export default {
     },
     selectNode (node) {
       const descendants = node.descendants()
-      descendants.forEach((n) => {
+      descendants.forEach(n => {
         const ind = this.d3Nodes.indexOf(n)
         n.selected = true
         this.$set(this.d3Nodes, ind, n)
-        if (this.selectedNodes.indexOf(n) === -1) { this.selectedNodes.push(n) }
+        if (this.selectedNodes.indexOf(n) === -1) {
+          this.selectedNodes.push(n)
+        }
       })
 
       this.$emit('select-nodes', this.selectedNodes)
@@ -290,7 +362,7 @@ export default {
     },
     deselectNode (node) {
       const descendants = node.descendants()
-      descendants.forEach((n) => {
+      descendants.forEach(n => {
         let ind = this.d3Nodes.indexOf(n)
         n.selected = false
         this.$set(this.d3Nodes, ind, n)
@@ -301,16 +373,14 @@ export default {
       this.$emit('select-nodes', this.selectedNodes)
     },
     getD3Node (id) {
-      const elts = this.d3Nodes.filter((n) => n.id === id)
+      const elts = this.d3Nodes.filter(n => n.id === id)
       if (elts.length === 0) {
         return null
       } else {
         return elts[0]
       }
     }
-
   }
-
 }
 </script>
 

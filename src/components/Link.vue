@@ -1,5 +1,7 @@
 <template>
-  <path class="link" :d="path" fill="none" :stroke="stroke" :stroke-width="strokeWidth" style="transition:d 0.5s ease-out">
+  <path class="link" :d="path" fill="none" :stroke="stroke"
+  :stroke-width="strokeWidth" style="transition:d 0.5s ease-out"
+  :stroke-dasharray="dashAttribute">
   </path>
 </template>
 
@@ -40,6 +42,10 @@ export default {
           y: 60
         }
       }
+    },
+    dashed: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -58,6 +64,10 @@ export default {
       } else {
         return this.radialRightAngleDiagonal()(pair)
       }
+    },
+    dashAttribute () {
+      const step = this.strokeWidth * 5
+      return this.dashed ? step + ',' + step : ''
     }
   },
   methods: {
@@ -187,8 +197,6 @@ export default {
 <style scoped>
 
 path{
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
   animation: dash 3s linear forwards;
 }
 

@@ -22,6 +22,10 @@
          <input type="checkbox" v-model="circular" />
           <br />
           <br />
+           Align Labels:
+         <input type="checkbox" v-model="alignLabels" />
+          <br />
+          <br />
           <button @click.prevent="resetZoom">Reset Zoom</button>
           <br />
           <br />
@@ -40,6 +44,7 @@
           :displayLabel="displayLabel"
           :labelWidth="Number(labelWidth)"
           :circular="circular"
+          :align-labels="alignLabels"
         ></Phylogram>
       </div>
     </div>
@@ -57,6 +62,7 @@ export default {
   data () {
     return {
       displayLabel: true,
+      alignLabels: false,
       labelWidth: 200,
       circular: false,
       margin: {
