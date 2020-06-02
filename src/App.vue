@@ -26,6 +26,14 @@
          <input type="checkbox" v-model="alignLabels" />
           <br />
           <br />
+           Display tree from an object (inputTree prop):
+         <input type="checkbox" v-model="displayFromTreeObject" />
+          <br />
+          <br />
+            Show pies:
+         <input type="checkbox" v-model="showPies" />
+          <br />
+          <br />
           <button @click.prevent="resetZoom">Reset Zoom</button>
           <br />
           <br />
@@ -34,7 +42,7 @@
         </form>
       </div>
       <div id="rightbox">
-        <Phylogram
+        <Phylogram v-if="! displayFromTreeObject"
         :width=1000
           ref="phylogram"
           :newick="newick"
@@ -45,6 +53,21 @@
           :labelWidth="Number(labelWidth)"
           :circular="circular"
           :align-labels="alignLabels"
+          :show-pies="showPies"
+        ></Phylogram>
+        <Phylogram v-else
+        :width=1000
+          ref="phylogram"
+          :inputTree="tree"
+          :right-angle="rightAngle"
+          :branch-lengths="branchLengths"
+          :margin="margin"
+          :displayLabel="displayLabel"
+          :labelWidth="Number(labelWidth)"
+          :circular="circular"
+          :align-labels="alignLabels"
+          :pies="metadatas.inputTree.pies"
+          :show-pies="showPies"
         ></Phylogram>
       </div>
     </div>
@@ -65,6 +88,7 @@ export default {
       alignLabels: false,
       labelWidth: 200,
       circular: false,
+      displayFromTreeObject: false,
       margin: {
         top: 20,
         bottom: 20,
@@ -73,6 +97,31 @@ export default {
       },
       rightAngle: true,
       branchLengths: true,
+      metadatas: {
+        inputTree:
+      {
+        pies: {
+          node1: {
+            data: [{ label: 'A', value: 10, color: 'blue' },
+              { label: 'B', value: 20, color: 'green' },
+              { label: 'C', value: 30, color: 'red' }],
+            size: 5
+          },
+          node4: {
+            data: [{ label: 'A', value: 50, color: 'blue' },
+              { label: 'B', value: 80, color: 'green' },
+              { label: 'C', value: 50, color: 'red' }],
+            size: 1.2
+          },
+          node2: {
+            data: [{ label: 'A', value: 90, color: 'blue' },
+              { label: 'B', value: 10, color: 'green' }
+            ],
+            size: 3
+          }
+        }
+      }
+      },
       newick:
         '(((Crotalus_oreganus_oreganus_cytochrome_b:0.00800,Crotalus_horridus_cytochrome_b:0.05866):0.04732,(Thamnophis_elegans_terrestris_cytochrome_b:0.00366,Thamnophis_atratus_cytochrome_b:0.00172):0.06255):0.00555,(Pituophis_catenifer_vertebralis_cytochrome_b:0.00552,Lampropeltis_getula_cytochrome_b:0.02035):0.05762,((Diadophis_punctatus_cytochrome_b:0.06486,Contia_tenuis_cytochrome_b:0.05342):0.01037,Hypsiglena_torquata_cytochrome_b:0.05346):0.00779)',
       tree: {
@@ -82,39 +131,40 @@ export default {
           {
             id: 'node1',
             name: 'node 1',
-            branchLength: 0.1,
+            length: 0.08,
             branchset: [
               {
                 id: 'node2',
                 name: 'node 2',
-                branchLength: 0.05
+                length: 0.05
               },
               {
                 id: 'node3',
                 name: 'node 3',
-                branchLength: 0.07
+                length: 0.07
               }
             ]
           },
           {
             id: 'node4',
             name: 'node 4',
-            branchLength: 0.15,
+            length: 0.05,
             branchset: [
               {
                 id: 'node5',
                 name: 'node 5',
-                branchLength: 0.2
+                length: 0.02
               },
               {
                 id: 'node6',
                 name: 'node 6',
-                branchLength: 0.07
+                length: 0.07
               }
             ]
           }
         ]
-      }
+      },
+      showPies: true
     }
   },
   methods: {

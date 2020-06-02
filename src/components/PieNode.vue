@@ -1,15 +1,16 @@
 <template>
 <g :class="classAttribute" :transform="transformAttribute" style="transition:transform 0.5s ease-out">
-    <circle :r="type === 'inner' ? size/3 : size/2"
-     :stroke-width="strokeWidth"
-     >
-     </circle>
+     <path v-for="(d, i) in pieData" :key="d.data.label" :d="paths[i]" :fill="d.data.color">
+        <title>{{d.data.label}} : {{d.data.value}}</title>
+     </path>
     </g>
 </template>
 
 <script>
+import * as d3 from 'd3'
+
 export default {
-  name: 'node',
+  name: 'pieNode',
   props: {
     size: {
       type: Number,
@@ -23,17 +24,13 @@ export default {
       type: Number,
       default: 0
     },
-    type: {
-      type: String,
-      default: ''
-    },
     circular: {
       type: Boolean,
       default: false
     },
-    selected: {
-      type: Boolean,
-      default: false
+    data: {
+      type: Array,
+      default: () => { return [] }
     }
   },
 
@@ -41,11 +38,8 @@ export default {
     strokeWidth () {
       return this.size / 5
     },
-    showCircle () {
-      return this.type !== 'inner'
-    },
     classAttribute () {
-      return 'node ' + this.type + ' ' + (this.selected ? ' selected' : '')
+      return 'pie ' + this.type
     },
     transformAttribute () {
       if (this.circular === false) {
@@ -53,42 +47,25 @@ export default {
       } else {
         return 'rotate(' + (this.x - 90) + ')translate(' + this.y + ')'
       }
+    },
+    arcFunction () {
+      return d3.arc().innerRadius(0).outerRadius(this.size / 2)
+    },
+    pieData () {
+      const pie = d3.pie().value(d => d.value).sort(null)
+      return pie(this.data)
+    },
+    paths () {
+      const arc = this.arcFunction
+      return this.pieData.map(d => { return arc(d) })
     }
   }
 }
 </script>
 
 <style scoped>
-
-circle {
-  opacity: 100%;
-  stroke:darkblue;
-  fill:steelblue
-}
-
-.root circle {
-  stroke: yellowgreen;
-  fill: greenyellow;
-}
-
-.inner circle {
-  opacity: 0%;
-  fill:lightsalmon;
-  stroke: coral;
-}
-
-.selected circle {
-  opacity: 100%;
-  transition: all 0.5s;
-  fill: red;
-  stroke: brown;
-  transform: scale(1.5);
-}
-
-circle:hover {
+path:hover {
   transition: all 0.5s;
   transform: scale(1.5);
-  opacity: 100%;
 }
-
 </style>

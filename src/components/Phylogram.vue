@@ -21,7 +21,7 @@
             :y="node.y"
             :type="node.type"
             :circular="circular"
-            :id="node.id.toString()"
+            :id="node.data.id"
             :selected="node.selected"
             :size="nodeWidth"
             @click.native="clickNode($event, node)"
@@ -36,7 +36,7 @@
             :type="node.type"
             :label="node.data.name"
             :circular="circular"
-            :id="node.id.toString()"
+            :id="node.data.id"
             :selected="node.selected"
             :size="nodeWidth"
             @click.native="clickNode($event, node)"
@@ -55,6 +55,18 @@
             stroke="grey"
           />
         </g>
+        <g v-if="hasPieMetadata && showPies" transform="translate(10, 10)">
+          <PieNode v-for="node in d3PieNodes"
+            :key="node.id"
+            :x="node.x"
+            :y="node.y"
+            :type="node.type"
+            :circular="circular"
+            :id="node.data.id"
+            :selected="node.selected"
+            :size="pies[node.data.id].size ? nodeWidth*pies[node.data.id].size : nodeWidth "
+            :data="pies[node.data.id].data ? pies[node.data.id].data : []" />
+        </g>
       </g>
     </svg>
   </div>
@@ -69,12 +81,14 @@ import * as svgPanZoom from 'svg-pan-zoom'
 import Node from '@/components/Node.vue'
 import Link from '@/components/Link.vue'
 import Label from '@/components/Label.vue'
+import PieNode from '@/components/PieNode.vue'
 
 export default {
   components: {
     Node,
     Link,
-    Label
+    Label,
+    PieNode
   },
   props: {
     width: {
@@ -131,6 +145,14 @@ export default {
     alignLabels: {
       type: Boolean,
       default: false
+    },
+    pies: {
+      type: Object,
+      default: () => {}
+    },
+    showPies: {
+      type: Boolean,
+      default: true
     }
   },
   data () {
@@ -145,6 +167,10 @@ export default {
       console.error('Needs newick or input-tree props')
       this.error = true
     }
+    if (!_.isEmpty(this.newick) && !_.isEmpty(this.inputTree)) {
+      console.error('newick and input-tree props can not coexist')
+      this.error = true
+    }
   },
   mounted () {
     this.zoom = svgPanZoom('#svgphylo')
@@ -154,7 +180,11 @@ export default {
      * Tree computed from the newick string
      */
     newickTree () {
-      return Newick.parse(this.newick)
+      if (this.newick) {
+        return Newick.parse(this.newick)
+      } else {
+        return this.inputTree
+      }
     },
     /**
      * d3 root node
@@ -309,6 +339,15 @@ export default {
     },
     maxY () {
       return d3.max(this.d3Nodes.map(n => n.y))
+    },
+    hasPieMetadata () {
+      if (!this.pies || this.pies.length === 0) {
+        return false
+      }
+      return true
+    },
+    d3PieNodes () {
+      return this.hasPieMetadata ? this.d3Nodes.filter(n => n.data.id in this.pies) : []
     }
   },
   methods: {
