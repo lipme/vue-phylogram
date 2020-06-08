@@ -8,6 +8,7 @@
             :key="link.id"
             :source="link.source"
             :target="link.target"
+            :selected="link.selected"
             :right-angle="rightAngle"
             :circular="circular"
             :stroke-width="linkWidth"
@@ -23,7 +24,7 @@
             :type="node.type"
             :circular="circular"
             :id="node.data.id"
-            :selected="node.selected"
+            :selected="selectedNodes.includes(node)"
             :size="nodeWidth"
             @click.native="clickNode($event, node)"
           />
@@ -307,10 +308,16 @@ export default {
       return this.d3Nodes
         .map(n => {
           if (n.parent) {
+            let selected = false
+            if (this.selectedNodes.includes(n) && this.selectedNodes.includes(n.parent)) {
+              selected = true
+            }
+
             return {
-              source: { x: n.parent.x, y: n.parent.y },
-              target: { x: n.x, y: n.y },
-              id: n.id
+              source: { x: n.parent.x, y: n.parent.y, selected: n.parent.selected },
+              target: { x: n.x, y: n.y, selected: n.parent.selected },
+              id: n.id,
+              selected: selected
             }
           } else {
             return null
@@ -382,7 +389,7 @@ export default {
       this.zoom.reset()
     },
     clickNode (e, node) {
-      if (node.selected === false) {
+      if (this.isSelected(node) === false) {
         this.selectNode(node)
       } else {
         this.deselectNode(node)
@@ -390,10 +397,12 @@ export default {
     },
     selectNode (node) {
       const descendants = node.descendants()
+
       descendants.forEach(n => {
-        const ind = this.d3Nodes.indexOf(n)
-        n.selected = true
-        this.$set(this.d3Nodes, ind, n)
+        // const ind = this.d3Nodes.indexOf(n)
+        // n.selected = true
+        // this.$set(this.d3Nodes, ind, n)
+        // this.$set(this.d3Nodes[ind], 'selected', true)
         if (this.selectedNodes.indexOf(n) === -1) {
           this.selectedNodes.push(n)
         }
@@ -402,15 +411,15 @@ export default {
       this.$emit('select-nodes', this.selectedNodes)
 
       // I don't knwow why but the reactivity does not work here...
-      this.$forceUpdate()
+      // this.$forceUpdate()
     },
     deselectNode (node) {
       const descendants = node.descendants()
       descendants.forEach(n => {
-        let ind = this.d3Nodes.indexOf(n)
-        n.selected = false
-        this.$set(this.d3Nodes, ind, n)
-        ind = this.selectedNodes.indexOf(n)
+        // let ind = this.d3Nodes.indexOf(n)
+        // this.$set(this.d3Nodes, ind, n)
+        // this.$set(this.d3Nodes[ind], 'selected', false)
+        const ind = this.selectedNodes.indexOf(n)
         this.selectedNodes.splice(ind, 1)
       })
 
@@ -423,6 +432,9 @@ export default {
       } else {
         return elts[0]
       }
+    },
+    isSelected (node) {
+      return this.selectedNodes.includes(node)
     }
   }
 }
