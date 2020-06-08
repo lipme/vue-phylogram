@@ -1,8 +1,15 @@
 <template>
-<g :class="classAttribute" :transform="transformAttribute" style="transition:transform 0.5s ease-out">
+<g :class="classAttribute" :transform="transformAttribute">
     <circle :class="{transparent: !show && type !== 'root'}" :r="type === 'inner' ? size/3 : size/2"
      :stroke-width="strokeWidth"
      >
+      <animateTransform attributeName="transform"
+             type="scale"
+             from="0 0"
+             to="1 1"
+             begin="0s"
+             dur="1s"
+        />
      </circle>
     </g>
 </template>
@@ -68,7 +75,7 @@ export default {
 circle {
   opacity: 100%;
   stroke:darkblue;
-  fill:steelblue
+  fill:steelblue;
 }
 
 .transparent {

@@ -1,7 +1,14 @@
 <template>
-<g :class="classAttribute" :transform="transformAttribute" style="transition:transform 0.5s ease-out">
+<g :class="classAttribute" :transform="transformAttribute">
      <path v-for="(d, i) in pieData" :key="d.data.label" :d="paths[i]" :fill="d.data.color">
         <title>{{d.data.label}} : {{d.data.value}}</title>
+        <animateTransform attributeName="transform"
+             type="scale"
+             from="0 0"
+             to="1 1"
+             begin="0s"
+             dur="1s"
+        />
      </path>
     </g>
 </template>

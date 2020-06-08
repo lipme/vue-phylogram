@@ -1,7 +1,20 @@
 <template>
-  <path class="link" :d="path" fill="none" :stroke="color"
-  :stroke-width="strokeWidth" style="transition:d 0.5s ease-out"
-  :stroke-dasharray="dashAttribute">
+  <path
+    class="link"
+    :d="path"
+    fill="none"
+    :stroke="color"
+    :stroke-width="strokeWidth"
+    :stroke-dasharray="dashAttribute"
+  >
+    <animate
+      attributeName="stroke-width"
+      attributeType="XML"
+      from="0"
+      :to="strokeWidth"
+      begin="0s"
+      dur="2s"
+    />
   </path>
 </template>
 
@@ -119,23 +132,42 @@ export default {
     radialRightAngleDiagonal () {
       const elt = this
 
-      return this.rightAngleDiagonal().path(function (pathData) {
-        const src = pathData[0]
-        const mid = pathData[1]
-        const dst = pathData[2]
-        const radius = Math.sqrt(src[0] * src[0] + src[1] * src[1])
-        const srcAngle = elt.coordinateToAngle(src, radius)
-        const midAngle = elt.coordinateToAngle(mid, radius)
-        const clockwise = Math.abs(midAngle - srcAngle) > Math.PI ? midAngle <= srcAngle : midAngle > srcAngle
-        const rotation = 0
-        const largeArc = 0
-        const sweep = clockwise ? 0 : 1
-        return 'M' + src + ' ' +
-          'A' + [radius, radius] + ' ' + rotation + ' ' + largeArc + ',' + sweep + ' ' + mid +
-          'L' + dst
-      })
+      return this.rightAngleDiagonal()
+        .path(function (pathData) {
+          const src = pathData[0]
+          const mid = pathData[1]
+          const dst = pathData[2]
+          const radius = Math.sqrt(src[0] * src[0] + src[1] * src[1])
+          const srcAngle = elt.coordinateToAngle(src, radius)
+          const midAngle = elt.coordinateToAngle(mid, radius)
+          const clockwise =
+            Math.abs(midAngle - srcAngle) > Math.PI
+              ? midAngle <= srcAngle
+              : midAngle > srcAngle
+          const rotation = 0
+          const largeArc = 0
+          const sweep = clockwise ? 0 : 1
+          return (
+            'M' +
+            src +
+            ' ' +
+            'A' +
+            [radius, radius] +
+            ' ' +
+            rotation +
+            ' ' +
+            largeArc +
+            ',' +
+            sweep +
+            ' ' +
+            mid +
+            'L' +
+            dst
+          )
+        })
         .projection(function (d) {
-          const r = d.y; var a = (d.x - 90) / 180 * Math.PI
+          const r = d.y
+          var a = ((d.x - 90) / 180) * Math.PI
           return [r * Math.cos(a), r * Math.sin(a)]
         })
     },
@@ -143,7 +175,8 @@ export default {
       const wholeAngle = 2 * Math.PI
       const quarterAngle = wholeAngle / 4
 
-      const coordQuad = coord[0] >= 0 ? (coord[1] >= 0 ? 1 : 2) : (coord[1] >= 0 ? 4 : 3)
+      const coordQuad =
+        coord[0] >= 0 ? (coord[1] >= 0 ? 1 : 2) : coord[1] >= 0 ? 4 : 3
       const coordBaseAngle = Math.abs(Math.asin(coord[1] / radius))
 
       // Since this is just based on the angle of the right triangle formed
@@ -192,7 +225,7 @@ export default {
       const link = d3Shape
         .linkRadial()
         .angle(function (d) {
-          return (d.x) / 180 * Math.PI
+          return (d.x / 180) * Math.PI
         })
         .radius(function (d) {
           return d.y
@@ -205,17 +238,6 @@ export default {
 </script>
 
 <style scoped>
-
-path{
-  animation: dash 3s linear forwards;
-}
-
-@keyframes dash {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
 path:hover {
   transition: all 0.5s;
   stroke: red;

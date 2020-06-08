@@ -2,7 +2,6 @@
   <g
     :class="classAttribute"
     :transform="transformAttribute"
-    style="transition:transform 0.5s ease-out"
   >
     <rect
       v-if="isSurrounded"
@@ -15,13 +14,13 @@
       :stroke="borderColor"
       :width="rectWidth"
     >
-    <animate
-        attributeType="XML"
-        attributeName="width"
-        from="0"
-        :to="rectWidth"
-        dur="0.8s"
-      />
+     <animateTransform attributeName="transform"
+             type="scale"
+             from="0 0"
+             to="1 1"
+             begin="0s"
+             dur="1s"
+        />
     </rect>
     <text
       ref="text"
@@ -33,13 +32,13 @@
       :fill="labelColor"
     >
       {{this.label}}
-      <animate
-        attributeType="XML"
-        attributeName="font-size"
-        from="0"
-        :to="optionsLabel['font-size']"
-        dur="0.8s"
-      />
+      <animateTransform attributeName="transform"
+             type="scale"
+             from="0 0"
+             to="1 1"
+             begin="0s"
+             dur="1s"
+        />
     </text>
   </g>
 </template>

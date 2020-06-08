@@ -11,7 +11,7 @@
             :selected="link.selected"
             :right-angle="rightAngle"
             :circular="circular"
-            :stroke-width="linkWidth"
+            :stroke-width="link.selected ? linkWidth * 1.5 : linkWidth"
           />
         </g>
         <g transform="translate(10, 10)">
