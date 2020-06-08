@@ -39,9 +39,10 @@
             :label="node.data.name"
             :circular="circular"
             :id="node.data.id"
-            :selected="node.selected"
+            :selected="selectedNodes.includes(node)"
             :size="nodeWidth"
             @click.native="clickNode($event, node)"
+            :color="getLabelColor(node)"
           />
         </g>
         <g v-show="displayLabels && alignLabels" transform="translate(10, 10)">
@@ -58,7 +59,8 @@
           />
         </g>
         <g v-if="hasPieMetadata && showPies" transform="translate(10, 10)">
-          <PieNode v-for="node in d3PieNodes"
+          <PieNode
+            v-for="node in d3PieNodes"
             :key="node.id"
             :x="node.x"
             :y="node.y"
@@ -67,7 +69,8 @@
             :id="node.data.id"
             :selected="node.selected"
             :size="pies[node.data.id].size ? nodeWidth*pies[node.data.id].size : nodeWidth "
-            :data="pies[node.data.id].data ? pies[node.data.id].data : []" />
+            :data="pies[node.data.id].data ? pies[node.data.id].data : []"
+          />
         </g>
       </g>
     </svg>
@@ -159,6 +162,10 @@ export default {
     displayNodes: {
       type: Boolean,
       default: true
+    },
+    labelStyles: {
+      type: Object,
+      default: () => {}
     }
   },
   data () {
@@ -360,6 +367,9 @@ export default {
     },
     d3PieNodes () {
       return this.hasPieMetadata ? this.d3Nodes.filter(n => n.data.id in this.pies) : []
+    },
+    hasLabelStyles () {
+      return !(!this.labelStyles || this.labelStyles.length === 0)
     }
   },
   methods: {
@@ -435,6 +445,16 @@ export default {
     },
     isSelected (node) {
       return this.selectedNodes.includes(node)
+    },
+    getLabelColor (node) {
+      if (this.hasLabelStyles) {
+        if (node.data.id in this.labelStyles) {
+          if ('color' in this.labelStyles[node.data.id]) {
+            return this.labelStyles[node.data.id].color
+          }
+        }
+      }
+      return 'black'
     }
   }
 }

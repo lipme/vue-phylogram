@@ -3,7 +3,8 @@
     <text :dx="optionsLabel.x"
     :dy="optionsLabel.y" :text-anchor="optionsLabel['text-anchor']"
     :font-size="optionsLabel['font-size']"
-    :transform="optionsLabel.transform" >
+    :transform="optionsLabel.transform"
+    :fill="labelColor" >
     {{this.label}}
     <animate attributeType="XML" attributeName="font-size" from="0" :to="optionsLabel['font-size']" dur="0.8s" />
     </text></g>
@@ -44,7 +45,12 @@ export default {
     selected: {
       type: Boolean,
       default: false
+    },
+    color: {
+      type: String,
+      default: 'black'
     }
+
   },
 
   computed: {
@@ -55,7 +61,7 @@ export default {
       return 'normal'
     },
     classAttribute () {
-      return 'node ' + this.type + ' ' + this.textClass + (this.selected ? ' selected' : '')
+      return this.textClass + (this.selected ? ' selected' : '')
     },
     transformAttribute () {
       if (this.circular === false) {
@@ -77,6 +83,9 @@ export default {
       return this.type === 'inner'
         ? { x: x, y: -this.size / 3, 'text-anchor': anchor, 'font-size': this.size * 1.5 + 'px' }
         : { x: x, y: this.size / 3, 'text-anchor': anchor, 'font-size': this.size * 1.5 + 'px' }
+    },
+    labelColor () {
+      return this.selected ? 'red' : this.color
     }
   }
 }
@@ -85,7 +94,6 @@ export default {
 <style scoped>
 
 .selected text {
-  fill: red;
   font-weight: bold;
   transform: scale(1.5);
 }
@@ -105,7 +113,6 @@ text:hover {
 }
 
 text {
-  fill: black;
   font-family: 'Helvetica Neue, Helvetica, sans-serif'
 }
 
