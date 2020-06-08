@@ -16,6 +16,7 @@
         <g transform="translate(10, 10)">
           <Node
             v-for="node in d3Nodes"
+            :show="displayNodes"
             :key="node.id"
             :x="node.x"
             :y="node.y"
@@ -27,7 +28,7 @@
             @click.native="clickNode($event, node)"
           />
         </g>
-        <g v-show="displayLabel" transform="translate(10, 10)">
+        <g v-show="displayLabels" transform="translate(10, 10)">
           <Label
             v-for="node in d3Nodes"
             :key="node.id"
@@ -42,7 +43,7 @@
             @click.native="clickNode($event, node)"
           />
         </g>
-        <g v-show="displayLabel && alignLabels" transform="translate(10, 10)">
+        <g v-show="displayLabels && alignLabels" transform="translate(10, 10)">
           <Link
             v-for="node in d3Leaves"
             :key="node.id"
@@ -134,7 +135,7 @@ export default {
       type: Boolean,
       default: false
     },
-    displayLabel: {
+    displayLabels: {
       type: Boolean,
       default: true
     },
@@ -151,6 +152,10 @@ export default {
       default: () => {}
     },
     showPies: {
+      type: Boolean,
+      default: true
+    },
+    displayNodes: {
       type: Boolean,
       default: true
     }

@@ -10,8 +10,12 @@
           <input type="checkbox" v-model="branchLengths" />
           <br />
           <br />
-           <br />Display Label
-          <input type="checkbox" v-model="displayLabel" />
+           <br />Display Labels
+          <input type="checkbox" v-model="displayLabels" />
+          <br />
+          <br />
+           <br />Display nodes
+          <input type="checkbox" v-model="displayNodes" />
           <br />
           <br />
          Label width:
@@ -49,7 +53,8 @@
           :right-angle="rightAngle"
           :branch-lengths="branchLengths"
           :margin="margin"
-          :displayLabel="displayLabel"
+          :displayLabels="displayLabels"
+          :displayNodes="displayNodes"
           :labelWidth="Number(labelWidth)"
           :circular="circular"
           :align-labels="alignLabels"
@@ -62,7 +67,8 @@
           :right-angle="rightAngle"
           :branch-lengths="branchLengths"
           :margin="margin"
-          :displayLabel="displayLabel"
+          :displayLabels="displayLabels"
+          :displayNodes="displayNodes"
           :labelWidth="Number(labelWidth)"
           :circular="circular"
           :align-labels="alignLabels"
@@ -84,7 +90,8 @@ export default {
   },
   data () {
     return {
-      displayLabel: true,
+      displayLabels: true,
+      displayNodes: true,
       alignLabels: false,
       labelWidth: 200,
       circular: false,
@@ -117,7 +124,7 @@ export default {
             data: [{ label: 'A', value: 90, color: 'blue' },
               { label: 'B', value: 10, color: 'green' }
             ],
-            size: 3
+            size: 1
           }
         }
       }

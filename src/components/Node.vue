@@ -1,6 +1,6 @@
 <template>
 <g :class="classAttribute" :transform="transformAttribute" style="transition:transform 0.5s ease-out">
-    <circle :r="type === 'inner' ? size/3 : size/2"
+    <circle :class="{transparent: !show && type !== 'root'}" :r="type === 'inner' ? size/3 : size/2"
      :stroke-width="strokeWidth"
      >
      </circle>
@@ -34,6 +34,10 @@ export default {
     selected: {
       type: Boolean,
       default: false
+    },
+    show: {
+      type: Boolean,
+      default: true
     }
   },
 
@@ -45,7 +49,8 @@ export default {
       return this.type !== 'inner'
     },
     classAttribute () {
-      return 'node ' + this.type + ' ' + (this.selected ? ' selected' : '')
+      return 'node ' + this.type +
+      (this.selected ? ' selected' : '')
     },
     transformAttribute () {
       if (this.circular === false) {
@@ -64,6 +69,10 @@ circle {
   opacity: 100%;
   stroke:darkblue;
   fill:steelblue
+}
+
+.transparent {
+  opacity:0%;
 }
 
 .root circle {
