@@ -52,6 +52,7 @@
         <Phylogram
           v-if="! displayFromTreeObject"
           :width="1000"
+          :height="600"
           ref="phylogram"
           :newick="newick"
           :right-angle="rightAngle"
@@ -63,10 +64,12 @@
           :circular="circular"
           :align-labels="alignLabels"
           :show-pies="showPies"
+          :label-styles="metadata.labelStyles"
         ></Phylogram>
         <Phylogram
           v-else
           :width="1000"
+          :height="600"
           ref="phylogram"
           :inputTree="tree"
           :right-angle="rightAngle"
@@ -138,7 +141,44 @@ export default {
           },
           labelStyles: {
             node5: {
-              color: 'orange'
+              color: 'orange',
+              background: 'darkgreen',
+              borderWidth: 2
+            },
+            node3: {
+              background: 'yellow'
+            },
+            node6: {
+              borderWidth: 1
+            },
+            node4: {
+              borderWidth: 4,
+              borderColor: 'red'
+            }
+          }
+        },
+        smallNewick: {
+          labelStyles: {
+            Crotalus_oreganus_oreganus_cytochrome_b: {
+              color: 'white',
+              background: 'grey',
+              borderWidth: 2
+            },
+            Crotalus_horridus_cytochrome_b: {
+              color: 'orange',
+              background: 'darkgreen'
+            },
+            Lampropeltis_getula_cytochrome_b: {
+              color: 'white',
+              background: 'black'
+            }
+          }
+        },
+        bigNewick: {
+          labelStyles: {
+            Nanoarchaeum_equitans: {
+              color: 'white',
+              background: 'brown'
             }
           }
         }
@@ -200,6 +240,15 @@ export default {
       return this.treeType === 'smallNewick'
         ? this.smallNewick
         : this.bigNewick
+    },
+    metadata () {
+      if (this.treeType === 'jsonExample') {
+        return this.metadatas.inputTree
+      } else if (this.treeType === 'smallNewick') {
+        return this.metadatas.smallNewick
+      } else {
+        return this.metadatas.bigNewick
+      }
     }
   },
   methods: {

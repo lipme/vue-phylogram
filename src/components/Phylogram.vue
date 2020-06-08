@@ -43,6 +43,9 @@
             :size="nodeWidth"
             @click.native="clickNode($event, node)"
             :color="getLabelColor(node)"
+            :background="getBackgroundColor(node)"
+            :borderWidth="getBorderWidth(node)"
+            :borderColor="getBorderColor(node)"
           />
         </g>
         <g v-show="displayLabels && alignLabels" transform="translate(10, 10)">
@@ -218,6 +221,7 @@ export default {
 
       rootNode.each(n => {
         n.selected = false
+        n.data.id = n.data.id ? n.data.id : n.data.name
       })
 
       return rootNode
@@ -451,6 +455,36 @@ export default {
         if (node.data.id in this.labelStyles) {
           if ('color' in this.labelStyles[node.data.id]) {
             return this.labelStyles[node.data.id].color
+          }
+        }
+      }
+      return 'black'
+    },
+    getBackgroundColor (node) {
+      if (this.hasLabelStyles) {
+        if (node.data.id in this.labelStyles) {
+          if ('background' in this.labelStyles[node.data.id]) {
+            return this.labelStyles[node.data.id].background
+          }
+        }
+      }
+      return ''
+    },
+    getBorderWidth (node) {
+      if (this.hasLabelStyles) {
+        if (node.data.id in this.labelStyles) {
+          if ('borderWidth' in this.labelStyles[node.data.id]) {
+            return this.labelStyles[node.data.id].borderWidth
+          }
+        }
+      }
+      return 0
+    },
+    getBorderColor (node) {
+      if (this.hasLabelStyles) {
+        if (node.data.id in this.labelStyles) {
+          if ('borderColor' in this.labelStyles[node.data.id]) {
+            return this.labelStyles[node.data.id].borderColor
           }
         }
       }

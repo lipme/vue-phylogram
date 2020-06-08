@@ -1,13 +1,47 @@
 <template>
-<g :class="classAttribute" :transform="transformAttribute" style="transition:transform 0.5s ease-out">
-    <text :dx="optionsLabel.x"
-    :dy="optionsLabel.y" :text-anchor="optionsLabel['text-anchor']"
-    :font-size="optionsLabel['font-size']"
-    :transform="optionsLabel.transform"
-    :fill="labelColor" >
-    {{this.label}}
-    <animate attributeType="XML" attributeName="font-size" from="0" :to="optionsLabel['font-size']" dur="0.8s" />
-    </text></g>
+  <g
+    :class="classAttribute"
+    :transform="transformAttribute"
+    style="transition:transform 0.5s ease-out"
+  >
+    <rect
+      v-if="isSurrounded"
+      :fill="background"
+      :fill-opacity="rectFillOpacity"
+      :x="rectX"
+      :y="rectY"
+      :height="fontSize+rectMargin"
+      :stroke-width="rectBorderWidth"
+      :stroke="borderColor"
+      :width="rectWidth"
+    >
+    <animate
+        attributeType="XML"
+        attributeName="width"
+        from="0"
+        :to="rectWidth"
+        dur="0.8s"
+      />
+    </rect>
+    <text
+      ref="text"
+      :dx="optionsLabel.x"
+      :dy="optionsLabel.y"
+      :text-anchor="optionsLabel['text-anchor']"
+      :font-size="optionsLabel['font-size']"
+      :transform="optionsLabel.transform"
+      :fill="labelColor"
+    >
+      {{this.label}}
+      <animate
+        attributeType="XML"
+        attributeName="font-size"
+        from="0"
+        :to="optionsLabel['font-size']"
+        dur="0.8s"
+      />
+    </text>
+  </g>
 </template>
 
 <script>
@@ -30,10 +64,6 @@ export default {
       type: String,
       default: null
     },
-    type: {
-      type: String,
-      default: ''
-    },
     circular: {
       type: Boolean,
       default: false
@@ -49,11 +79,36 @@ export default {
     color: {
       type: String,
       default: 'black'
+    },
+    background: {
+      type: String,
+      default: ''
+    },
+    borderWidth: {
+      type: Number,
+      default: 0
+    },
+    borderColor: {
+      type: String,
+      default: 'black'
     }
-
+  },
+  data () {
+    return {
+      rectWidth: 0
+    }
+  },
+  mounted () {
+    this.updateRect()
+  },
+  updated () {
+    this.updateRect()
   },
 
   computed: {
+    fontSize () {
+      return this.size * 1.5
+    },
     textClass () {
       if (this.circular && this.x > 180) {
         return 'reverse'
@@ -61,7 +116,7 @@ export default {
       return 'normal'
     },
     classAttribute () {
-      return this.textClass + (this.selected ? ' selected' : '')
+      return 'nodeLabel ' + this.textClass + (this.selected ? ' selected' : '')
     },
     transformAttribute () {
       if (this.circular === false) {
@@ -80,30 +135,67 @@ export default {
         x = -1.5 * this.size
       }
 
-      return this.type === 'inner'
-        ? { x: x, y: -this.size / 3, 'text-anchor': anchor, 'font-size': this.size * 1.5 + 'px' }
-        : { x: x, y: this.size / 3, 'text-anchor': anchor, 'font-size': this.size * 1.5 + 'px' }
+      return {
+        x: x,
+        y: 0 + this.size / 2,
+        'text-anchor': anchor,
+        'font-size': this.fontSize + 'px'
+      }
     },
     labelColor () {
       return this.selected ? 'red' : this.color
+    },
+    isSurrounded () {
+      return this.background !== '' || this.rectBorderWidth > 0
+    },
+    rectMargin () {
+      return this.fontSize / 5
+    },
+    rectBorderWidth () {
+      return this.fontSize / 10 * this.borderWidth
+    },
+    rectY () {
+      return this.optionsLabel.y - this.fontSize + this.rectMargin / 2
+    },
+    rectX () {
+      // const margin = (this.circular && this.x > 180) ? this.optionsLabel.x - this.rectMargin * 3 : this.rectMargin * 2
+      // return this.optionsLabel.x - margin
+      return (this.circular && this.x > 180) ? this.rectMargin * 3 : this.optionsLabel.x - this.rectMargin * 2
+    },
+    rectFillOpacity () {
+      return this.background ? '100%' : '0%'
+    }
+
+  },
+  methods: {
+    updateRect () {
+      this.rectWidth = this.$refs.text.getComputedTextLength() + this.size * 1.2
     }
   }
 }
 </script>
 
 <style scoped>
-
 .selected text {
   font-weight: bold;
   transform: scale(1.5);
 }
 
-text:hover {
+.selected rect {
+  transform: scale(1.5);
+}
+
+.nodeLabel:hover text {
   transition: all 0.5s;
   transform: scale(1.5);
 }
 
-.reverse text:hover {
+.nodeLabel:hover rect {
+  transition: all 0.5s;
+  transform: scale(1.5);
+}
+
+.reverse:hover text {
   transition: all 0.5s;
   transform: scale(1.5) rotate(180deg);
 }
@@ -113,7 +205,6 @@ text:hover {
 }
 
 text {
-  font-family: 'Helvetica Neue, Helvetica, sans-serif'
+  font-family: "Helvetica Neue, Helvetica, sans-serif";
 }
-
 </style>
