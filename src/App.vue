@@ -84,6 +84,7 @@
           :show-pies="showPies"
           :label-styles="metadatas.inputTree.labelStyles"
           :branch-styles="metadatas.inputTree.branchStyles"
+          :node-styles="metadatas.inputTree.nodeStyles"
         ></Phylogram>
       </div>
     </div>
@@ -170,6 +171,11 @@ export default {
             node4: {
               borderWidth: 4,
               borderColor: 'red'
+            }
+          },
+          nodeStyles: {
+            node6: {
+              color: 'orange'
             }
           }
         },

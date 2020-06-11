@@ -27,6 +27,7 @@
             :id="node.data.id"
             :selected="selectedNodes.includes(node)"
             :size="nodeWidth"
+            :fill="getNodeColor(node)"
             @click.native="clickNode($event, node)"
           />
         </g>
@@ -172,6 +173,10 @@ export default {
       default: () => {}
     },
     branchStyles: {
+      type: Object,
+      default: () => {}
+    },
+    nodeStyles: {
       type: Object,
       default: () => {}
     }
@@ -382,6 +387,9 @@ export default {
     },
     hasBranchStyles () {
       return !(!this.branchStyles || this.branchStyles.length === 0)
+    },
+    hasNodeStyles () {
+      return !(!this.nodeStyles || this.nodeStyles.length === 0)
     }
   },
   methods: {
@@ -517,6 +525,18 @@ export default {
         }
       }
       return 'black'
+    },
+    getNodeColor (node) {
+      if (this.hasNodeStyles) {
+        if (node.data.id in this.nodeStyles) {
+          if ('color' in this.nodeStyles[node.data.id]) {
+            return this.nodeStyles[node.data.id].color
+          }
+        }
+      }
+      if (node.type === 'root') { return 'greenyellow' }
+      if (node.type === 'inner') { return 'lightsalmon' }
+      return 'steelblue'
     }
 
   }

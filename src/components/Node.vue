@@ -1,7 +1,7 @@
 <template>
 <g :class="classAttribute" :transform="transformAttribute">
     <circle :class="{transparent: !show && type !== 'root'}" :r="type === 'inner' ? size/3 : size/2"
-     :stroke-width="strokeWidth"
+     :stroke-width="strokeWidth" :stroke="strokeColor" :fill="fill"
      >
       <animateTransform attributeName="transform"
              type="scale"
@@ -45,6 +45,14 @@ export default {
     show: {
       type: Boolean,
       default: true
+    },
+    strokeColor: {
+      type: String,
+      default: 'darkblue'
+    },
+    fill: {
+      type: String,
+      default: 'steelblue'
     }
   },
 
@@ -75,7 +83,6 @@ export default {
 circle {
   opacity: 100%;
   stroke:darkblue;
-  fill:steelblue;
 }
 
 .transparent {
@@ -84,13 +91,10 @@ circle {
 
 .root circle {
   stroke: yellowgreen;
-  fill: greenyellow;
 }
 
 .inner circle {
   opacity: 0%;
-  fill:lightsalmon;
-  stroke: coral;
 }
 
 .selected circle {
