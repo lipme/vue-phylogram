@@ -175,12 +175,15 @@ export default {
 </script>
 
 <style scoped>
+
 .selected text {
   font-weight: bold;
   transform: scale(1.5);
+  transition: all 0.5s;
 }
 
 .selected rect {
+  transition: all 0.5s;
   transform: scale(1.5);
 }
 
