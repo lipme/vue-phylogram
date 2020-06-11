@@ -83,6 +83,7 @@
           :pies="metadatas.inputTree.pies"
           :show-pies="showPies"
           :label-styles="metadatas.inputTree.labelStyles"
+          :branch-styles="metadatas.inputTree.branchStyles"
         ></Phylogram>
       </div>
     </div>
@@ -138,6 +139,21 @@ export default {
               ],
               size: 1
             }
+          },
+          branchStyles: {
+            node0: {
+              color: 'green',
+              type: 'from'
+            },
+            node2: {
+              color: 'orange',
+              type: 'to'
+            },
+            node4: {
+              color: 'brown',
+              type: 'both'
+            }
+
           },
           labelStyles: {
             node5: {

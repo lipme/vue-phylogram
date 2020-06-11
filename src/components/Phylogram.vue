@@ -12,6 +12,7 @@
             :right-angle="rightAngle"
             :circular="circular"
             :stroke-width="link.selected ? linkWidth * 1.5 : linkWidth"
+            :stroke="getBranchColor(link)"
           />
         </g>
         <g transform="translate(10, 10)">
@@ -167,6 +168,10 @@ export default {
       default: true
     },
     labelStyles: {
+      type: Object,
+      default: () => {}
+    },
+    branchStyles: {
       type: Object,
       default: () => {}
     }
@@ -325,8 +330,8 @@ export default {
             }
 
             return {
-              source: { x: n.parent.x, y: n.parent.y, selected: n.parent.selected },
-              target: { x: n.x, y: n.y, selected: n.parent.selected },
+              source: { x: n.parent.x, y: n.parent.y, selected: n.parent.selected, data: n.parent.data },
+              target: { x: n.x, y: n.y, selected: n.selected, data: n.data },
               id: n.id,
               selected: selected
             }
@@ -374,6 +379,9 @@ export default {
     },
     hasLabelStyles () {
       return !(!this.labelStyles || this.labelStyles.length === 0)
+    },
+    hasBranchStyles () {
+      return !(!this.branchStyles || this.branchStyles.length === 0)
     }
   },
   methods: {
@@ -489,7 +497,28 @@ export default {
         }
       }
       return 'black'
+    },
+    getBranchColor (link) {
+      if (this.hasBranchStyles) {
+        if (link.target.data.id in this.branchStyles) {
+          const spec = this.branchStyles[link.target.data.id]
+          if ('color' in spec &&
+          (('type' in spec && (spec.type === 'to' || spec.type === 'both')) ||
+          (!('type' in spec)))) {
+            return spec.color
+          }
+        } else if (link.source.data.id in this.branchStyles) {
+          const spec = this.branchStyles[link.source.data.id]
+          if ('color' in spec &&
+          (('type' in spec && (spec.type === 'from' || spec.type === 'both')) ||
+          (!('type' in spec)))) {
+            return spec.color
+          }
+        }
+      }
+      return 'black'
     }
+
   }
 }
 </script>
