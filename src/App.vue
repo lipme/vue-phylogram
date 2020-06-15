@@ -176,6 +176,12 @@ export default {
           nodeStyles: {
             node6: {
               color: 'orange'
+            },
+            node5: {
+              size: 3
+            },
+            node1: {
+              size: 0.5
             }
           }
         },

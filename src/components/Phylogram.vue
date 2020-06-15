@@ -26,7 +26,7 @@
             :circular="circular"
             :id="node.data.id"
             :selected="selectedNodes.includes(node)"
-            :size="nodeWidth"
+            :size="getNodeSize(node)"
             :fill="getNodeColor(node)"
             @click.native="clickNode($event, node)"
           />
@@ -42,7 +42,7 @@
             :circular="circular"
             :id="node.data.id"
             :selected="selectedNodes.includes(node)"
-            :size="nodeWidth"
+            :size="getNodeSize(node)"
             @click.native="clickNode($event, node)"
             :color="getLabelColor(node)"
             :background="getBackgroundColor(node)"
@@ -537,6 +537,19 @@ export default {
       if (node.type === 'root') { return 'greenyellow' }
       if (node.type === 'inner') { return 'lightsalmon' }
       return 'steelblue'
+    },
+    getNodeSize (node) {
+      const baseWidth = this.nodeWidth
+
+      if (this.hasNodeStyles) {
+        if (node.data.id in this.nodeStyles) {
+          if ('size' in this.nodeStyles[node.data.id]) {
+            return this.nodeStyles[node.data.id].size * baseWidth
+          }
+        }
+      }
+
+      return this.nodeWidth
     }
 
   }
