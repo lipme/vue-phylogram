@@ -62,6 +62,9 @@
     var ancestors = []
     var tree = {}
     var tokens = s.split(/\s*(;|\(|\)|,|:)\s*/)
+
+    let nodeIndex = 0
+
     for (var i = 0; i < tokens.length; i++) {
       var token = tokens[i]
       let subtree = {}
@@ -86,7 +89,11 @@
           var x = tokens[i - 1]
           if (x === ')' || x === '(' || x === ',') {
             tree.name = token
+            tree.id = token
           } else if (x === ':') {
+            tree.id = 'node' + nodeIndex
+            tree.id = 'node' + nodeIndex
+            nodeIndex++
             tree.length = parseFloat(token)
           }
       }

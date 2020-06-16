@@ -1,5 +1,7 @@
 <template>
-  <div id="phylogram">
+  <div id="phylogram"
+  @click="hideMenu  "
+   >
     <svg id="svgphylo" v-if="!error" :width="width" :height="height">
       <g :transform="translationString" id="groupphylo">
         <g transform="translate(10, 10)">
@@ -28,7 +30,7 @@
             :selected="selectedNodes.includes(node)"
             :size="getNodeSize(node)"
             :fill="getNodeColor(node)"
-            @click.native="clickNode($event, node)"
+            @click.native.stop="clickNode($event, node)"
           />
         </g>
         <g v-show="displayLabels" transform="translate(10, 10)">
@@ -43,7 +45,7 @@
             :id="node.data.id"
             :selected="selectedNodes.includes(node)"
             :size="getNodeSize(node)"
-            @click.native="clickNode($event, node)"
+            @click.native.stop="clickNode($event, node)"
             :color="getLabelColor(node)"
             :background="getBackgroundColor(node)"
             :borderWidth="getBorderWidth(node)"
@@ -65,6 +67,7 @@
         </g>
         <g v-if="hasPieMetadata && showPies" transform="translate(10, 10)">
           <PieNode
+            @click.native.stop="clickNode($event, node)"
             v-for="node in d3PieNodes"
             :key="node.id"
             :x="node.x"
@@ -79,6 +82,21 @@
         </g>
       </g>
     </svg>
+    <div @click="hideMenu" v-show="showMenu" class="menu" ref="menu"
+     :style="{position:'absolute', left:currentNodePosition.x+'px', top:currentNodePosition.y+'px'}">
+        <ul>
+            <li>
+                <a @click.prevent="toggleSelect(currentNode)">
+                    Select/Deselect
+                </a>
+            </li>
+            <li>
+                <a @click.prevent="toggleCollapse(currentNode)">
+                    Collapse/Expand
+                </a>
+            </li>
+        </ul>
+        </div>
   </div>
 </template>
 
@@ -180,12 +198,18 @@ export default {
       type: Object,
       default: () => {}
     }
+
   },
   data () {
     return {
       svg: null,
       zoom: null,
-      selectedNodes: []
+      selectedNodes: [],
+      currentNode: null,
+      currentNodePosition: { x: 0, y: 0 },
+      showMenu: false,
+      d3RootNodeProxy: null,
+      newickTreeProxy: null
     }
   },
   created () {
@@ -201,40 +225,67 @@ export default {
   mounted () {
     this.zoom = svgPanZoom('#svgphylo')
   },
+  watch: {
+    newick () {
+      this.newickTreeProxy = null
+    },
+    inputTree () {
+      this.newickTreeProxy = null
+    }
+  },
   computed: {
     /**
      * Tree computed from the newick string
+     * or set with inputTree
      */
-    newickTree () {
-      if (this.newick) {
-        return Newick.parse(this.newick)
-      } else {
-        return this.inputTree
+    newickTree: {
+      get: function () {
+        if (this.newickTreeProxy !== null) {
+          return this.newickTreeProxy
+        } else {
+          if (this.newick) {
+            return Newick.parse(this.newick)
+          } else {
+            return this.inputTree
+          }
+        }
+      },
+      set: function (tree) {
+        this.newickTreeProxy = tree
       }
     },
     /**
      * d3 root node
      */
-    d3RootNode () {
-      const rootNode = d3
-        .hierarchy(this.newickTree, function (node) {
-          return node.branchset
-        })
-        .sum(function (d) {
-          return d.branchset ? 1 : 0
-        })
-        .sort(function (a, b) {
-          return (
-            a.value - b.value || d3.descending(a.data.length, b.data.length)
-          )
-        })
+    d3RootNode: {
+      get: function () {
+        if (this.d3RootNodeProxy !== null) {
+          return this.d3RootNodeProxy
+        } else {
+          const rootNode = d3
+            .hierarchy(this.newickTree, function (node) {
+              return node.branchset
+            })
+            .sum(function (d) {
+              return d.branchset ? 1 : 0
+            })
+            .sort(function (a, b) {
+              return (
+                a.value - b.value || d3.descending(a.data.length, b.data.length)
+              )
+            })
 
-      rootNode.each(n => {
-        n.selected = false
-        n.data.id = n.data.id ? n.data.id : n.data.name
-      })
+          rootNode.each(n => {
+            n.selected = false
+            n.data.id = n.data.id ? n.data.id : n.data.name
+          })
 
-      return rootNode
+          return rootNode
+        }
+      },
+      set: function (rootNode) {
+        this.d3RootNodeProxy = rootNode
+      }
     },
     /**
      * Cluster function
@@ -419,6 +470,13 @@ export default {
       this.zoom.reset()
     },
     clickNode (e, node) {
+      this.currentNode = node
+      this.currentNodePosition = { x: e.pageX + 10, y: e.pageY + 10 }
+      this.displayMenu()
+    },
+    toggleSelect (node) {
+      this.hideMenu()
+
       if (this.isSelected(node) === false) {
         this.selectNode(node)
       } else {
@@ -550,11 +608,90 @@ export default {
       }
 
       return this.nodeWidth
+    },
+    toggleCollapse (node) {
+      this.showMenu = false
+
+      if (node.children) {
+        this.collapse(node)
+      } else if (node.data._branchset) {
+        this.expand(node)
+      }
+    },
+    collapse (node) {
+      this.newickTree = this._collapseNode(node.data.id, this.newickTree, false)
+    },
+    _collapseNode (id, node, collapseChildren) {
+      if (node.id === id) {
+        collapseChildren = true
+      }
+      if (node.branchset) {
+        node.branchset.forEach(n => this._collapseNode(id, n, collapseChildren))
+      }
+      if (node.branchset && collapseChildren) {
+        node._branchset = node.branchset
+        node.branchset = null
+      }
+      return node
+    },
+    expand (node) {
+      this.newickTree = this._expandNode(node.data.id, this.newickTree, false)
+    },
+    _expandNode (id, node, expandChildren) {
+      if (node.id === id) {
+        expandChildren = true
+      }
+      if (node.branchset) {
+        node.branchset.forEach(n => this._expandNode(id, n, expandChildren))
+      }
+      if (node._branchset && expandChildren) {
+        node.branchset = node._branchset
+        node._branchset = null
+      }
+      return node
+    },
+    toggleMenu () {
+      this.showMenu = !this.showMenu
+    },
+    hideMenu () {
+      this.showMenu = false
+    },
+    displayMenu () {
+      this.showMenu = true
     }
 
   }
 }
 </script>
 
-<style>
+<style scoped>
+
+.menu{
+  border:3px solid #afb1b2;
+  border-radius:0px 10px 10px 10px;
+  -moz-border-radius:0px 10px 10px 10px;
+  -webkit-border-radius:0px 10px 10px 10px;
+ -webkit-box-shadow:17px 10px 17px 0px #5a5353 ;
+  -moz-box-shadow:17px 10px 17px 0px #5a5353 ;
+  box-shadow:17px 10px 17px 0px #5a5353 ;
+  padding:0px;
+  background-color: white;
+}
+
+  /* CSS by GenerateCSS.com */
+.menu ul{
+  list-style-type: none;
+  list-style-position: outside;
+  }
+.menu li {
+  padding: 0px;
+  margin: 0px 5px 0px -25px;
+  font-size:12px;
+}
+
+.menu li:hover
+{
+  font-weight: bold  ;
+}
+
 </style>
