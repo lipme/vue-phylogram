@@ -31,6 +31,7 @@
             :size="getNodeSize(node)"
             :fill="getNodeColor(node)"
             @click.native.stop="clickNode($event, node)"
+            :collapsed="isCollapsed(node)"
           />
         </g>
         <g v-show="displayLabels" transform="translate(10, 10)">
@@ -38,7 +39,7 @@
             v-for="node in d3Nodes"
             :key="node.id"
             :x="node.x"
-            :y="alignLabels && node.type==='leaf' ? maxY : node.y"
+            :y="alignLabels && node.type==='leaf' ? maxY : node.y+getNodeSize(node)*2"
             :type="node.type"
             :label="node.data.name"
             :circular="circular"
@@ -644,6 +645,9 @@ export default {
       if (node.branchset) {
         node.branchset.forEach(n => this._expandNode(id, n, expandChildren))
       }
+      if (node._branchset) {
+        node._branchset.forEach(n => this._expandNode(id, n, expandChildren))
+      }
       if (node._branchset && expandChildren) {
         node.branchset = node._branchset
         node._branchset = null
@@ -658,6 +662,9 @@ export default {
     },
     displayMenu () {
       this.showMenu = true
+    },
+    isCollapsed (node) {
+      return !!node.data._branchset
     }
 
   }

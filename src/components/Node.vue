@@ -1,6 +1,6 @@
 <template>
 <g :class="classAttribute" :transform="transformAttribute">
-    <circle :class="{transparent: !show && type !== 'root'}" :r="type === 'inner' ? size/3 : size/2"
+    <circle v-if="!collapsed" :class="{transparent: !show && type !== 'root'}" :r="type === 'inner' ? size/3 : size/2"
      :stroke-width="strokeWidth" :stroke="strokeColor" :fill="fill"
      >
       <animateTransform attributeName="transform"
@@ -11,6 +11,7 @@
              dur="1s"
         />
      </circle>
+       <polygon v-else :points="triangleCoords" :fill="fill" :stroke-width="strokeWidth" :stroke="strokeColor"/>
     </g>
 </template>
 
@@ -53,6 +54,10 @@ export default {
     fill: {
       type: String,
       default: 'steelblue'
+    },
+    collapsed: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -73,6 +78,21 @@ export default {
       } else {
         return 'rotate(' + (this.x - 90) + ')translate(' + this.y + ')'
       }
+    },
+    triangleCoords () {
+      const coords = [
+        { x: 0, y: 0 },
+        {
+          x: this.size * 2,
+          y: -this.size * 2
+        },
+        {
+          x: this.size * 2,
+          y: this.size * 2
+        }
+      ]
+
+      return `${coords[0].x} ${coords[0].y},${coords[1].x} ${coords[1].y}, ${coords[2].x} ${coords[2].y}`
     }
   }
 }
@@ -80,7 +100,7 @@ export default {
 
 <style scoped>
 
-circle {
+circle polygon {
   opacity: 100%;
   stroke:darkblue;
 }
@@ -89,7 +109,7 @@ circle {
   opacity:0%;
 }
 
-.root circle {
+.root circle polygon {
   stroke: yellowgreen;
 }
 
@@ -97,16 +117,22 @@ circle {
   opacity: 0%;
 }
 
-.selected circle {
+.selected circle polygon {
   transition: all 0.5s;
   fill: red;
   stroke: brown;
-  transform: scale(1.5);
+  transform: scale(3);
 }
 
 circle:hover {
   transition: all 0.5s;
-  transform: scale(1.5);
+  transform: scale(3);
+  opacity: 100%;
+}
+
+polygon:hover {
+  transition: all 0.5s;
+  transform: scale(3);
   opacity: 100%;
 }
 
