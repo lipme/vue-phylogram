@@ -662,14 +662,23 @@ export default {
       this.newickTree = this._expandNode(node.data.id, this.newickTree, false)
     },
     _expandNode (id, node, expandChildren) {
+      console.log('expand ', node)
       if (node.id === id) {
         expandChildren = true
       }
+      const selected = this.selectedNodes.includes(node.id)
+
       if (node.branchset) {
-        node.branchset.forEach(n => this._expandNode(id, n, expandChildren))
+        node.branchset.forEach((n) => {
+          if (selected) this.selectedNodes.push(n.id)
+          this._expandNode(id, n, expandChildren)
+        })
       }
       if (node._branchset) {
-        node._branchset.forEach(n => this._expandNode(id, n, expandChildren))
+        node._branchset.forEach((n) => {
+          if (selected) this.selectedNodes.push(n.id)
+          this._expandNode(id, n, expandChildren)
+        })
       }
       if (node._branchset && expandChildren) {
         node.branchset = node._branchset
