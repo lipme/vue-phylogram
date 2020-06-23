@@ -91,13 +91,13 @@
             tree.name = token
             tree.id = token
           } else if (x === ':') {
-            tree.id = 'node' + nodeIndex
-            tree.id = 'node' + nodeIndex
+            if (!tree.id) { tree.id = 'node' + nodeIndex }
             nodeIndex++
             tree.length = parseFloat(token)
           }
       }
     }
+    if (!tree.id) { tree.id = 'root' }
     return tree
   }
 })(
