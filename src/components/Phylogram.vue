@@ -27,7 +27,7 @@
             :type="node.type"
             :circular="circular"
             :id="node.data.id"
-            :selected="selectedNodes.includes(node)"
+            :selected="selectedNodes.includes(node.data.id)"
             :size="getNodeSize(node)"
             :fill="getNodeColor(node)"
             @click.native.stop="clickNode($event, node)"
@@ -44,7 +44,7 @@
             :label="node.data.name"
             :circular="circular"
             :id="node.data.id"
-            :selected="selectedNodes.includes(node)"
+            :selected="selectedNodes.includes(node.data.id)"
             :size="getNodeSize(node)"
             @click.native.stop="clickNode($event, node)"
             :color="getLabelColor(node)"
@@ -198,6 +198,10 @@ export default {
     nodeStyles: {
       type: Object,
       default: () => {}
+    },
+    selected: {
+      type: String,
+      default: ''
     }
 
   },
@@ -225,6 +229,7 @@ export default {
   },
   mounted () {
     this.zoom = svgPanZoom('#svgphylo')
+    this.selectFromProp()
   },
   watch: {
     newick () {
@@ -232,6 +237,9 @@ export default {
     },
     inputTree () {
       this.newickTreeProxy = null
+    },
+    selected () {
+      this.selectFromProp()
     }
   },
   computed: {
@@ -382,7 +390,8 @@ export default {
         .map(n => {
           if (n.parent) {
             let selected = false
-            if (this.selectedNodes.includes(n) && this.selectedNodes.includes(n.parent)) {
+            if (this.selectedNodes.includes(n.data.id) &&
+            this.selectedNodes.includes(n.parent.data.id)) {
               selected = true
             }
 
@@ -443,6 +452,20 @@ export default {
     hasNodeStyles () {
       return !(!this.nodeStyles || this.nodeStyles.length === 0)
     }
+    // selectedNodes: {
+    //   get: function () {
+    //     if (this.selectedNodesProxy !== null) {
+    //       return this.selectedNodesProxy
+    //     } else {
+    //       console.log('select :' + this.select.split(','))
+    //       return this.select.split(',')
+    //     }
+    //   },
+    //   set: function (selected) {
+    //     console.log('set selected nodes')
+    //     this.selectedNodesProxy = selected
+    //   }
+    // }
   },
   methods: {
     /**
@@ -492,8 +515,8 @@ export default {
         // n.selected = true
         // this.$set(this.d3Nodes, ind, n)
         // this.$set(this.d3Nodes[ind], 'selected', true)
-        if (this.selectedNodes.indexOf(n) === -1) {
-          this.selectedNodes.push(n)
+        if (this.selectedNodes.indexOf(n.data.id) === -1) {
+          this.selectedNodes.push(n.data.id)
         }
       })
 
@@ -508,14 +531,14 @@ export default {
         // let ind = this.d3Nodes.indexOf(n)
         // this.$set(this.d3Nodes, ind, n)
         // this.$set(this.d3Nodes[ind], 'selected', false)
-        const ind = this.selectedNodes.indexOf(n)
+        const ind = this.selectedNodes.indexOf(n.data.id)
         this.selectedNodes.splice(ind, 1)
       })
 
       this.$emit('select-nodes', this.selectedNodes)
     },
     getD3Node (id) {
-      const elts = this.d3Nodes.filter(n => n.id === id)
+      const elts = this.d3Nodes.filter(n => n.data.id === id)
       if (elts.length === 0) {
         return null
       } else {
@@ -523,7 +546,7 @@ export default {
       }
     },
     isSelected (node) {
-      return this.selectedNodes.includes(node)
+      return this.selectedNodes.includes(node.data.id)
     },
     getLabelColor (node) {
       if (this.hasLabelStyles) {
@@ -665,6 +688,15 @@ export default {
     },
     isCollapsed (node) {
       return !!node.data._branchset
+    },
+    selectFromProp () {
+      const nodeIds = this.selected.split(',')
+      nodeIds.forEach(id => {
+        const node = this.getD3Node(id)
+        if (node !== null) {
+          this.selectNode(node)
+        }
+      })
     }
 
   }

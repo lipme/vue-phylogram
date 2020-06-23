@@ -85,6 +85,7 @@
           :label-styles="metadatas.inputTree.labelStyles"
           :branch-styles="metadatas.inputTree.branchStyles"
           :node-styles="metadatas.inputTree.nodeStyles"
+          selected="node1,node6"
         ></Phylogram>
       </div>
     </div>
@@ -256,7 +257,13 @@ export default {
         ]
       },
       showPies: true,
-      treeType: 'jsonExample'
+      treeType: 'jsonExample',
+      newickProxy: null
+    }
+  },
+  watch: {
+    treeType () {
+      this.newickProxy = null
     }
   },
 
@@ -264,10 +271,19 @@ export default {
     displayFromTreeObject () {
       return this.treeType === 'jsonExample'
     },
-    newick () {
-      return this.treeType === 'smallNewick'
-        ? this.smallNewick
-        : this.bigNewick
+    newick: {
+      get: function () {
+        if (this.newickProxy !== null) {
+          return this.newickProxy
+        } else {
+          return this.treeType === 'smallNewick'
+            ? this.smallNewick
+            : this.bigNewick
+        }
+      },
+      set: function (n) {
+        this.newickProxy = n
+      }
     },
     metadata () {
       if (this.treeType === 'jsonExample') {
