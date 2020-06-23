@@ -30,6 +30,14 @@
           <input type="checkbox" v-model="showPies" />
           <br />
           <br />
+          Selected node ids : <br />
+          <input type="text" name="selection" v-model="selected">
+          <br />
+          <br />
+          Collapsed node ids : <br />
+          <input type="text" name="collapse" v-model="collapsed">
+          <br />
+          <br />
           <button @click.prevent="resetZoom">Reset Zoom</button>
           <br />
           <br />Type of tree:
@@ -66,6 +74,8 @@
           :align-labels="alignLabels"
           :show-pies="showPies"
           :label-styles="metadata.labelStyles"
+          :selected="selected"
+          :collapsed="collapsed"
         ></Phylogram>
         <Phylogram
           v-else
@@ -87,7 +97,8 @@
           :label-styles="metadatas.inputTree.labelStyles"
           :branch-styles="metadatas.inputTree.branchStyles"
           :node-styles="metadatas.inputTree.nodeStyles"
-          selected="node1,node6"
+          :selected="selected"
+          :collapsed="collapsed"
         ></Phylogram>
       </div>
     </div>
@@ -263,7 +274,9 @@ export default {
       },
       showPies: true,
       treeType: 'jsonExample',
-      newickProxy: null
+      newickProxy: null,
+      selected: 'node1,node6',
+      collapsed: 'node4'
     }
   },
   watch: {

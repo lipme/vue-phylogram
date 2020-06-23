@@ -202,6 +202,10 @@ export default {
     selected: {
       type: String,
       default: ''
+    },
+    collapsed: {
+      type: String,
+      default: ''
     }
 
   },
@@ -230,6 +234,7 @@ export default {
   mounted () {
     this.zoom = svgPanZoom('#svgphylo')
     this.selectFromProp()
+    this.collapseFromProp()
   },
   watch: {
     newick () {
@@ -239,7 +244,12 @@ export default {
       this.newickTreeProxy = null
     },
     selected () {
+      this.deselectAll()
       this.selectFromProp()
+    },
+    collapsed () {
+      this.expandAll()
+      this.collapseFromProp()
     }
   },
   computed: {
@@ -537,6 +547,9 @@ export default {
 
       this.$emit('select-nodes', this.selectedNodes)
     },
+    deselectAll (node) {
+      this.deselectNode(this.d3RootNode)
+    },
     getD3Node (id) {
       const elts = this.d3Nodes.filter(n => n.data.id === id)
       if (elts.length === 0) {
@@ -662,7 +675,6 @@ export default {
       this.newickTree = this._expandNode(node.data.id, this.newickTree, false)
     },
     _expandNode (id, node, expandChildren) {
-      console.log('expand ', node)
       if (node.id === id) {
         expandChildren = true
       }
@@ -686,6 +698,9 @@ export default {
       }
       return node
     },
+    expandAll () {
+      this.expand(this.d3RootNode)
+    },
     toggleMenu () {
       this.showMenu = !this.showMenu
     },
@@ -704,6 +719,15 @@ export default {
         const node = this.getD3Node(id)
         if (node !== null) {
           this.selectNode(node)
+        }
+      })
+    },
+    collapseFromProp () {
+      const nodeIds = this.collapsed.split(',')
+      nodeIds.forEach(id => {
+        const node = this.getD3Node(id)
+        if (node !== null) {
+          this.collapse(node)
         }
       })
     }
