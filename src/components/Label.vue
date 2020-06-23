@@ -92,21 +92,10 @@ export default {
       default: 'black'
     }
   },
-  data () {
-    return {
-      rectWidth: 0
-    }
-  },
-  mounted () {
-    this.updateRect()
-  },
-  updated () {
-    this.updateRect()
-  },
 
   computed: {
     fontSize () {
-      return this.size * 1.5
+      return this.selected ? this.size * 1.5 * 1.5 : this.size * 1.5
     },
     textClass () {
       if (this.circular && this.x > 180) {
@@ -163,13 +152,11 @@ export default {
     },
     rectFillOpacity () {
       return this.background ? '100%' : '0%'
+    },
+    rectWidth () {
+      return this.fontSize * this.label.length / 2 + this.rectBorderWidth * 2 + this.rectMargin * 2
     }
 
-  },
-  methods: {
-    updateRect () {
-      this.rectWidth = this.$refs.text.getComputedTextLength() + this.size * 1.2
-    }
   }
 }
 </script>
@@ -178,14 +165,13 @@ export default {
 
 .selected text {
   font-weight: bold;
-  transform: scale(1.5);
   transition: all 0.5s;
 }
 
-.selected rect {
+/* .selected rect {
   transition: all 0.5s;
   transform: scale(1.5);
-}
+} */
 
 .nodeLabel:hover text {
   transition: all 0.5s;
