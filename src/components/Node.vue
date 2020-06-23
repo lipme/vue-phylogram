@@ -100,7 +100,7 @@ export default {
 
 <style scoped>
 
-circle polygon {
+circle,polygon {
   opacity: 100%;
   stroke:darkblue;
 }
@@ -109,7 +109,7 @@ circle polygon {
   opacity:0%;
 }
 
-.root circle polygon {
+.root circle,polygon {
   stroke: yellowgreen;
 }
 
@@ -117,20 +117,12 @@ circle polygon {
   opacity: 0%;
 }
 
-.selected circle polygon {
-  transition: all 0.5s;
+.selected circle,.selected polygon {
   fill: red;
   stroke: brown;
-  transform: scale(3);
 }
 
-circle:hover {
-  transition: all 0.5s;
-  transform: scale(3);
-  opacity: 100%;
-}
-
-polygon:hover {
+circle:hover,polygon:hover {
   transition: all 0.5s;
   transform: scale(3);
   opacity: 100%;
