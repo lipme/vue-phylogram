@@ -2,49 +2,78 @@ import { shallowMount } from '@vue/test-utils'
 import Node from '@/components/Node.vue'
 
 describe('Node component', () => {
-  it('root node renders correctly', () => {
+  it('default node renders correctly', () => {
+    const comp = shallowMount(Node)
+
+    expect(comp.element).toMatchSnapshot()
+  })
+  it('node size set correctly', () => {
     const comp = shallowMount(Node, {
       propsData: {
-        type: 'root',
-        size: 5,
-        stroke_width: 3,
-        x: 30,
-        y: 10,
-        label: 'root',
-        stroke: 'blue',
-        fill: 'red'
+        size: 10
       }
     })
 
     expect(comp.element).toMatchSnapshot()
   })
-  it('inner node renders correctly', () => {
+  it('node x set correctly', () => {
     const comp = shallowMount(Node, {
       propsData: {
-        type: 'inner',
-        size: 5,
-        stroke_width: 3,
-        x: 50,
-        y: 80,
-        label: 'inner',
-        stroke: 'red',
-        fill: 'yellow'
+        x: 100
       }
     })
 
     expect(comp.element).toMatchSnapshot()
   })
-  it('leave node renders correctly', () => {
+  it('node y set correctly', () => {
     const comp = shallowMount(Node, {
       propsData: {
-        type: 'inner',
-        size: 3,
-        stroke_width: 3,
-        x: 100,
-        y: 120,
-        label: 'leave',
-        stroke: 'yellow',
-        fill: 'blue'
+        y: 100
+      }
+    })
+
+    expect(comp.element).toMatchSnapshot()
+  })
+  it('node position in circular mode set correctly', () => {
+    const comp = shallowMount(Node, {
+      propsData: {
+        circular: true
+      }
+    })
+
+    expect(comp.element).toMatchSnapshot()
+  })
+  it('show mode set correctly', () => {
+    const comp = shallowMount(Node, {
+      propsData: {
+        show: false
+      }
+    })
+
+    expect(comp.element).toMatchSnapshot()
+  })
+  it('stroke color set correctly', () => {
+    const comp = shallowMount(Node, {
+      propsData: {
+        strokeColor: 'black'
+      }
+    })
+
+    expect(comp.element).toMatchSnapshot()
+  })
+  it('fill color set correctly', () => {
+    const comp = shallowMount(Node, {
+      propsData: {
+        fill: 'black'
+      }
+    })
+
+    expect(comp.element).toMatchSnapshot()
+  })
+  it('collapsed mode set correctly', () => {
+    const comp = shallowMount(Node, {
+      propsData: {
+        collapsed: true
       }
     })
 
