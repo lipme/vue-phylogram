@@ -3,7 +3,7 @@
     class="link"
     :d="path"
     fill="none"
-    :stroke="color"
+    :stroke="stroke"
     :stroke-width="strokeWidth"
     :stroke-dasharray="dashAttribute"
   >
@@ -44,8 +44,7 @@ export default {
       default: () => {
         return {
           x: 20,
-          y: 10,
-          selected: false
+          y: 10
         }
       }
     },
@@ -54,16 +53,11 @@ export default {
       default: () => {
         return {
           x: 40,
-          y: 60,
-          selected: false
+          y: 60
         }
       }
     },
     dashed: {
-      type: Boolean,
-      default: false
-    },
-    selected: {
       type: Boolean,
       default: false
     }
@@ -88,9 +82,6 @@ export default {
     dashAttribute () {
       const step = this.strokeWidth * 5
       return this.dashed ? step + ',' + step : ''
-    },
-    color () {
-      return this.selected === true ? 'red' : this.stroke
     }
   },
   methods: {

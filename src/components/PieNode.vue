@@ -1,5 +1,5 @@
 <template>
-<g :class="classAttribute" :transform="transformAttribute">
+<g v-if="data.length>0" :transform="transformAttribute">
      <path v-for="(d, i) in pieData" :key="d.data.label" :d="paths[i]" :fill="d.data.color">
         <title>{{d.data.label}} : {{d.data.value}}</title>
         <animateTransform attributeName="transform"
@@ -37,17 +37,34 @@ export default {
     },
     data: {
       type: Array,
-      default: () => { return [] }
+      default: () => { return [] },
+      required: true,
+      validator: function (data) {
+        if (data.length === 0) { return false }
+        for (let i = 0; i < data.length; i++) {
+          if (!('value' in data[i])) {
+            console.error("missing key 'value' in pie data")
+            return false
+          }
+          if (!('color' in data[i])) {
+            console.error("missing key 'color' in pie data")
+            return false
+          }
+          if (!('label' in data[i])) {
+            console.error("missing key 'label' in pie data")
+            return false
+          }
+          if (!isFinite(data[i].value)) {
+            console.error("The 'value' attribute in pie data must be a number")
+            return false
+          }
+        }
+        return true
+      }
     }
   },
 
   computed: {
-    strokeWidth () {
-      return this.size / 5
-    },
-    classAttribute () {
-      return 'pie ' + this.type
-    },
     transformAttribute () {
       if (this.circular === false) {
         return 'translate(' + this.y + ' ' + this.x + ')'

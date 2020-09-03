@@ -29,7 +29,8 @@
       :text-anchor="optionsLabel['text-anchor']"
       :font-size="optionsLabel['font-size']"
       :transform="optionsLabel.transform"
-      :fill="labelColor"
+      :fill="color"
+      :font-weight="fontWeight"
     >
       {{this.label}}
       <animateTransform attributeName="transform"
@@ -67,14 +68,6 @@ export default {
       type: Boolean,
       default: false
     },
-    id: {
-      type: String,
-      default: null
-    },
-    selected: {
-      type: Boolean,
-      default: false
-    },
     color: {
       type: String,
       default: 'black'
@@ -90,12 +83,16 @@ export default {
     borderColor: {
       type: String,
       default: 'black'
+    },
+    fontWeight: {
+      type: String,
+      default: 'normal'
     }
   },
 
   computed: {
     fontSize () {
-      return this.selected ? this.size * 1.5 * 1.5 : this.size * 1.5
+      return this.size * 1.5
     },
     textClass () {
       if (this.circular && this.x > 180) {
@@ -104,7 +101,7 @@ export default {
       return 'normal'
     },
     classAttribute () {
-      return 'nodeLabel ' + this.textClass + (this.selected ? ' selected' : '')
+      return 'nodeLabel ' + this.textClass
     },
     transformAttribute () {
       if (this.circular === false) {
@@ -130,11 +127,8 @@ export default {
         'font-size': this.fontSize + 'px'
       }
     },
-    labelColor () {
-      return this.selected ? 'red' : this.color
-    },
     isSurrounded () {
-      return this.background !== '' || this.rectBorderWidth > 0
+      return this.label !== null && this.label !== '' && (this.background !== '' || this.rectBorderWidth > 0)
     },
     rectMargin () {
       return this.fontSize / 5
@@ -154,7 +148,7 @@ export default {
       return this.background ? '100%' : '0%'
     },
     rectWidth () {
-      return this.fontSize * this.label.length / 2 + this.rectBorderWidth * 2 + this.rectMargin * 2
+      return 2 * this.fontSize * this.label.length / 4 + this.rectBorderWidth + this.rectMargin * 4
     }
 
   }

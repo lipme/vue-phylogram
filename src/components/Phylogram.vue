@@ -10,7 +10,6 @@
             :key="link.id"
             :source="link.source"
             :target="link.target"
-            :selected="link.selected"
             :right-angle="rightAngle"
             :circular="circular"
             :stroke-width="link.selected ? linkWidth * 1.5 : linkWidth"
@@ -20,7 +19,7 @@
         <g transform="translate(10, 10)">
           <Node
             v-for="node in d3Nodes"
-            :show="displayNodes"
+            :show="getNodeShow(node)"
             :key="node.id"
             :x="node.x"
             :y="node.y"
@@ -29,7 +28,8 @@
             :id="node.data.id"
             :selected="selectedNodes.includes(node.data.id)"
             :size="getNodeSize(node)"
-            :fill="getNodeColor(node)"
+            :fill="getNodeFillColor(node)"
+            :stroke-color="getNodeStrokeColor(node)"
             @click.native.stop="clickNode($event, node)"
             :collapsed="isCollapsed(node)"
           />
@@ -48,9 +48,10 @@
             :size="getNodeSize(node)"
             @click.native.stop="clickNode($event, node)"
             :color="getLabelColor(node)"
-            :background="getBackgroundColor(node)"
-            :borderWidth="getBorderWidth(node)"
-            :borderColor="getBorderColor(node)"
+            :background="getLabelBackgroundColor(node)"
+            :borderWidth="getLabelBorderWidth(node)"
+            :borderColor="getLabelBorderColor(node)"
+            :font-weight="getLabelFontWeight(node)"
           />
         </g>
         <g v-show="displayLabels && alignLabels" transform="translate(10, 10)">
@@ -91,7 +92,7 @@
                     Select/Deselect
                 </a>
             </li>
-            <li>
+            <li v-show="currentNode != null && (currentNode.type!=='leaf' || isCollapsed(currentNode))">
                 <a @click.prevent="toggleCollapse(currentNode)">
                     Collapse/Expand
                 </a>
@@ -218,7 +219,8 @@ export default {
       currentNodePosition: { x: 0, y: 0 },
       showMenu: false,
       d3RootNodeProxy: null,
-      newickTreeProxy: null
+      newickTreeProxy: null,
+      collapsedNodes: []
     }
   },
   created () {
@@ -294,9 +296,11 @@ export default {
               )
             })
 
+          let i = 0
           rootNode.each(n => {
+            i++
             n.selected = false
-            n.data.id = n.data.id ? n.data.id : n.data.name
+            n.data.id = n.data.id ? n.data.id : i
           })
 
           return rootNode
@@ -562,6 +566,10 @@ export default {
       return this.selectedNodes.includes(node.data.id)
     },
     getLabelColor (node) {
+      if (this.isSelected(node)) {
+        return 'red'
+      }
+
       if (this.hasLabelStyles) {
         if (node.data.id in this.labelStyles) {
           if ('color' in this.labelStyles[node.data.id]) {
@@ -571,7 +579,7 @@ export default {
       }
       return 'black'
     },
-    getBackgroundColor (node) {
+    getLabelBackgroundColor (node) {
       if (this.hasLabelStyles) {
         if (node.data.id in this.labelStyles) {
           if ('background' in this.labelStyles[node.data.id]) {
@@ -581,7 +589,7 @@ export default {
       }
       return ''
     },
-    getBorderWidth (node) {
+    getLabelBorderWidth (node) {
       if (this.hasLabelStyles) {
         if (node.data.id in this.labelStyles) {
           if ('borderWidth' in this.labelStyles[node.data.id]) {
@@ -591,7 +599,7 @@ export default {
       }
       return 0
     },
-    getBorderColor (node) {
+    getLabelBorderColor (node) {
       if (this.hasLabelStyles) {
         if (node.data.id in this.labelStyles) {
           if ('borderColor' in this.labelStyles[node.data.id]) {
@@ -601,7 +609,14 @@ export default {
       }
       return 'black'
     },
+    getLabelFontWeight (node) {
+      return this.isSelected(node) ? 'bold' : 'normal'
+    },
     getBranchColor (link) {
+      if (link.selected) {
+        return 'red'
+      }
+
       if (this.hasBranchStyles) {
         if (link.target.data.id in this.branchStyles) {
           const spec = this.branchStyles[link.target.data.id]
@@ -621,7 +636,11 @@ export default {
       }
       return 'black'
     },
-    getNodeColor (node) {
+    getNodeFillColor (node) {
+      if (this.selectedNodes.includes(node.data.id)) {
+        return 'red'
+      }
+
       if (this.hasNodeStyles) {
         if (node.data.id in this.nodeStyles) {
           if ('color' in this.nodeStyles[node.data.id]) {
@@ -632,6 +651,11 @@ export default {
       if (node.type === 'root') { return 'greenyellow' }
       if (node.type === 'inner') { return 'lightsalmon' }
       return 'steelblue'
+    },
+    getNodeStrokeColor (node) {
+      if (this.selectedNodes.includes(node.data.id)) {
+        return 'brown'
+      }
     },
     getNodeSize (node) {
       const baseWidth = this.nodeWidth
@@ -646,6 +670,12 @@ export default {
 
       return this.nodeWidth
     },
+    getNodeShow (node) {
+      if (node.type === 'root') {
+        return true
+      }
+      return this.displayNodes
+    },
     toggleCollapse (node) {
       this.showMenu = false
 
@@ -657,6 +687,8 @@ export default {
     },
     collapse (node) {
       this.newickTree = this._collapseNode(node.data.id, this.newickTree, false)
+      this.collapsedNodes.push(node.data.id)
+      this.$emit('collapse-nodes', this.collapsedNodes)
     },
     _collapseNode (id, node, collapseChildren) {
       if (node.id === id) {
@@ -673,6 +705,9 @@ export default {
     },
     expand (node) {
       this.newickTree = this._expandNode(node.data.id, this.newickTree, false)
+      const ind = this.collapsedNodes.indexOf(node.data.id)
+      this.collapsedNodes.splice(ind, 1)
+      this.$emit('collapse-nodes', this.collapsedNodes)
     },
     _expandNode (id, node, expandChildren) {
       if (node.id === id) {
