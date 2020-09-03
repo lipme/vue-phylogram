@@ -29,17 +29,35 @@
           <br />Show pies:
           <input type="checkbox" v-model="showPies" />
           <br />
+          <br />Selected node ids :
           <br />
-          Selected node ids : <br />
-          <input type="text" name="selection" v-model="selected">
+          <input type="text" name="selection" v-model="selected" />
           <br />
+          <br />Collapsed node ids :
           <br />
-          Collapsed node ids : <br />
-          <input type="text" name="collapse" v-model="collapsed">
+          <input type="text" name="collapse" v-model="collapsed" />
           <br />
           <br />
           <button @click.prevent="resetZoom">Reset Zoom</button>
           <br />
+          <div v-if="treeType=='jsonExample'">
+            <b>Metadata:</b>
+            <br />Pies:
+            <br />
+            {{ this.metadatas.inputTree.pies }}
+            <br />
+            <br />Branch Styles:
+            <br />
+            {{ this.metadatas.inputTree.branchStyles }}
+            <br />Node Styles:
+            <br />
+            {{ this.metadatas.inputTree.nodeStyles }}
+            <br />Label Styles:
+            <br />
+            {{ this.metadatas.inputTree.labelStyles }}
+            <br />
+          </div>
+
           <br />Type of tree:
           <br />
           <input type="radio" name="treeType" v-model="treeType" value="jsonExample" />
@@ -135,71 +153,75 @@ export default {
       metadatas: {
         inputTree: {
           pies: {
-            node1: {
+            A: {
               data: [
-                { label: 'A', value: 10, color: 'blue' },
-                { label: 'B', value: 20, color: 'green' },
-                { label: 'C', value: 30, color: 'red' }
+                { label: 'value 1', value: 10, color: 'blue' },
+                { label: 'value 2', value: 20, color: 'green' },
+                { label: 'value 3', value: 30, color: 'red' }
               ],
               size: 5
             },
-            node4: {
+            ABCD: {
               data: [
-                { label: 'A', value: 50, color: 'blue' },
-                { label: 'B', value: 80, color: 'green' },
-                { label: 'C', value: 50, color: 'red' }
+                { label: 'value 1', value: 50, color: 'blue' },
+                { label: 'value 2', value: 80, color: 'green' },
+                { label: 'value 3', value: 50, color: 'red' }
               ],
-              size: 1.2
+              size: 3
             },
-            node2: {
+            CD: {
               data: [
-                { label: 'A', value: 90, color: 'blue' },
-                { label: 'B', value: 10, color: 'green' }
+                { label: 'value 1', value: 90, color: 'blue' },
+                { label: 'value 2', value: 10, color: 'green' }
               ],
-              size: 1
+              size: 2
             }
           },
           branchStyles: {
-            node0: {
+            CD: {
               color: 'green',
               type: 'from'
             },
-            node2: {
+            ABCD: {
               color: 'orange',
               type: 'to'
             },
-            node4: {
+            AB: {
               color: 'brown',
               type: 'both'
             }
-
           },
           labelStyles: {
-            node5: {
+            A: {
               color: 'orange',
               background: 'darkgreen',
               borderWidth: 2
             },
-            node3: {
+            C: {
               background: 'yellow'
             },
-            node6: {
+            D: {
               borderWidth: 1
             },
-            node4: {
+            E: {
+              borderWidth: 4,
+              borderColor: 'red'
+            },
+            CD: {
               borderWidth: 4,
               borderColor: 'red'
             }
           },
           nodeStyles: {
-            node6: {
+            C: {
+              size: 3,
               color: 'orange'
             },
-            node5: {
-              size: 3
-            },
-            node1: {
+            B: {
               size: 0.5
+            },
+            AB: {
+              size: 2
             }
           }
         },
@@ -233,50 +255,59 @@ export default {
 
       smallNewick: smallNewick,
       tree: {
-        id: 'node0',
-        name: 'node 0',
+        id: 'ABCDE',
         branchset: [
           {
-            id: 'node1',
-            name: 'node 1',
-            length: 0.08,
+            id: 'ABCD',
+            length: 0.2,
             branchset: [
               {
-                id: 'node2',
-                name: 'node 2',
-                length: 0.05
+                length: 0.3,
+                id: 'AB',
+                branchset: [
+                  {
+                    name: 'A',
+                    id: 'A',
+                    length: 0.2
+                  },
+                  {
+                    id: 'B',
+                    name: 'B',
+                    length: 0.3
+                  }
+                ]
               },
               {
-                id: 'node3',
-                name: 'node 3',
-                length: 0.07
+                length: 0.2,
+                id: 'CD',
+                name: 'CD',
+                branchset: [
+                  {
+                    id: 'C',
+                    name: 'C',
+                    length: 0.5
+                  },
+                  {
+                    id: 'D',
+                    name: 'D',
+                    length: 0.3
+                  }
+                ]
               }
             ]
           },
           {
-            id: 'node4',
-            name: 'node 4',
-            length: 0.05,
-            branchset: [
-              {
-                id: 'node5',
-                name: 'node 5',
-                length: 0.02
-              },
-              {
-                id: 'node6',
-                name: 'node 6',
-                length: 0.07
-              }
-            ]
+            id: 'E',
+            name: 'E',
+            length: 0.7
           }
         ]
       },
       showPies: true,
       treeType: 'jsonExample',
       newickProxy: null,
-      selected: 'node1,node6',
-      collapsed: 'node4'
+      selected: 'AB,E',
+      collapsed: 'AB'
     }
   },
   watch: {
