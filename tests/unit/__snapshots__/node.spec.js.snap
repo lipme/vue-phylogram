@@ -1,0 +1,198 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Node component collapsed mode set correctly 1`] = `
+<g
+  transform="translate(0 0)"
+>
+  <polygon
+    fill="steelblue"
+    points="0 0,12 -12, 12 12"
+    stroke="darkblue"
+    stroke-width="1.2"
+  />
+</g>
+`;
+
+exports[`Node component default node renders correctly 1`] = `
+<g
+  transform="translate(0 0)"
+>
+  <circle
+    class=""
+    fill="steelblue"
+    r="3"
+    stroke="darkblue"
+    stroke-width="1.2"
+  >
+    <animatetransform
+      attributeName="transform"
+      begin="0s"
+      dur="1s"
+      from="0 0"
+      to="1 1"
+      type="scale"
+    />
+  </circle>
+</g>
+`;
+
+exports[`Node component fill color set correctly 1`] = `
+<g
+  transform="translate(0 0)"
+>
+  <circle
+    class=""
+    fill="black"
+    r="3"
+    stroke="darkblue"
+    stroke-width="1.2"
+  >
+    <animatetransform
+      attributeName="transform"
+      begin="0s"
+      dur="1s"
+      from="0 0"
+      to="1 1"
+      type="scale"
+    />
+  </circle>
+</g>
+`;
+
+exports[`Node component node position in circular mode set correctly 1`] = `
+<g
+  transform="rotate(-90)translate(0)"
+>
+  <circle
+    class=""
+    fill="steelblue"
+    r="3"
+    stroke="darkblue"
+    stroke-width="1.2"
+  >
+    <animatetransform
+      attributeName="transform"
+      begin="0s"
+      dur="1s"
+      from="0 0"
+      to="1 1"
+      type="scale"
+    />
+  </circle>
+</g>
+`;
+
+exports[`Node component node size set correctly 1`] = `
+<g
+  transform="translate(0 0)"
+>
+  <circle
+    class=""
+    fill="steelblue"
+    r="5"
+    stroke="darkblue"
+    stroke-width="2"
+  >
+    <animatetransform
+      attributeName="transform"
+      begin="0s"
+      dur="1s"
+      from="0 0"
+      to="1 1"
+      type="scale"
+    />
+  </circle>
+</g>
+`;
+
+exports[`Node component node x set correctly 1`] = `
+<g
+  transform="translate(0 100)"
+>
+  <circle
+    class=""
+    fill="steelblue"
+    r="3"
+    stroke="darkblue"
+    stroke-width="1.2"
+  >
+    <animatetransform
+      attributeName="transform"
+      begin="0s"
+      dur="1s"
+      from="0 0"
+      to="1 1"
+      type="scale"
+    />
+  </circle>
+</g>
+`;
+
+exports[`Node component node y set correctly 1`] = `
+<g
+  transform="translate(100 0)"
+>
+  <circle
+    class=""
+    fill="steelblue"
+    r="3"
+    stroke="darkblue"
+    stroke-width="1.2"
+  >
+    <animatetransform
+      attributeName="transform"
+      begin="0s"
+      dur="1s"
+      from="0 0"
+      to="1 1"
+      type="scale"
+    />
+  </circle>
+</g>
+`;
+
+exports[`Node component show mode set correctly 1`] = `
+<g
+  transform="translate(0 0)"
+>
+  <circle
+    class="transparent"
+    fill="steelblue"
+    r="3"
+    stroke="darkblue"
+    stroke-width="1.2"
+  >
+    <animatetransform
+      attributeName="transform"
+      begin="0s"
+      dur="1s"
+      from="0 0"
+      to="1 1"
+      type="scale"
+    />
+  </circle>
+</g>
+`;
+
+exports[`Node component stroke color set correctly 1`] = `
+<g
+  transform="translate(0 0)"
+>
+  <circle
+    class=""
+    fill="steelblue"
+    r="3"
+    stroke="black"
+    stroke-width="1.2"
+  >
+    <animatetransform
+      attributeName="transform"
+      begin="0s"
+      dur="1s"
+      from="0 0"
+      to="1 1"
+      type="scale"
+    />
+  </circle>
+</g>
+`;
