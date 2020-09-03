@@ -1,12 +1,49 @@
 {
   "name": "vue-phylogram",
+  "description": "Vue component for displaying phylogenetic trees",
+  "keywords": [
+    "bioinformatics",
+    "vue",
+    "d3",
+    "phylogeny"
+  ],
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Ludovic Cottret",
+    "email": "ludovic.cottret@inrae.fr"
+  },
+  "contributors": [
+    {
+      "name": "Erika Sallet",
+      "email": "erika.sallet@inrae.fr"
+    },
+    {
+      "name": "Jérôme Gouzy",
+      "email": "jerome.gouzy@inrae.fr"
+    },
+    {
+      "name": "Sébastien Carrere",
+      "email": "sebastien.carrere@inrae.fr"
+    },
+    {
+      "name": "Ludovic Legrand",
+      "email": "ludovic.legrand@inrae.fr"
+    }
+  ],
+  "bugs": {
+    "email": "ludovic.cottret@inrae.fr"
+  },
+  "main": "./dist/vue-phylogram.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "test:unit:update": "vue-cli-service test:unit -u",
+    "lint": "vue-cli-service lint",
+    "build-npm": "vue-cli-service build --target lib --name vue-phylogram ./src/components/index.js",
+    "publish-npm": "npm publish --access public"
   },
   "dependencies": {
     "core-js": "^3.6.4",
@@ -30,5 +67,8 @@
     "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-vue": "^6.1.2",
     "vue-template-compiler": "^2.6.11"
-  }
+  },
+  "files": [
+    "dist/*"
+  ]
 }
