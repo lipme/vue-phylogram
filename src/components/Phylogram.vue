@@ -1,6 +1,6 @@
 <template>
   <div id="phylogram"
-  @click="hideMenu  "
+  @click="hideMenu"
    >
     <svg id="svgphylo" v-if="!error" :width="width" :height="height">
       <g :transform="translationString" id="groupphylo">
@@ -106,7 +106,6 @@
 import _ from 'lodash'
 import Newick from '../../public/lib/newick.js'
 import * as d3 from 'd3'
-import * as svgPanZoom from 'svg-pan-zoom'
 
 import Node from '@/components/Node.vue'
 import Link from '@/components/Link.vue'
@@ -159,10 +158,6 @@ export default {
     rightAngle: {
       type: Boolean,
       default: true
-    },
-    error: {
-      type: Boolean,
-      default: false
     },
     displayLabels: {
       type: Boolean,
@@ -220,7 +215,8 @@ export default {
       showMenu: false,
       d3RootNodeProxy: null,
       newickTreeProxy: null,
-      collapsedNodes: []
+      collapsedNodes: [],
+      error: false
     }
   },
   created () {
@@ -234,9 +230,14 @@ export default {
     }
   },
   mounted () {
-    this.zoom = svgPanZoom('#svgphylo')
-    this.selectFromProp()
-    this.collapseFromProp()
+    if (this.error === false) {
+      import('svg-pan-zoom').then(module => {
+        const svgPanZoom = module.default
+        this.zoom = svgPanZoom('#svgphylo')
+        this.selectFromProp()
+        this.collapseFromProp()
+      })
+    }
   },
   watch: {
     newick () {
