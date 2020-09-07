@@ -132,6 +132,10 @@ export default {
       type: String,
       default: 'length'
     },
+    branchKey: {
+      type: String,
+      default: 'branchset'
+    },
     width: {
       type: Number,
       default: 600
@@ -297,15 +301,16 @@ export default {
      */
     d3RootNode: {
       get: function () {
+        const component = this
         if (this.d3RootNodeProxy !== null) {
           return this.d3RootNodeProxy
         } else {
           const rootNode = d3
             .hierarchy(this.newickTree, function (node) {
-              return node.branchset
+              return node[component.branchKey]
             })
             .sum(function (d) {
-              return d.branchset ? 1 : 0
+              return d[component.branchKey] ? 1 : 0
             })
             .sort((a, b) => {
               return (
@@ -627,7 +632,7 @@ export default {
       return this.isSelected(node) ? 'bold' : 'normal'
     },
     getDisplayLabel (node) {
-      return node.data.branchset
+      return node.data[this.branchKey]
         ? this.displayInnerLabels
         : this.displayLeafLabels
     },
@@ -702,7 +707,7 @@ export default {
       if (node.type === 'root') {
         return true
       }
-      return node.data.branchset ? this.displayInnerNodes : this.displayLeaves
+      return node.data[this.branchKey] ? this.displayInnerNodes : this.displayLeaves
     },
     toggleCollapse (node) {
       this.showMenu = false
@@ -726,14 +731,14 @@ export default {
       if (node.id === id) {
         collapseChildren = true
       }
-      if (node.branchset) {
-        node.branchset.forEach((n) =>
+      if (node[this.branchKey]) {
+        node[this.branchKey].forEach((n) =>
           this._collapseNode(id, n, collapseChildren)
         )
       }
-      if (node.branchset && collapseChildren) {
-        node._branchset = node.branchset
-        node.branchset = null
+      if (node[this.branchKey] && collapseChildren) {
+        node._branchset = node[this.branchKey]
+        node[this.branchKey] = null
       }
       return node
     },
@@ -749,8 +754,8 @@ export default {
       }
       const selected = this.selectedNodes.includes(node.id)
 
-      if (node.branchset) {
-        node.branchset.forEach((n) => {
+      if (node[this.branchKey]) {
+        node[this.branchKey].forEach((n) => {
           if (selected) this.selectedNodes.push(n.id)
           this._expandNode(id, n, expandChildren)
         })
@@ -762,7 +767,7 @@ export default {
         })
       }
       if (node._branchset && expandChildren) {
-        node.branchset = node._branchset
+        node[this.branchKey] = node._branchset
         node._branchset = null
       }
       return node
