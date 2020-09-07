@@ -1,3 +1,1 @@
-import Phylogram from './Phylogram.vue'
-
-export default Phylogram
+export { default as VuePhylogram } from './phylogram'

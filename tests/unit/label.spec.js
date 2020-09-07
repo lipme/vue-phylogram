@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import Label from '@/components/Label.vue'
+import Label from '@/components/label'
 
 describe('Label component', () => {
   it('default label renders correctly', () => {

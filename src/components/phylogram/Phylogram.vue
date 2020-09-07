@@ -99,15 +99,16 @@
 
 <script>
 import _ from 'lodash'
-import Newick from '../../public/lib/newick.js'
+import Newick from '@/lib/newick.js'
 import * as d3 from 'd3'
 
-import Node from '@/components/Node.vue'
-import Link from '@/components/Link.vue'
-import Label from '@/components/Label.vue'
-import PieNode from '@/components/PieNode.vue'
+import Node from '@/components/node'
+import Link from '@/components/link'
+import Label from '@/components/label'
+import PieNode from '@/components/pieNode'
 
 export default {
+  name: 'VuePhylogram',
   components: {
     Node,
     Link,

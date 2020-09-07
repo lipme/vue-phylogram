@@ -7,7 +7,7 @@
     "d3",
     "phylogeny"
   ],
-  "version": "0.1.2",
+  "version": "0.1.8",
   "private": false,
   "license": "Apache-2.0",
   "author": {
@@ -35,7 +35,7 @@
   "bugs": {
     "email": "ludovic.cottret@inrae.fr"
   },
-  "main": "./dist/vue-phylogram.js",
+  "main": "./dist/vue-phylogram.common.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -69,6 +69,8 @@
     "vue-template-compiler": "^2.6.11"
   },
   "files": [
-    "dist/*", "public/images/*", "public/lib/*"
+    "dist/*",
+    "public/images/*",
+    "public/lib/*"
   ]
 }

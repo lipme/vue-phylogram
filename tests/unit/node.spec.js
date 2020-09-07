@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import Node from '@/components/Node.vue'
+import Node from '@/components/node'
 
 describe('Node component', () => {
   it('default node renders correctly', () => {

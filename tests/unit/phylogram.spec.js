@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import Phylogram from '@/components/Phylogram.vue'
+import Phylogram from '@/components/phylogram'
 const jsonTree = {
   id: 'ABCDE',
   branchset: [

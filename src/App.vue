@@ -129,7 +129,7 @@
 </template>
 
 <script>
-import Phylogram from './components/Phylogram'
+import Phylogram from './components/phylogram'
 
 import { bigNewick } from './examples/bigNewick.js'
 

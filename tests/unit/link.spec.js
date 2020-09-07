@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import Link from '@/components/Link.vue'
+import Link from '@/components/link'
 
 describe('Link component', () => {
   it('default link renders correctly', () => {

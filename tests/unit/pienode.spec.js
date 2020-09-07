@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import PieNode from '@/components/PieNode.vue'
+import PieNode from '@/components/pieNode'
 
 const validator = PieNode.props.data.validator
 
