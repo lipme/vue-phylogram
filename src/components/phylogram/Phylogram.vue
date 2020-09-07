@@ -30,9 +30,10 @@
             :collapsed="isCollapsed(node)"
           />
         </g>
-        <g v-show="displayLabels" transform="translate(10, 10)">
+        <g transform="translate(10, 10)">
           <Label
             v-for="node in d3Nodes"
+            v-show="getDisplayLabel(node)"
             :key="node.id"
             :x="node.x"
             :y="alignLabels && node.type==='leaf' ? maxY : node.y+getNodeSize(node)*2"
@@ -48,9 +49,10 @@
             :font-weight="getLabelFontWeight(node)"
           />
         </g>
-        <g v-show="displayLabels && alignLabels" transform="translate(10, 10)">
+        <g v-show="alignLabels" transform="translate(10, 10)">
           <Link
             v-for="node in d3Leaves"
+            v-show="getDisplayLabel(node)"
             :key="node.id"
             :source="{x:node.x, y:node.y+nodeWidth}"
             :target="{x:node.x, y:maxY}"
@@ -155,10 +157,6 @@ export default {
       type: Boolean,
       default: true
     },
-    displayLabels: {
-      type: Boolean,
-      default: true
-    },
     circular: {
       type: Boolean,
       default: false
@@ -180,6 +178,14 @@ export default {
       default: true
     },
     displayInnerNodes: {
+      type: Boolean,
+      default: false
+    },
+    displayLeafLabels: {
+      type: Boolean,
+      default: true
+    },
+    displayInnerLabels: {
       type: Boolean,
       default: false
     },
@@ -611,6 +617,9 @@ export default {
     },
     getLabelFontWeight (node) {
       return this.isSelected(node) ? 'bold' : 'normal'
+    },
+    getDisplayLabel (node) {
+      return node.data.branchset ? this.displayInnerLabels : this.displayLeafLabels
     },
     getBranchColor (link) {
       if (link.selected) {

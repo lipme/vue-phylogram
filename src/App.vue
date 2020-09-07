@@ -10,8 +10,12 @@
           <input type="checkbox" v-model="branchLengths" />
           <br />
           <br />
-          <br />Display Labels
-          <input type="checkbox" v-model="displayLabels" />
+          <br />Display Leaf Labels
+          <input type="checkbox" v-model="displayLeafLabels" />
+          <br />
+          <br />
+          <br />Display inner Labels
+          <input type="checkbox" v-model="displayInnerLabels" />
           <br />
           <br />
           <br />Display leaves
@@ -88,8 +92,8 @@
           :right-angle="rightAngle"
           :branch-lengths="branchLengths"
           :margin="margin"
-          :displayLabels="displayLabels"
-          :displayLeaves="displayLeaves"
+          :displayInnerLabels="displayInnerLabels"
+          :displayLeafLabels="displayLeafLabels"
           :displayInnerNodes="displayInnerNodes"
           :labelWidth="Number(labelWidth)"
           :circular="circular"
@@ -109,7 +113,8 @@
           :right-angle="rightAngle"
           :branch-lengths="branchLengths"
           :margin="margin"
-          :displayLabels="displayLabels"
+          :displayInnerLabels="displayInnerLabels"
+          :displayLeafLabels="displayLeafLabels"
           :displayLeaves="displayLeaves"
           :displayInnerNodes="displayInnerNodes"
           :labelWidth="Number(labelWidth)"
@@ -142,7 +147,8 @@ export default {
   },
   data () {
     return {
-      displayLabels: true,
+      displayInnerLabels: false,
+      displayLeafLabels: true,
       displayLeaves: true,
       displayInnerNodes: false,
       alignLabels: false,
