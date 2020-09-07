@@ -1,0 +1,713 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Phylogram component Tree from inputTree works 1`] = `
+<div
+  id="phylogram"
+>
+  <svg
+    height="400"
+    id="svgphylo"
+    width="600"
+  >
+    <g
+      id="groupphylo"
+      transform="translate(10,10)"
+    >
+      <g
+        transform="translate(10, 10)"
+      >
+        <link-stub
+          rightAngle="true"
+          source="[object Object]"
+          stroke="black"
+          strokeWidth="2.3600728495537338"
+          target="[object Object]"
+        />
+        <link-stub
+          rightAngle="true"
+          source="[object Object]"
+          stroke="black"
+          strokeWidth="2.3600728495537338"
+          target="[object Object]"
+        />
+        <link-stub
+          rightAngle="true"
+          source="[object Object]"
+          stroke="black"
+          strokeWidth="2.3600728495537338"
+          target="[object Object]"
+        />
+        <link-stub
+          rightAngle="true"
+          source="[object Object]"
+          stroke="black"
+          strokeWidth="2.3600728495537338"
+          target="[object Object]"
+        />
+        <link-stub
+          rightAngle="true"
+          source="[object Object]"
+          stroke="black"
+          strokeWidth="2.3600728495537338"
+          target="[object Object]"
+        />
+        <link-stub
+          rightAngle="true"
+          source="[object Object]"
+          stroke="black"
+          strokeWidth="2.3600728495537338"
+          target="[object Object]"
+        />
+        <link-stub
+          rightAngle="true"
+          source="[object Object]"
+          stroke="black"
+          strokeWidth="2.3600728495537338"
+          target="[object Object]"
+        />
+        <link-stub
+          rightAngle="true"
+          source="[object Object]"
+          stroke="black"
+          strokeWidth="2.3600728495537338"
+          target="[object Object]"
+        />
+      </g>
+       
+      <g
+        transform="translate(10, 10)"
+      >
+        <node-stub
+          fill="greenyellow"
+          id="ABCDE"
+          show="true"
+          size="7.874067520329519"
+          strokeColor="darkblue"
+          x="136.5"
+          y="0"
+        />
+        <node-stub
+          fill="lightsalmon"
+          id="ABCD"
+          size="7.874067520329519"
+          strokeColor="darkblue"
+          x="234"
+          y="88.8888888888889"
+        />
+        <node-stub
+          fill="lightsalmon"
+          id="AB"
+          size="7.874067520329519"
+          strokeColor="darkblue"
+          x="156"
+          y="222.22222222222223"
+        />
+        <node-stub
+          fill="lightsalmon"
+          id="CD"
+          size="7.874067520329519"
+          strokeColor="darkblue"
+          x="312"
+          y="177.7777777777778"
+        />
+        <node-stub
+          fill="steelblue"
+          id="E"
+          show="true"
+          size="7.874067520329519"
+          strokeColor="darkblue"
+          x="39"
+          y="311.1111111111111"
+        />
+        <node-stub
+          fill="steelblue"
+          id="B"
+          show="true"
+          size="7.874067520329519"
+          strokeColor="darkblue"
+          x="117"
+          y="355.5555555555556"
+        />
+        <node-stub
+          fill="steelblue"
+          id="A"
+          show="true"
+          size="7.874067520329519"
+          strokeColor="darkblue"
+          x="195"
+          y="311.1111111111111"
+        />
+        <node-stub
+          fill="steelblue"
+          id="C"
+          show="true"
+          size="7.874067520329519"
+          strokeColor="darkblue"
+          x="273"
+          y="400"
+        />
+        <node-stub
+          fill="steelblue"
+          id="D"
+          show="true"
+          size="7.874067520329519"
+          strokeColor="darkblue"
+          x="351"
+          y="311.1111111111111"
+        />
+      </g>
+       
+      <g
+        transform="translate(10, 10)"
+      >
+        <label-stub
+          background=""
+          borderColor="black"
+          borderWidth="0"
+          color="black"
+          fontWeight="normal"
+          id="ABCDE"
+          size="7.874067520329519"
+          x="136.5"
+          y="15.748135040659038"
+        />
+        <label-stub
+          background=""
+          borderColor="black"
+          borderWidth="0"
+          color="black"
+          fontWeight="normal"
+          id="ABCD"
+          size="7.874067520329519"
+          x="234"
+          y="104.63702392954794"
+        />
+        <label-stub
+          background=""
+          borderColor="black"
+          borderWidth="0"
+          color="black"
+          fontWeight="normal"
+          id="AB"
+          size="7.874067520329519"
+          x="156"
+          y="237.97035726288127"
+        />
+        <label-stub
+          background=""
+          borderColor="black"
+          borderWidth="0"
+          color="black"
+          fontWeight="normal"
+          id="CD"
+          label="CD"
+          size="7.874067520329519"
+          x="312"
+          y="193.52591281843684"
+        />
+        <label-stub
+          background=""
+          borderColor="black"
+          borderWidth="0"
+          color="black"
+          fontWeight="normal"
+          id="E"
+          label="E"
+          size="7.874067520329519"
+          x="39"
+          y="326.85924615177015"
+        />
+        <label-stub
+          background=""
+          borderColor="black"
+          borderWidth="0"
+          color="black"
+          fontWeight="normal"
+          id="B"
+          label="B"
+          size="7.874067520329519"
+          x="117"
+          y="371.30369059621466"
+        />
+        <label-stub
+          background=""
+          borderColor="black"
+          borderWidth="0"
+          color="black"
+          fontWeight="normal"
+          id="A"
+          label="A"
+          size="7.874067520329519"
+          x="195"
+          y="326.85924615177015"
+        />
+        <label-stub
+          background=""
+          borderColor="black"
+          borderWidth="0"
+          color="black"
+          fontWeight="normal"
+          id="C"
+          label="C"
+          size="7.874067520329519"
+          x="273"
+          y="415.74813504065906"
+        />
+        <label-stub
+          background=""
+          borderColor="black"
+          borderWidth="0"
+          color="black"
+          fontWeight="normal"
+          id="D"
+          label="D"
+          size="7.874067520329519"
+          x="351"
+          y="326.85924615177015"
+        />
+      </g>
+       
+      <g
+        style="display: none;"
+        transform="translate(10, 10)"
+      >
+        <link-stub
+          dashed="true"
+          rightAngle="true"
+          source="[object Object]"
+          stroke="grey"
+          strokeWidth="1.1800364247768669"
+          target="[object Object]"
+        />
+        <link-stub
+          dashed="true"
+          rightAngle="true"
+          source="[object Object]"
+          stroke="grey"
+          strokeWidth="1.1800364247768669"
+          target="[object Object]"
+        />
+        <link-stub
+          dashed="true"
+          rightAngle="true"
+          source="[object Object]"
+          stroke="grey"
+          strokeWidth="1.1800364247768669"
+          target="[object Object]"
+        />
+        <link-stub
+          dashed="true"
+          rightAngle="true"
+          source="[object Object]"
+          stroke="grey"
+          strokeWidth="1.1800364247768669"
+          target="[object Object]"
+        />
+        <link-stub
+          dashed="true"
+          rightAngle="true"
+          source="[object Object]"
+          stroke="grey"
+          strokeWidth="1.1800364247768669"
+          target="[object Object]"
+        />
+      </g>
+       
+      <!---->
+    </g>
+  </svg>
+   
+  <div
+    class="menu"
+    style="position: absolute; left: 0px; top: 0px; display: none;"
+  >
+    <ul>
+      <li>
+        <a>
+          Select/Deselect
+        </a>
+      </li>
+       
+      <li
+        style="display: none;"
+      >
+        <a>
+          Collapse/Expand
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`Phylogram component Tree from newick works 1`] = `
+<div
+  id="phylogram"
+>
+  <svg
+    height="400"
+    id="svgphylo"
+    width="600"
+  >
+    <g
+      id="groupphylo"
+      transform="translate(10,10)"
+    >
+      <g
+        transform="translate(10, 10)"
+      >
+        <link-stub
+          rightAngle="true"
+          source="[object Object]"
+          stroke="black"
+          strokeWidth="2.3600728495537338"
+          target="[object Object]"
+        />
+        <link-stub
+          rightAngle="true"
+          source="[object Object]"
+          stroke="black"
+          strokeWidth="2.3600728495537338"
+          target="[object Object]"
+        />
+        <link-stub
+          rightAngle="true"
+          source="[object Object]"
+          stroke="black"
+          strokeWidth="2.3600728495537338"
+          target="[object Object]"
+        />
+        <link-stub
+          rightAngle="true"
+          source="[object Object]"
+          stroke="black"
+          strokeWidth="2.3600728495537338"
+          target="[object Object]"
+        />
+        <link-stub
+          rightAngle="true"
+          source="[object Object]"
+          stroke="black"
+          strokeWidth="2.3600728495537338"
+          target="[object Object]"
+        />
+        <link-stub
+          rightAngle="true"
+          source="[object Object]"
+          stroke="black"
+          strokeWidth="2.3600728495537338"
+          target="[object Object]"
+        />
+        <link-stub
+          rightAngle="true"
+          source="[object Object]"
+          stroke="black"
+          strokeWidth="2.3600728495537338"
+          target="[object Object]"
+        />
+        <link-stub
+          rightAngle="true"
+          source="[object Object]"
+          stroke="black"
+          strokeWidth="2.3600728495537338"
+          target="[object Object]"
+        />
+      </g>
+       
+      <g
+        transform="translate(10, 10)"
+      >
+        <node-stub
+          fill="greenyellow"
+          id="node8"
+          show="true"
+          size="7.874067520329519"
+          strokeColor="darkblue"
+          x="136.5"
+          y="200"
+        />
+        <node-stub
+          fill="lightsalmon"
+          id="node6"
+          size="7.874067520329519"
+          strokeColor="darkblue"
+          x="234"
+          y="260"
+        />
+        <node-stub
+          fill="lightsalmon"
+          id="node2"
+          size="7.874067520329519"
+          strokeColor="darkblue"
+          x="156"
+          y="320"
+        />
+        <node-stub
+          fill="lightsalmon"
+          id="node5"
+          size="7.874067520329519"
+          strokeColor="darkblue"
+          x="312"
+          y="300"
+        />
+        <node-stub
+          fill="steelblue"
+          id="E"
+          show="true"
+          size="7.874067520329519"
+          strokeColor="darkblue"
+          x="39"
+          y="340"
+        />
+        <node-stub
+          fill="steelblue"
+          id="B"
+          show="true"
+          size="7.874067520329519"
+          strokeColor="darkblue"
+          x="117"
+          y="380"
+        />
+        <node-stub
+          fill="steelblue"
+          id="A"
+          show="true"
+          size="7.874067520329519"
+          strokeColor="darkblue"
+          x="195"
+          y="360"
+        />
+        <node-stub
+          fill="steelblue"
+          id="C"
+          show="true"
+          size="7.874067520329519"
+          strokeColor="darkblue"
+          x="273"
+          y="400"
+        />
+        <node-stub
+          fill="steelblue"
+          id="D"
+          show="true"
+          size="7.874067520329519"
+          strokeColor="darkblue"
+          x="351"
+          y="360"
+        />
+      </g>
+       
+      <g
+        transform="translate(10, 10)"
+      >
+        <label-stub
+          background=""
+          borderColor="black"
+          borderWidth="0"
+          color="black"
+          fontWeight="normal"
+          id="node8"
+          label=""
+          size="7.874067520329519"
+          x="136.5"
+          y="215.74813504065904"
+        />
+        <label-stub
+          background=""
+          borderColor="black"
+          borderWidth="0"
+          color="black"
+          fontWeight="normal"
+          id="node6"
+          label=""
+          size="7.874067520329519"
+          x="234"
+          y="275.74813504065906"
+        />
+        <label-stub
+          background=""
+          borderColor="black"
+          borderWidth="0"
+          color="black"
+          fontWeight="normal"
+          id="node2"
+          label=""
+          size="7.874067520329519"
+          x="156"
+          y="335.74813504065906"
+        />
+        <label-stub
+          background=""
+          borderColor="black"
+          borderWidth="0"
+          color="black"
+          fontWeight="normal"
+          id="node5"
+          label=""
+          size="7.874067520329519"
+          x="312"
+          y="315.74813504065906"
+        />
+        <label-stub
+          background=""
+          borderColor="black"
+          borderWidth="0"
+          color="black"
+          fontWeight="normal"
+          id="E"
+          label="E"
+          size="7.874067520329519"
+          x="39"
+          y="355.74813504065906"
+        />
+        <label-stub
+          background=""
+          borderColor="black"
+          borderWidth="0"
+          color="black"
+          fontWeight="normal"
+          id="B"
+          label="B"
+          size="7.874067520329519"
+          x="117"
+          y="395.74813504065906"
+        />
+        <label-stub
+          background=""
+          borderColor="black"
+          borderWidth="0"
+          color="black"
+          fontWeight="normal"
+          id="A"
+          label="A"
+          size="7.874067520329519"
+          x="195"
+          y="375.74813504065906"
+        />
+        <label-stub
+          background=""
+          borderColor="black"
+          borderWidth="0"
+          color="black"
+          fontWeight="normal"
+          id="C"
+          label="C"
+          size="7.874067520329519"
+          x="273"
+          y="415.74813504065906"
+        />
+        <label-stub
+          background=""
+          borderColor="black"
+          borderWidth="0"
+          color="black"
+          fontWeight="normal"
+          id="D"
+          label="D"
+          size="7.874067520329519"
+          x="351"
+          y="375.74813504065906"
+        />
+      </g>
+       
+      <g
+        style="display: none;"
+        transform="translate(10, 10)"
+      >
+        <link-stub
+          dashed="true"
+          rightAngle="true"
+          source="[object Object]"
+          stroke="grey"
+          strokeWidth="1.1800364247768669"
+          target="[object Object]"
+        />
+        <link-stub
+          dashed="true"
+          rightAngle="true"
+          source="[object Object]"
+          stroke="grey"
+          strokeWidth="1.1800364247768669"
+          target="[object Object]"
+        />
+        <link-stub
+          dashed="true"
+          rightAngle="true"
+          source="[object Object]"
+          stroke="grey"
+          strokeWidth="1.1800364247768669"
+          target="[object Object]"
+        />
+        <link-stub
+          dashed="true"
+          rightAngle="true"
+          source="[object Object]"
+          stroke="grey"
+          strokeWidth="1.1800364247768669"
+          target="[object Object]"
+        />
+        <link-stub
+          dashed="true"
+          rightAngle="true"
+          source="[object Object]"
+          stroke="grey"
+          strokeWidth="1.1800364247768669"
+          target="[object Object]"
+        />
+      </g>
+       
+      <!---->
+    </g>
+  </svg>
+   
+  <div
+    class="menu"
+    style="position: absolute; left: 0px; top: 0px; display: none;"
+  >
+    <ul>
+      <li>
+        <a>
+          Select/Deselect
+        </a>
+      </li>
+       
+      <li
+        style="display: none;"
+      >
+        <a>
+          Collapse/Expand
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`Phylogram component does not render if no props inputTree or newick 1`] = `
+<div
+  id="phylogram"
+>
+  <!---->
+   
+  <div
+    class="menu"
+    style="position: absolute; left: 0px; top: 0px; display: none;"
+  >
+    <ul>
+      <li>
+        <a>
+          Select/Deselect
+        </a>
+      </li>
+       
+      <li
+        style="display: none;"
+      >
+        <a>
+          Collapse/Expand
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
