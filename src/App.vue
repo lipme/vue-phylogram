@@ -45,8 +45,6 @@
           <input type="text" name="collapse" v-model="collapsed" />
           <br />
           <br />
-          <button @click.prevent="resetZoom">Reset Zoom</button>
-          <br />
           <div v-if="treeType=='jsonExample'">
             <b>Metadata:</b>
             <br />Pies:
@@ -363,11 +361,6 @@ export default {
       } else {
         return 2
       }
-    }
-  },
-  methods: {
-    resetZoom () {
-      this.$refs.phylogram.resetZoom()
     }
   }
 }

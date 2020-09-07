@@ -1,85 +1,93 @@
 <template>
   <div id="phylogram" @click="hideMenu">
-    <svg id="svgphylo" v-if="!error" :width="width" :height="height">
-      <g :transform="translationString" id="groupphylo">
-        <g transform="translate(10, 10)">
-          <Link
-            v-for="link in d3Links"
-            :key="link.id"
-            :source="link.source"
-            :target="link.target"
-            :right-angle="rightAngle"
-            :circular="circular"
-            :stroke-width="link.selected ? linkWidth * 1.5 : linkWidth"
-            :stroke="getBranchColor(link)"
-          />
+    <SvgPanZoom
+      :style="svgStyle"
+      :zoomEnabled="true"
+      :controlIconsEnabled="true"
+      :fit="false"
+      :center="true"
+    >
+      <svg id="svgphylo" v-if="!error" :width="width" :height="height">
+        <g :transform="translationString" id="groupphylo">
+          <g transform="translate(10, 10)">
+            <Link
+              v-for="link in d3Links"
+              :key="link.id"
+              :source="link.source"
+              :target="link.target"
+              :right-angle="rightAngle"
+              :circular="circular"
+              :stroke-width="link.selected ? linkWidth * 1.5 : linkWidth"
+              :stroke="getBranchColor(link)"
+            />
+          </g>
+          <g transform="translate(10, 10)">
+            <Node
+              v-for="node in d3Nodes"
+              :show="getNodeShow(node)"
+              :key="node.id"
+              :x="node.x"
+              :y="node.y"
+              :circular="circular"
+              :id="node.data.id"
+              :size="getNodeSize(node)"
+              :fill="getNodeFillColor(node)"
+              :stroke-color="getNodeStrokeColor(node)"
+              @click.native.stop="clickNode($event, node)"
+              :collapsed="isCollapsed(node)"
+            />
+          </g>
+          <g transform="translate(10, 10)">
+            <Label
+              v-for="node in d3Nodes"
+              v-show="getDisplayLabel(node)"
+              :key="node.id"
+              :x="node.x"
+              :y="alignLabels && node.type==='leaf' ? maxY : node.y+getNodeSize(node)*2"
+              :label="node.data.name"
+              :circular="circular"
+              :id="node.data.id"
+              :size="getNodeSize(node)"
+              @click.native.stop="clickNode($event, node)"
+              :color="getLabelColor(node)"
+              :background="getLabelBackgroundColor(node)"
+              :borderWidth="getLabelBorderWidth(node)"
+              :borderColor="getLabelBorderColor(node)"
+              :font-weight="getLabelFontWeight(node)"
+            />
+          </g>
+          <g v-show="alignLabels" transform="translate(10, 10)">
+            <Link
+              v-for="node in d3Leaves"
+              v-show="getDisplayLabel(node)"
+              :key="node.id"
+              :source="{x:node.x, y:node.y+nodeWidth}"
+              :target="{x:node.x, y:maxY}"
+              :right-angle="rightAngle"
+              :circular="circular"
+              :stroke-width="linkWidth/2"
+              :dashed="true"
+              stroke="grey"
+            />
+          </g>
+          <g v-if="hasPieMetadata && showPies" transform="translate(10, 10)">
+            <PieNode
+              @click.native.stop="clickNode($event, node)"
+              v-for="node in d3PieNodes"
+              :key="node.id"
+              :x="node.x"
+              :y="node.y"
+              :type="node.type"
+              :circular="circular"
+              :id="node.data.id"
+              :selected="node.selected"
+              :size="pies[node.data.id].size ? nodeWidth*pies[node.data.id].size : nodeWidth "
+              :data="pies[node.data.id].data ? pies[node.data.id].data : []"
+            />
+          </g>
         </g>
-        <g transform="translate(10, 10)">
-          <Node
-            v-for="node in d3Nodes"
-            :show="getNodeShow(node)"
-            :key="node.id"
-            :x="node.x"
-            :y="node.y"
-            :circular="circular"
-            :id="node.data.id"
-            :size="getNodeSize(node)"
-            :fill="getNodeFillColor(node)"
-            :stroke-color="getNodeStrokeColor(node)"
-            @click.native.stop="clickNode($event, node)"
-            :collapsed="isCollapsed(node)"
-          />
-        </g>
-        <g transform="translate(10, 10)">
-          <Label
-            v-for="node in d3Nodes"
-            v-show="getDisplayLabel(node)"
-            :key="node.id"
-            :x="node.x"
-            :y="alignLabels && node.type==='leaf' ? maxY : node.y+getNodeSize(node)*2"
-            :label="node.data.name"
-            :circular="circular"
-            :id="node.data.id"
-            :size="getNodeSize(node)"
-            @click.native.stop="clickNode($event, node)"
-            :color="getLabelColor(node)"
-            :background="getLabelBackgroundColor(node)"
-            :borderWidth="getLabelBorderWidth(node)"
-            :borderColor="getLabelBorderColor(node)"
-            :font-weight="getLabelFontWeight(node)"
-          />
-        </g>
-        <g v-show="alignLabels" transform="translate(10, 10)">
-          <Link
-            v-for="node in d3Leaves"
-            v-show="getDisplayLabel(node)"
-            :key="node.id"
-            :source="{x:node.x, y:node.y+nodeWidth}"
-            :target="{x:node.x, y:maxY}"
-            :right-angle="rightAngle"
-            :circular="circular"
-            :stroke-width="linkWidth/2"
-            :dashed="true"
-            stroke="grey"
-          />
-        </g>
-        <g v-if="hasPieMetadata && showPies" transform="translate(10, 10)">
-          <PieNode
-            @click.native.stop="clickNode($event, node)"
-            v-for="node in d3PieNodes"
-            :key="node.id"
-            :x="node.x"
-            :y="node.y"
-            :type="node.type"
-            :circular="circular"
-            :id="node.data.id"
-            :selected="node.selected"
-            :size="pies[node.data.id].size ? nodeWidth*pies[node.data.id].size : nodeWidth "
-            :data="pies[node.data.id].data ? pies[node.data.id].data : []"
-          />
-        </g>
-      </g>
-    </svg>
+      </svg>
+    </SvgPanZoom>
     <div
       @click="hideMenu"
       v-show="showMenu"
@@ -103,6 +111,7 @@
 import _ from 'lodash'
 import Newick from '@/lib/newick.js'
 import * as d3 from 'd3'
+import SvgPanZoom from 'vue-svg-pan-zoom'
 
 import Node from '@/components/node'
 import Link from '@/components/link'
@@ -115,7 +124,8 @@ export default {
     Node,
     Link,
     Label,
-    PieNode
+    PieNode,
+    SvgPanZoom
   },
   props: {
     width: {
@@ -212,8 +222,6 @@ export default {
   },
   data () {
     return {
-      svg: null,
-      zoom: null,
       selectedNodes: [],
       currentNode: null,
       currentNodePosition: { x: 0, y: 0 },
@@ -236,12 +244,8 @@ export default {
   },
   mounted () {
     if (this.error === false) {
-      import('svg-pan-zoom').then((module) => {
-        const svgPanZoom = module.default
-        this.zoom = svgPanZoom('#svgphylo')
-        this.selectFromProp()
-        this.collapseFromProp()
-      })
+      this.selectFromProp()
+      this.collapseFromProp()
     }
   },
   watch: {
@@ -261,6 +265,9 @@ export default {
     }
   },
   computed: {
+    svgStyle () {
+      return 'width: ' + this.width + 'px; height: ' + this.height + 'px;'
+    },
     /**
      * Tree computed from the newick string
      * or set with inputTree
@@ -510,9 +517,6 @@ export default {
         return d3.scaleLinear().domain([0, this.width]).range([0, this.width])
       }
     },
-    resetZoom () {
-      this.zoom.reset()
-    },
     clickNode (e, node) {
       this.currentNode = node
       this.currentNodePosition = { x: e.pageX + 10, y: e.pageY + 10 }
@@ -619,7 +623,9 @@ export default {
       return this.isSelected(node) ? 'bold' : 'normal'
     },
     getDisplayLabel (node) {
-      return node.data.branchset ? this.displayInnerLabels : this.displayLeafLabels
+      return node.data.branchset
+        ? this.displayInnerLabels
+        : this.displayLeafLabels
     },
     getBranchColor (link) {
       if (link.selected) {
