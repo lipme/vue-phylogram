@@ -128,6 +128,10 @@ export default {
     SvgPanZoom
   },
   props: {
+    branchLengthKey: {
+      type: String,
+      default: 'length'
+    },
     width: {
       type: Number,
       default: 600
@@ -303,9 +307,9 @@ export default {
             .sum(function (d) {
               return d.branchset ? 1 : 0
             })
-            .sort(function (a, b) {
+            .sort((a, b) => {
               return (
-                a.value - b.value || d3.descending(a.data.length, b.data.length)
+                a.value - b.value || d3.descending(a.data[this.branchLengthKey], b.data[this.branchLengthKey])
               )
             })
 
@@ -393,9 +397,9 @@ export default {
             }
           }
         }
-        visitPreOrder(nodes[0], function (node) {
+        visitPreOrder(nodes[0], node => {
           node.rootDist =
-            (node.parent ? node.parent.rootDist : 0) + (node.data.length || 0)
+            (node.parent ? node.parent.rootDist : 0) + (node.data[this.branchLengthKey] || 0)
         })
 
         const yScale = this.yScale(nodes)

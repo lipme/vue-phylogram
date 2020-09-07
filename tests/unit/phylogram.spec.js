@@ -50,6 +50,56 @@ const jsonTree = {
   ]
 }
 
+const jsonTreeWithOtherLengthKey = {
+  id: 'ABCDE',
+  branchset: [
+    {
+      id: 'ABCD',
+      branchLength: 0.2,
+      branchset: [
+        {
+          branchLength: 0.3,
+          id: 'AB',
+          branchset: [
+            {
+              name: 'A',
+              id: 'A',
+              branchLength: 0.2
+            },
+            {
+              id: 'B',
+              name: 'B',
+              branchLength: 0.3
+            }
+          ]
+        },
+        {
+          branchLength: 0.2,
+          id: 'CD',
+          name: 'CD',
+          branchset: [
+            {
+              id: 'C',
+              name: 'C',
+              branchLength: 0.5
+            },
+            {
+              id: 'D',
+              name: 'D',
+              branchLength: 0.3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'E',
+      name: 'E',
+      branchLength: 0.7
+    }
+  ]
+}
+
 const newick = '(((A:0.2, B:0.3):0.3,(C:0.5, D:0.3):0.2):0.3, E:0.7):1.0'
 
 describe('Phylogram component', () => {
@@ -74,6 +124,16 @@ describe('Phylogram component', () => {
     const comp = shallowMount(Phylogram, {
       propsData: {
         newick: newick
+      }
+    })
+
+    expect(comp.element).toMatchSnapshot()
+  })
+  it('Tree from inputTree with different branch key works', () => {
+    const comp = shallowMount(Phylogram, {
+      propsData: {
+        inputTree: jsonTreeWithOtherLengthKey,
+        branchLengthKey: 'branchLength'
       }
     })
 
