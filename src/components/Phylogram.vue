@@ -1,7 +1,5 @@
 <template>
-  <div id="phylogram"
-  @click="hideMenu"
-   >
+  <div id="phylogram" @click="hideMenu">
     <svg id="svgphylo" v-if="!error" :width="width" :height="height">
       <g :transform="translationString" id="groupphylo">
         <g transform="translate(10, 10)">
@@ -23,10 +21,8 @@
             :key="node.id"
             :x="node.x"
             :y="node.y"
-            :type="node.type"
             :circular="circular"
             :id="node.data.id"
-            :selected="selectedNodes.includes(node.data.id)"
             :size="getNodeSize(node)"
             :fill="getNodeFillColor(node)"
             :stroke-color="getNodeStrokeColor(node)"
@@ -40,11 +36,9 @@
             :key="node.id"
             :x="node.x"
             :y="alignLabels && node.type==='leaf' ? maxY : node.y+getNodeSize(node)*2"
-            :type="node.type"
             :label="node.data.name"
             :circular="circular"
             :id="node.data.id"
-            :selected="selectedNodes.includes(node.data.id)"
             :size="getNodeSize(node)"
             @click.native.stop="clickNode($event, node)"
             :color="getLabelColor(node)"
@@ -84,21 +78,22 @@
         </g>
       </g>
     </svg>
-    <div @click="hideMenu" v-show="showMenu" class="menu" ref="menu"
-     :style="{position:'absolute', left:currentNodePosition.x+'px', top:currentNodePosition.y+'px'}">
-        <ul>
-            <li>
-                <a @click.prevent="toggleSelect(currentNode)">
-                    Select/Deselect
-                </a>
-            </li>
-            <li v-show="currentNode != null && (currentNode.type!=='leaf' || isCollapsed(currentNode))">
-                <a @click.prevent="toggleCollapse(currentNode)">
-                    Collapse/Expand
-                </a>
-            </li>
-        </ul>
-        </div>
+    <div
+      @click="hideMenu"
+      v-show="showMenu"
+      class="menu"
+      ref="menu"
+      :style="{position:'absolute', left:currentNodePosition.x+'px', top:currentNodePosition.y+'px'}"
+    >
+      <ul>
+        <li>
+          <a @click.prevent="toggleSelect(currentNode)">Select/Deselect</a>
+        </li>
+        <li v-show="currentNode != null && (currentNode.type!=='leaf' || isCollapsed(currentNode))">
+          <a @click.prevent="toggleCollapse(currentNode)">Collapse/Expand</a>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -179,9 +174,13 @@ export default {
       type: Boolean,
       default: true
     },
-    displayNodes: {
+    displayLeaves: {
       type: Boolean,
       default: true
+    },
+    displayInnerNodes: {
+      type: Boolean,
+      default: false
     },
     labelStyles: {
       type: Object,
@@ -203,7 +202,6 @@ export default {
       type: String,
       default: ''
     }
-
   },
   data () {
     return {
@@ -231,7 +229,7 @@ export default {
   },
   mounted () {
     if (this.error === false) {
-      import('svg-pan-zoom').then(module => {
+      import('svg-pan-zoom').then((module) => {
         const svgPanZoom = module.default
         this.zoom = svgPanZoom('#svgphylo')
         this.selectFromProp()
@@ -298,7 +296,7 @@ export default {
             })
 
           let i = 0
-          rootNode.each(n => {
+          rootNode.each((n) => {
             i++
             n.selected = false
             n.data.id = n.data.id ? n.data.id : i
@@ -395,23 +393,30 @@ export default {
       return nodes
     },
     d3Leaves () {
-      return this.d3Nodes.filter(n => n.type === 'leaf')
+      return this.d3Nodes.filter((n) => n.type === 'leaf')
     },
     /**
      * Array of d3 links
      */
     d3Links () {
       return this.d3Nodes
-        .map(n => {
+        .map((n) => {
           if (n.parent) {
             let selected = false
-            if (this.selectedNodes.includes(n.data.id) &&
-            this.selectedNodes.includes(n.parent.data.id)) {
+            if (
+              this.selectedNodes.includes(n.data.id) &&
+              this.selectedNodes.includes(n.parent.data.id)
+            ) {
               selected = true
             }
 
             return {
-              source: { x: n.parent.x, y: n.parent.y, selected: n.parent.selected, data: n.parent.data },
+              source: {
+                x: n.parent.x,
+                y: n.parent.y,
+                selected: n.parent.selected,
+                data: n.parent.data
+              },
               target: { x: n.x, y: n.y, selected: n.selected, data: n.data },
               id: n.id,
               selected: selected
@@ -420,7 +425,7 @@ export default {
             return null
           }
         })
-        .filter(n => n !== null)
+        .filter((n) => n !== null)
     },
     /**
      * Translation string for the main svg
@@ -433,21 +438,15 @@ export default {
       }
     },
     linkWidth () {
-      const scale = d3
-        .scaleLog()
-        .domain([3, 500])
-        .range([3, 0.02])
+      const scale = d3.scaleLog().domain([3, 500]).range([3, 0.02])
       return scale(this.d3Nodes.length)
     },
     nodeWidth () {
-      const scale = d3
-        .scaleLog()
-        .domain([3, 500])
-        .range([10, 0.1])
+      const scale = d3.scaleLog().domain([3, 500]).range([10, 0.1])
       return scale(this.d3Nodes.length)
     },
     maxY () {
-      return d3.max(this.d3Nodes.map(n => n.y))
+      return d3.max(this.d3Nodes.map((n) => n.y))
     },
     hasPieMetadata () {
       if (!this.pies || this.pies.length === 0) {
@@ -456,7 +455,9 @@ export default {
       return true
     },
     d3PieNodes () {
-      return this.hasPieMetadata ? this.d3Nodes.filter(n => n.data.id in this.pies) : []
+      return this.hasPieMetadata
+        ? this.d3Nodes.filter((n) => n.data.id in this.pies)
+        : []
     },
     hasLabelStyles () {
       return !(!this.labelStyles || this.labelStyles.length === 0)
@@ -499,10 +500,7 @@ export default {
             (this.circular ? this.width / 2 : this.width) - this.labelWidth
           ])
       } else {
-        return d3
-          .scaleLinear()
-          .domain([0, this.width])
-          .range([0, this.width])
+        return d3.scaleLinear().domain([0, this.width]).range([0, this.width])
       }
     },
     resetZoom () {
@@ -525,7 +523,7 @@ export default {
     selectNode (node) {
       const descendants = node.descendants()
 
-      descendants.forEach(n => {
+      descendants.forEach((n) => {
         // const ind = this.d3Nodes.indexOf(n)
         // n.selected = true
         // this.$set(this.d3Nodes, ind, n)
@@ -542,7 +540,7 @@ export default {
     },
     deselectNode (node) {
       const descendants = node.descendants()
-      descendants.forEach(n => {
+      descendants.forEach((n) => {
         // let ind = this.d3Nodes.indexOf(n)
         // this.$set(this.d3Nodes, ind, n)
         // this.$set(this.d3Nodes[ind], 'selected', false)
@@ -556,7 +554,7 @@ export default {
       this.deselectNode(this.d3RootNode)
     },
     getD3Node (id) {
-      const elts = this.d3Nodes.filter(n => n.data.id === id)
+      const elts = this.d3Nodes.filter((n) => n.data.id === id)
       if (elts.length === 0) {
         return null
       } else {
@@ -621,16 +619,21 @@ export default {
       if (this.hasBranchStyles) {
         if (link.target.data.id in this.branchStyles) {
           const spec = this.branchStyles[link.target.data.id]
-          if ('color' in spec &&
-          (('type' in spec && (spec.type === 'to' || spec.type === 'both')) ||
-          (!('type' in spec)))) {
+          if (
+            'color' in spec &&
+            (('type' in spec && (spec.type === 'to' || spec.type === 'both')) ||
+              !('type' in spec))
+          ) {
             return spec.color
           }
         } else if (link.source.data.id in this.branchStyles) {
           const spec = this.branchStyles[link.source.data.id]
-          if ('color' in spec &&
-          (('type' in spec && (spec.type === 'from' || spec.type === 'both')) ||
-          (!('type' in spec)))) {
+          if (
+            'color' in spec &&
+            (('type' in spec &&
+              (spec.type === 'from' || spec.type === 'both')) ||
+              !('type' in spec))
+          ) {
             return spec.color
           }
         }
@@ -649,8 +652,12 @@ export default {
           }
         }
       }
-      if (node.type === 'root') { return 'greenyellow' }
-      if (node.type === 'inner') { return 'lightsalmon' }
+      if (node.type === 'root') {
+        return 'greenyellow'
+      }
+      if (node.type === 'inner') {
+        return 'lightsalmon'
+      }
       return 'steelblue'
     },
     getNodeStrokeColor (node) {
@@ -675,7 +682,7 @@ export default {
       if (node.type === 'root') {
         return true
       }
-      return this.displayNodes
+      return node.data.branchset ? this.displayInnerNodes : this.displayLeaves
     },
     toggleCollapse (node) {
       this.showMenu = false
@@ -687,7 +694,11 @@ export default {
       }
     },
     collapse (node) {
-      this.newickTree = this._collapseNode(node.data.id, this.newickTree, false)
+      this.newickTree = this._collapseNode(
+        node.data.id,
+        this.newickTree,
+        false
+      )
       this.collapsedNodes.push(node.data.id)
       this.$emit('collapse-nodes', this.collapsedNodes)
     },
@@ -696,7 +707,9 @@ export default {
         collapseChildren = true
       }
       if (node.branchset) {
-        node.branchset.forEach(n => this._collapseNode(id, n, collapseChildren))
+        node.branchset.forEach((n) =>
+          this._collapseNode(id, n, collapseChildren)
+        )
       }
       if (node.branchset && collapseChildren) {
         node._branchset = node.branchset
@@ -751,7 +764,7 @@ export default {
     },
     selectFromProp () {
       const nodeIds = this.selected.split(',')
-      nodeIds.forEach(id => {
+      nodeIds.forEach((id) => {
         const node = this.getD3Node(id)
         if (node !== null) {
           this.selectNode(node)
@@ -760,46 +773,42 @@ export default {
     },
     collapseFromProp () {
       const nodeIds = this.collapsed.split(',')
-      nodeIds.forEach(id => {
+      nodeIds.forEach((id) => {
         const node = this.getD3Node(id)
         if (node !== null) {
           this.collapse(node)
         }
       })
     }
-
   }
 }
 </script>
 
 <style scoped>
-
-.menu{
-  border:3px solid #afb1b2;
-  border-radius:0px 10px 10px 10px;
-  -moz-border-radius:0px 10px 10px 10px;
-  -webkit-border-radius:0px 10px 10px 10px;
- -webkit-box-shadow:17px 10px 17px 0px #5a5353 ;
-  -moz-box-shadow:17px 10px 17px 0px #5a5353 ;
-  box-shadow:17px 10px 17px 0px #5a5353 ;
-  padding:0px;
+.menu {
+  border: 3px solid #afb1b2;
+  border-radius: 0px 10px 10px 10px;
+  -moz-border-radius: 0px 10px 10px 10px;
+  -webkit-border-radius: 0px 10px 10px 10px;
+  -webkit-box-shadow: 17px 10px 17px 0px #5a5353;
+  -moz-box-shadow: 17px 10px 17px 0px #5a5353;
+  box-shadow: 17px 10px 17px 0px #5a5353;
+  padding: 0px;
   background-color: white;
 }
 
-  /* CSS by GenerateCSS.com */
-.menu ul{
+/* CSS by GenerateCSS.com */
+.menu ul {
   list-style-type: none;
   list-style-position: outside;
-  }
+}
 .menu li {
   padding: 0px;
   margin: 0px 5px 0px -25px;
-  font-size:12px;
+  font-size: 12px;
 }
 
-.menu li:hover
-{
-  font-weight: bold  ;
+.menu li:hover {
+  font-weight: bold;
 }
-
 </style>

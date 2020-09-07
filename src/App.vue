@@ -14,8 +14,11 @@
           <input type="checkbox" v-model="displayLabels" />
           <br />
           <br />
-          <br />Display nodes
-          <input type="checkbox" v-model="displayNodes" />
+          <br />Display leaves
+          <input type="checkbox" v-model="displayLeaves" />
+          <br />
+          <br />Display inner nodes
+          <input type="checkbox" v-model="displayInnerNodes" />
           <br />
           <br />Label width:
           <input type="range" min="20" max="500" class="slider" v-model="labelWidth" />
@@ -86,7 +89,8 @@
           :branch-lengths="branchLengths"
           :margin="margin"
           :displayLabels="displayLabels"
-          :displayNodes="displayNodes"
+          :displayLeaves="displayLeaves"
+          :displayInnerNodes="displayInnerNodes"
           :labelWidth="Number(labelWidth)"
           :circular="circular"
           :align-labels="alignLabels"
@@ -106,7 +110,8 @@
           :branch-lengths="branchLengths"
           :margin="margin"
           :displayLabels="displayLabels"
-          :displayNodes="displayNodes"
+          :displayLeaves="displayLeaves"
+          :displayInnerNodes="displayInnerNodes"
           :labelWidth="Number(labelWidth)"
           :circular="circular"
           :align-labels="alignLabels"
@@ -138,7 +143,8 @@ export default {
   data () {
     return {
       displayLabels: true,
-      displayNodes: true,
+      displayLeaves: true,
+      displayInnerNodes: false,
       alignLabels: false,
       labelWidth: 200,
       circular: false,

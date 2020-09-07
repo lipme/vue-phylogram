@@ -52,7 +52,7 @@ The following tree can be represented by two formats : newick or json object.
 ~~~~
  data () {
     return {
-		newick : "((A:0.2, B:0.3):0.3,(C:0.5, D:0.3):0.2):0.3, E:0.7):1.0"
+		newick : "(((A:0.2, B:0.3):0.3,(C:0.5, D:0.3):0.2):0.3, E:0.7):1.0"
 		....
 ~~~~
 
@@ -206,12 +206,20 @@ The labels are displayed by default. To hide them:
 <Phylogram :newick="newick" :display-labels="false" ></Phylogram>
 ~~~~
 
-## Display nodes
+## Display leaves
 
-Currently, only leaves are displayed by default. The inner nodes appear when they are hovered by the mouse. To hide all the nodes:
+Leaves are displayed by default. To hide them:
 
 ~~~~
-<Phylogram :newick="newick" :display-nodes="false" ></Phylogram>
+<Phylogram :newick="newick" :display-leaves="false" ></Phylogram>
+~~~~
+
+## Display inner nodes
+
+Inner nodes are hiddent by default. To show them:
+
+~~~~
+<Phylogram :newick="newick" :display-inner-nodes="true" ></Phylogram>
 ~~~~
 
 ## Align labels
