@@ -388,6 +388,19 @@ Use the "selected" props and put the node ids separateb by commas.
 <Phylogram :inputTree="tree" :collapsed="AB,CD">
 ~~~
 
+## Use a function when a node is clicked
+
+By default, a small menu that enables to select or to collapse the node is displayed when a node is clicked. But you can specify instead a function to launch when a node is clicked
+
+~~~
+<Phylogram :inputTree="tree" :clickNodeFn="customFunction">
+~~~
+
+
+~~~
+customFunction : (node, event) => {console.log("click"s)}
+~~~
+
 ## Events
 
  * select-nodes: when the user selects or deselect one node, returns the array of the selected node ids.

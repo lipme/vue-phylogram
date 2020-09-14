@@ -1,13 +1,14 @@
 <template>
   <div id="phylogram" @click="hideMenu">
     <SvgPanZoom
+      @svgpanzoom="registerSvgPanZoom"
       :style="svgStyle"
       :zoomEnabled="true"
       :controlIconsEnabled="true"
       :fit="false"
       :center="true"
     >
-      <svg id="svgphylo" v-if="!error" :width="width" :height="height">
+      <svg id="svgphylo" ref="svgphylo" v-if="!error" :width="width" :height="height">
         <g :transform="translationString" id="groupphylo">
           <g transform="translate(10, 10)">
             <Link
@@ -89,21 +90,23 @@
       </svg>
     </SvgPanZoom>
     <div
-      @click="hideMenu"
-      v-show="showMenu"
-      class="menu"
-      ref="menu"
-      :style="{position:'absolute', left:currentNodePosition.x+'px', top:currentNodePosition.y+'px'}"
-    >
-      <ul>
-        <li>
-          <a @click.prevent="toggleSelect(currentNode)">Select/Deselect</a>
-        </li>
-        <li v-show="currentNode != null && (currentNode.type!=='leaf' || isCollapsed(currentNode))">
-          <a @click.prevent="toggleCollapse(currentNode)">Collapse/Expand</a>
-        </li>
-      </ul>
-    </div>
+          @click="hideMenu"
+          v-show="showMenu"
+          class="menu"
+          ref="menu"
+          :style="{position:'absolute', left:currentNodePosition.x+'px', top:currentNodePosition.y+'px'}"
+        >
+          <ul>
+            <li>
+              <a @click.prevent="toggleSelect(currentNode)">Select/Deselect</a>
+            </li>
+            <li
+              v-show="currentNode != null && (currentNode.type!=='leaf' || isCollapsed(currentNode))"
+            >
+              <a @click.prevent="toggleCollapse(currentNode)">Collapse/Expand</a>
+            </li>
+          </ul>
+        </div>
   </div>
 </template>
 
@@ -226,6 +229,10 @@ export default {
     collapsed: {
       type: String,
       default: ''
+    },
+    clickNodeFn: {
+      type: Function,
+      default: null
     }
   },
   data () {
@@ -314,7 +321,11 @@ export default {
             })
             .sort((a, b) => {
               return (
-                a.value - b.value || d3.descending(a.data[this.branchLengthKey], b.data[this.branchLengthKey])
+                a.value - b.value ||
+                d3.descending(
+                  a.data[this.branchLengthKey],
+                  b.data[this.branchLengthKey]
+                )
               )
             })
 
@@ -402,10 +413,13 @@ export default {
             }
           }
         }
-        visitPreOrder(nodes[0], node => {
+        visitPreOrder(nodes[0], (node) => {
           let branchLength = 0
           if (this.branchLengthKey in node.data) {
-            branchLength = node.data[this.branchLengthKey] > 0 ? node.data[this.branchLengthKey] : 0
+            branchLength =
+              node.data[this.branchLengthKey] > 0
+                ? node.data[this.branchLengthKey]
+                : 0
           }
           node.rootDist =
             (node.parent ? node.parent.rootDist : 0) + branchLength
@@ -531,9 +545,13 @@ export default {
       }
     },
     clickNode (e, node) {
-      this.currentNode = node
-      this.currentNodePosition = { x: e.pageX + 10, y: e.pageY + 10 }
-      this.displayMenu()
+      if (this.clickNodeFn === null) {
+        this.currentNode = node
+        this.currentNodePosition = { x: e.pageX + 10, y: e.pageY + 10 }
+        this.displayMenu()
+      } else {
+        this.clickNodeFn(e, node)
+      }
     },
     toggleSelect (node) {
       this.hideMenu()
@@ -711,7 +729,9 @@ export default {
       if (node.type === 'root') {
         return true
       }
-      return node.data[this.branchKey] ? this.displayInnerNodes : this.displayLeaves
+      return node.data[this.branchKey]
+        ? this.displayInnerNodes
+        : this.displayLeaves
     },
     toggleCollapse (node) {
       this.showMenu = false
@@ -808,6 +828,9 @@ export default {
           this.collapse(node)
         }
       })
+    },
+    registerSvgPanZoom (svgpanzoom) {
+      this.svgpanzoom = svgpanzoom
     }
   }
 }
