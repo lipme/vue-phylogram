@@ -403,8 +403,12 @@ export default {
           }
         }
         visitPreOrder(nodes[0], node => {
+          let branchLength = 0
+          if (this.branchLengthKey in node.data) {
+            branchLength = node.data[this.branchLengthKey] > 0 ? node.data[this.branchLengthKey] : 0
+          }
           node.rootDist =
-            (node.parent ? node.parent.rootDist : 0) + (node.data[this.branchLengthKey] || 0)
+            (node.parent ? node.parent.rootDist : 0) + branchLength
         })
 
         const yScale = this.yScale(nodes)

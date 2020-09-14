@@ -69,8 +69,6 @@
     "vue-template-compiler": "^2.6.11"
   },
   "files": [
-    "dist/*",
-    "public/images/*",
-    "public/lib/*"
+    "dist/*"
   ]
 }
