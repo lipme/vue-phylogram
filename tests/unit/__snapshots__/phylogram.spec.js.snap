@@ -6,7 +6,6 @@ exports[`Phylogram component Tree from inputTree with different branch key works
 >
   <svgpanzoom-stub
     center="true"
-    controliconsenabled="true"
     dblclickzoomenabled="true"
     maxzoom="10"
     minzoom="0.5"
@@ -366,7 +365,6 @@ exports[`Phylogram component Tree from inputTree with different length key works
 >
   <svgpanzoom-stub
     center="true"
-    controliconsenabled="true"
     dblclickzoomenabled="true"
     maxzoom="10"
     minzoom="0.5"
@@ -726,7 +724,6 @@ exports[`Phylogram component Tree from inputTree works 1`] = `
 >
   <svgpanzoom-stub
     center="true"
-    controliconsenabled="true"
     dblclickzoomenabled="true"
     maxzoom="10"
     minzoom="0.5"
@@ -1086,7 +1083,6 @@ exports[`Phylogram component Tree from newick works 1`] = `
 >
   <svgpanzoom-stub
     center="true"
-    controliconsenabled="true"
     dblclickzoomenabled="true"
     maxzoom="10"
     minzoom="0.5"
@@ -1449,7 +1445,6 @@ exports[`Phylogram component does not render if no props inputTree or newick 1`]
 >
   <svgpanzoom-stub
     center="true"
-    controliconsenabled="true"
     dblclickzoomenabled="true"
     maxzoom="10"
     minzoom="0.5"

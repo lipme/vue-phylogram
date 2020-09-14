@@ -4,7 +4,6 @@
       @svgpanzoom="registerSvgPanZoom"
       :style="svgStyle"
       :zoomEnabled="true"
-      :controlIconsEnabled="true"
       :fit="false"
       :center="true"
     >
@@ -90,23 +89,21 @@
       </svg>
     </SvgPanZoom>
     <div
-          @click="hideMenu"
-          v-show="showMenu"
-          class="menu"
-          ref="menu"
-          :style="{position:'absolute', left:currentNodePosition.x+'px', top:currentNodePosition.y+'px'}"
-        >
-          <ul>
-            <li>
-              <a @click.prevent="toggleSelect(currentNode)">Select/Deselect</a>
-            </li>
-            <li
-              v-show="currentNode != null && (currentNode.type!=='leaf' || isCollapsed(currentNode))"
-            >
-              <a @click.prevent="toggleCollapse(currentNode)">Collapse/Expand</a>
-            </li>
-          </ul>
-        </div>
+      @click="hideMenu"
+      v-show="showMenu"
+      class="menu"
+      ref="menu"
+      :style="{position:'absolute', left:currentNodePosition.x+'px', top:currentNodePosition.y+'px'}"
+    >
+      <ul>
+        <li>
+          <a @click.prevent="toggleSelect(currentNode)">Select/Deselect</a>
+        </li>
+        <li v-show="currentNode != null && (currentNode.type!=='leaf' || isCollapsed(currentNode))">
+          <a @click.prevent="toggleCollapse(currentNode)">Collapse/Expand</a>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -831,6 +828,27 @@ export default {
     },
     registerSvgPanZoom (svgpanzoom) {
       this.svgpanzoom = svgpanzoom
+    },
+    zoomOut () {
+      this.svgpanzoom.zoomOut()
+    },
+    zoomIn () {
+      this.svgpanzoom.zoomIn()
+    },
+    reset () {
+      this.svgpanzoom.reset()
+    },
+    left () {
+      this.svgpanzoom.panBy({ x: -5, y: 0 })
+    },
+    right () {
+      this.svgpanzoom.panBy({ x: 5, y: 0 })
+    },
+    up () {
+      this.svgpanzoom.panBy({ x: 0, y: 5 })
+    },
+    down () {
+      this.svgpanzoom.panBy({ x: 0, y: -5 })
     }
   }
 }
@@ -863,4 +881,5 @@ export default {
 .menu li:hover {
   font-weight: bold;
 }
+
 </style>
