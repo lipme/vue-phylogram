@@ -1,5 +1,5 @@
 <template>
-  <div id="phylogram" @click="hideMenu">
+  <div id="phylogram" @click="clickOutside">
     <SvgPanZoom
       @svgpanzoom="registerSvgPanZoom"
       :style="svgStyle"
@@ -33,7 +33,8 @@
               :size="getNodeSize(node)"
               :fill="getNodeFillColor(node)"
               :stroke-color="getNodeStrokeColor(node)"
-              @click.native.stop="clickNode($event, node)"
+              @contextmenu.native.prevent="rightClickNode($event, node)"
+              @click.native.prevent="clickNode($event, node)"
               :collapsed="isCollapsed(node)"
             />
           </g>
@@ -48,7 +49,8 @@
               :circular="circular"
               :id="node.data.id"
               :size="getNodeSize(node)"
-              @click.native.stop="clickNode($event, node)"
+              @contextmenu.native.prevent="rightClickNode($event, node)"
+              @click="clickNode($event, node)"
               :color="getLabelColor(node)"
               :background="getLabelBackgroundColor(node)"
               :borderWidth="getLabelBorderWidth(node)"
@@ -72,7 +74,7 @@
           </g>
           <g v-if="hasPieMetadata && showPies" transform="translate(10, 10)">
             <PieNode
-              @click.native.stop="clickNode($event, node)"
+              @contextmenu.native.prevent="rightClickNode($event, node)"
               v-for="node in d3PieNodes"
               :key="node.id"
               :x="node.x"
@@ -88,22 +90,6 @@
         </g>
       </svg>
     </SvgPanZoom>
-    <div
-      @click="hideMenu"
-      v-show="showMenu"
-      class="menu"
-      ref="menu"
-      :style="{position:'absolute', left:currentNodePosition.x+'px', top:currentNodePosition.y+'px'}"
-    >
-      <ul>
-        <li>
-          <a @click.prevent="toggleSelect(currentNode)">Select/Deselect</a>
-        </li>
-        <li v-show="currentNode != null && (currentNode.type!=='leaf' || isCollapsed(currentNode))">
-          <a @click.prevent="toggleCollapse(currentNode)">Collapse/Expand</a>
-        </li>
-      </ul>
-    </div>
   </div>
 </template>
 
@@ -226,18 +212,11 @@ export default {
     collapsed: {
       type: String,
       default: ''
-    },
-    clickNodeFn: {
-      type: Function,
-      default: null
     }
   },
   data () {
     return {
       selectedNodes: [],
-      currentNode: null,
-      currentNodePosition: { x: 0, y: 0 },
-      showMenu: false,
       d3RootNodeProxy: null,
       newickTreeProxy: null,
       collapsedNodes: [],
@@ -542,17 +521,15 @@ export default {
       }
     },
     clickNode (e, node) {
-      if (this.clickNodeFn === null) {
-        this.currentNode = node
-        this.currentNodePosition = { x: e.pageX + 10, y: e.pageY + 10 }
-        this.displayMenu()
-      } else {
-        this.clickNodeFn(e, node)
-      }
+      this.$emit('click-node', e, node)
+    },
+    clickOutside (e) {
+      this.$emit('click-outside', e)
+    },
+    rightClickNode (e, node) {
+      this.$emit('right-click-node', e, node)
     },
     toggleSelect (node) {
-      this.hideMenu()
-
       if (this.isSelected(node) === false) {
         this.selectNode(node)
       } else {
@@ -731,8 +708,6 @@ export default {
         : this.displayLeaves
     },
     toggleCollapse (node) {
-      this.showMenu = false
-
       if (node.children) {
         this.collapse(node)
       } else if (node.data._branchset) {
@@ -796,15 +771,6 @@ export default {
     expandAll () {
       this.expand(this.d3RootNode)
     },
-    toggleMenu () {
-      this.showMenu = !this.showMenu
-    },
-    hideMenu () {
-      this.showMenu = false
-    },
-    displayMenu () {
-      this.showMenu = true
-    },
     isCollapsed (node) {
       return !!node.data._branchset
     },
@@ -844,42 +810,12 @@ export default {
     right () {
       this.svgpanzoom.panBy({ x: 5, y: 0 })
     },
-    up () {
+    down () {
       this.svgpanzoom.panBy({ x: 0, y: 5 })
     },
-    down () {
+    up () {
       this.svgpanzoom.panBy({ x: 0, y: -5 })
     }
   }
 }
 </script>
-
-<style scoped>
-.menu {
-  border: 3px solid #afb1b2;
-  border-radius: 0px 10px 10px 10px;
-  -moz-border-radius: 0px 10px 10px 10px;
-  -webkit-border-radius: 0px 10px 10px 10px;
-  -webkit-box-shadow: 17px 10px 17px 0px #5a5353;
-  -moz-box-shadow: 17px 10px 17px 0px #5a5353;
-  box-shadow: 17px 10px 17px 0px #5a5353;
-  padding: 0px;
-  background-color: white;
-}
-
-/* CSS by GenerateCSS.com */
-.menu ul {
-  list-style-type: none;
-  list-style-position: outside;
-}
-.menu li {
-  padding: 0px;
-  margin: 0px 5px 0px -25px;
-  font-size: 12px;
-}
-
-.menu li:hover {
-  font-weight: bold;
-}
-
-</style>
