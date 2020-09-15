@@ -85,13 +85,13 @@ export default {
 <style scoped>
 
 .transparent {
-  opacity:0%;
+  opacity:0;
 }
 
 circle:hover,polygon:hover {
   transition: all 0.5s;
   transform: scale(2);
-  opacity: 100%;
+  opacity: 1;
 }
 
 </style>
