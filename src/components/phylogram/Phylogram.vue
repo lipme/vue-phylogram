@@ -35,6 +35,7 @@
               :stroke-color="getNodeStrokeColor(node)"
               @contextmenu.native.prevent="rightClickNode($event, node)"
               @click.native.prevent="clickNode($event, node)"
+              @mouseover.native.prevent="hoverNode($event, node)"
               :collapsed="isCollapsed(node)"
             />
           </g>
@@ -49,8 +50,9 @@
               :circular="circular"
               :id="node.data.id"
               :size="getNodeSize(node)"
-              @contextmenu.native.prevent="rightClickNode($event, node)"
-              @click="clickNode($event, node)"
+              @contextmenu.native.prevent="rightClickLabel($event, node)"
+              @click="clickLabel($event, node)"
+              @mouseover.native.prevent="hoverLabel($event, node)"
               :color="getLabelColor(node)"
               :background="getLabelBackgroundColor(node)"
               :borderWidth="getLabelBorderWidth(node)"
@@ -75,6 +77,8 @@
           <g v-if="hasPieMetadata && showPies" transform="translate(10, 10)">
             <PieNode
               @contextmenu.native.prevent="rightClickNode($event, node)"
+              @click.native.prevent="clickNode($event, node)"
+              @mouseover.native.prevent="hoverNode($event, node)"
               v-for="node in d3PieNodes"
               :key="node.id"
               :x="node.x"
@@ -520,15 +524,6 @@ export default {
         return d3.scaleLinear().domain([0, this.width]).range([0, this.width])
       }
     },
-    clickNode (e, node) {
-      this.$emit('click-node', e, node)
-    },
-    clickOutside (e) {
-      this.$emit('click-outside', e)
-    },
-    rightClickNode (e, node) {
-      this.$emit('right-click-node', e, node)
-    },
     toggleSelect (node) {
       if (this.isSelected(node) === false) {
         this.selectNode(node)
@@ -815,6 +810,28 @@ export default {
     },
     up () {
       this.svgpanzoom.panBy({ x: 0, y: -5 })
+    },
+    // events
+    clickNode (e, node) {
+      this.$emit('click-node', e, node)
+    },
+    clickOutside (e) {
+      this.$emit('click-outside', e)
+    },
+    rightClickNode (e, node) {
+      this.$emit('right-click-node', e, node)
+    },
+    hoverNode (e, node) {
+      this.$emit('hover-node', e, node)
+    },
+    clickLabel (e, node) {
+      this.$emit('click-label', e, node)
+    },
+    rightClickLabel (e, node) {
+      this.$emit('right-click-label', e, node)
+    },
+    hoverLabel (e, node) {
+      this.$emit('hover-label', e, node)
     }
   }
 }
