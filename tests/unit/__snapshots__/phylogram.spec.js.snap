@@ -335,27 +335,6 @@ exports[`Phylogram component Tree from inputTree with different branch key works
       </g>
     </svg>
   </svgpanzoom-stub>
-   
-  <div
-    class="menu"
-    style="position: absolute; left: 0px; top: 0px; display: none;"
-  >
-    <ul>
-      <li>
-        <a>
-          Select/Deselect
-        </a>
-      </li>
-       
-      <li
-        style="display: none;"
-      >
-        <a>
-          Collapse/Expand
-        </a>
-      </li>
-    </ul>
-  </div>
 </div>
 `;
 
@@ -694,27 +673,6 @@ exports[`Phylogram component Tree from inputTree with different length key works
       </g>
     </svg>
   </svgpanzoom-stub>
-   
-  <div
-    class="menu"
-    style="position: absolute; left: 0px; top: 0px; display: none;"
-  >
-    <ul>
-      <li>
-        <a>
-          Select/Deselect
-        </a>
-      </li>
-       
-      <li
-        style="display: none;"
-      >
-        <a>
-          Collapse/Expand
-        </a>
-      </li>
-    </ul>
-  </div>
 </div>
 `;
 
@@ -1053,27 +1011,6 @@ exports[`Phylogram component Tree from inputTree works 1`] = `
       </g>
     </svg>
   </svgpanzoom-stub>
-   
-  <div
-    class="menu"
-    style="position: absolute; left: 0px; top: 0px; display: none;"
-  >
-    <ul>
-      <li>
-        <a>
-          Select/Deselect
-        </a>
-      </li>
-       
-      <li
-        style="display: none;"
-      >
-        <a>
-          Collapse/Expand
-        </a>
-      </li>
-    </ul>
-  </div>
 </div>
 `;
 
@@ -1415,27 +1352,6 @@ exports[`Phylogram component Tree from newick works 1`] = `
       </g>
     </svg>
   </svgpanzoom-stub>
-   
-  <div
-    class="menu"
-    style="position: absolute; left: 0px; top: 0px; display: none;"
-  >
-    <ul>
-      <li>
-        <a>
-          Select/Deselect
-        </a>
-      </li>
-       
-      <li
-        style="display: none;"
-      >
-        <a>
-          Collapse/Expand
-        </a>
-      </li>
-    </ul>
-  </div>
 </div>
 `;
 
@@ -1459,26 +1375,5 @@ exports[`Phylogram component does not render if no props inputTree or newick 1`]
   >
     <!---->
   </svgpanzoom-stub>
-   
-  <div
-    class="menu"
-    style="position: absolute; left: 0px; top: 0px; display: none;"
-  >
-    <ul>
-      <li>
-        <a>
-          Select/Deselect
-        </a>
-      </li>
-       
-      <li
-        style="display: none;"
-      >
-        <a>
-          Collapse/Expand
-        </a>
-      </li>
-    </ul>
-  </div>
 </div>
 `;
