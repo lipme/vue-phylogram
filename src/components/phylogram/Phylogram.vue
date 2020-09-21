@@ -395,31 +395,33 @@ export default {
         }
 
         const root = nodes.find(n => { return n.type === 'root' })
-
-        visitPreOrder(root, (node) => {
-          let branchLength = 0
-          if (this.branchLengthKey in node.data) {
-            branchLength =
+        if (root) {
+          visitPreOrder(root, (node) => {
+            let branchLength = 0
+            if (node.data && this.branchLengthKey in node.data) {
+              branchLength =
               node.data[this.branchLengthKey] > 0
                 ? node.data[this.branchLengthKey]
                 : 0
-          }
-          node.rootDist = 0
-          if (node.parent) {
-            if (node.parent.rootDist) {
-              node.rootDist = node.parent.rootDist
             }
-          }
+            node.rootDist = 0
+            if (node.parent) {
+              if (node.parent.rootDist) {
+                node.rootDist = node.parent.rootDist
+              }
+            }
 
-          node.rootDist += branchLength
-        })
+            node.rootDist += branchLength
+          })
 
-        const yScale = this.yScale(nodes)
+          const yScale = this.yScale(nodes)
 
-        visitPreOrder(root, function (node) {
-          node.y = yScale(node.rootDist)
-        })
+          visitPreOrder(root, function (node) {
+            node.y = yScale(node.rootDist)
+          })
+        }
       }
+
       return nodes
     },
     d3Leaves () {
