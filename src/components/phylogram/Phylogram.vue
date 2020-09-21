@@ -417,8 +417,6 @@ export default {
         const yScale = this.yScale(nodes)
 
         visitPreOrder(root, function (node) {
-          console.log({ node })
-          console.log({ rootDist: node.rootDist })
           node.y = yScale(node.rootDist)
         })
       }
