@@ -393,7 +393,10 @@ export default {
             }
           }
         }
-        visitPreOrder(nodes[0], (node) => {
+
+        const root = nodes.find(n => { return n.type === 'root' })
+
+        visitPreOrder(root, (node) => {
           let branchLength = 0
           if (this.branchLengthKey in node.data) {
             branchLength =
@@ -401,13 +404,21 @@ export default {
                 ? node.data[this.branchLengthKey]
                 : 0
           }
-          node.rootDist =
-            (node.parent ? node.parent.rootDist : 0) + branchLength
+          node.rootDist = 0
+          if (node.parent) {
+            if (node.parent.rootDist) {
+              node.rootDist = node.parent.rootDist
+            }
+          }
+
+          node.rootDist += branchLength
         })
 
         const yScale = this.yScale(nodes)
 
-        visitPreOrder(nodes[0], function (node) {
+        visitPreOrder(root, function (node) {
+          console.log({ node })
+          console.log({ rootDist: node.rootDist })
           node.y = yScale(node.rootDist)
         })
       }
