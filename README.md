@@ -33,7 +33,7 @@ npm install --save vue-phylogram
 ## Import in a .vue file
 
 ~~~~
-import { Phylogram} from 'vue-phylogram';
+import { VuePhylogram } from 'vue-phylogram';
 ~~~~
 
 ## Data Sources
@@ -199,13 +199,6 @@ By default, the tree is displayed in a linear way. If you want to display the tr
 <Phylogram :newick="newick" circular ></Phylogram>
 ~~~~
 
-## Display labels
-
-The labels are displayed by default. To hide them:
-~~~~
-<Phylogram :newick="newick" :display-labels="false" ></Phylogram>
-~~~~
-
 ## Display leaves
 
 Leaves are displayed by default. To hide them:
@@ -221,6 +214,21 @@ Inner nodes are hiddent by default. To show them:
 ~~~~
 <Phylogram :newick="newick" :display-inner-nodes="true" ></Phylogram>
 ~~~~
+
+## Display leaf labels
+
+The leaf labels are displayed by default. To hide them:
+~~~~
+<Phylogram :newick="newick" :display-leaf-labels="false" ></Phylogram>
+~~~~
+
+## Display inner labels
+
+The inner labels are hidden by default. To show them:
+~~~~
+<Phylogram :newick="newick" :display-inner-labels="true" ></Phylogram>
+~~~~
+
 
 ## Align labels
 
