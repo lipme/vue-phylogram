@@ -101,8 +101,7 @@
             }
           } else if (x === '(' || x === ',') {
             tree.name = token
-            tree.id = 'node' + nodeIndex
-            nodeIndex++
+            tree.id = tree.name
           } else if (x === ':') {
             if (!tree.id) { tree.id = 'node' + nodeIndex }
             nodeIndex++
