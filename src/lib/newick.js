@@ -87,9 +87,22 @@
           break
         default:
           var x = tokens[i - 1]
-          if (x === ')' || x === '(' || x === ',') {
+          if (x === ')') {
+            // If the token is a number, put it as branch support
+            // otherwise, put it as an id
+            tree.id = 'node' + nodeIndex
+            nodeIndex++
+
+            if (isNaN(token)) {
+              tree.name = token
+            } else {
+              tree.support = token
+              tree.name = tree.id
+            }
+          } else if (x === '(' || x === ',') {
             tree.name = token
-            tree.id = token
+            tree.id = 'node' + nodeIndex
+            nodeIndex++
           } else if (x === ':') {
             if (!tree.id) { tree.id = 'node' + nodeIndex }
             nodeIndex++

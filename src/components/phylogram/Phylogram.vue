@@ -824,12 +824,10 @@ export default {
     },
     // events
     clickNode (e, node) {
-      console.log('click node', e)
       this.$emit('click-node', e, node)
     },
     clickOutside (e) {
       if (e.target.id === 'svgphylo') {
-        console.log('click outside', e)
         this.$emit('click-outside', e)
       }
     },

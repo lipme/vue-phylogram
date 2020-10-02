@@ -85,7 +85,7 @@
           :key="phylogramKey"
           :width="1000"
           :height="600"
-          ref="phylogramFromNewick"
+          ref="phylo"
           :newick="newick"
           :right-angle="rightAngle"
           :branch-lengths="branchLengths"
@@ -100,13 +100,14 @@
           :label-styles="metadata.labelStyles"
           :selected="selected"
           :collapsed="collapsed"
+          @click-node="clickNodeFn"
         ></Phylogram>
         <Phylogram
           v-else
           :key="phylogramKey"
           :width="1000"
           :height="600"
-          ref="phylogramFromObject"
+          ref="phylo"
           :inputTree="tree"
           :right-angle="rightAngle"
           :branch-lengths="branchLengths"
@@ -125,6 +126,7 @@
           :node-styles="metadatas.inputTree.nodeStyles"
           :selected="selected"
           :collapsed="collapsed"
+          @click-node="clickNodeFn"
         ></Phylogram>
       </div>
     </div>
@@ -361,6 +363,12 @@ export default {
       } else {
         return 2
       }
+    }
+  },
+  methods: {
+    clickNodeFn (e, node) {
+      this.$refs.phylo.deselectAll()
+      this.$refs.phylo.selectNode(node)
     }
   }
 }
