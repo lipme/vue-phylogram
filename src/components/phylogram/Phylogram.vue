@@ -7,7 +7,13 @@
       :fit="false"
       :center="true"
     >
-      <svg id="svgphylo" ref="svgphylo" v-if="!error" :width="width" :height="height">
+      <svg
+        id="svgphylo"
+        ref="svgphylo"
+        v-if="!error"
+        :width="width"
+        :height="height"
+      >
         <g :transform="translationString" id="groupphylo">
           <g transform="translate(10, 10)">
             <Link
@@ -45,7 +51,11 @@
               v-show="getDisplayLabel(node)"
               :key="node.id"
               :x="node.x"
-              :y="alignLabels && node.type==='leaf' ? maxY : node.y+getNodeSize(node)*2"
+              :y="
+                alignLabels && node.type === 'leaf'
+                  ? maxY
+                  : node.y + getNodeSize(node) * 2
+              "
               :label="node.data.name"
               :circular="circular"
               :id="node.data.id"
@@ -65,11 +75,11 @@
               v-for="node in d3Leaves"
               v-show="getDisplayLabel(node)"
               :key="node.id"
-              :source="{x:node.x, y:node.y+nodeWidth}"
-              :target="{x:node.x, y:maxY}"
+              :source="{ x: node.x, y: node.y + nodeWidth }"
+              :target="{ x: node.x, y: maxY }"
               :right-angle="rightAngle"
               :circular="circular"
-              :stroke-width="linkWidth/2"
+              :stroke-width="linkWidth / 2"
               :dashed="true"
               stroke="grey"
             />
@@ -87,7 +97,11 @@
               :circular="circular"
               :id="node.data.id"
               :selected="node.selected"
-              :size="pies[node.data.id].size ? nodeWidth*pies[node.data.id].size : nodeWidth "
+              :size="
+                pies[node.data.id].size
+                  ? nodeWidth * pies[node.data.id].size
+                  : nodeWidth
+              "
               :data="pies[node.data.id].data ? pies[node.data.id].data : []"
             />
           </g>
@@ -216,6 +230,10 @@ export default {
     collapsed: {
       type: String,
       default: ''
+    },
+    layoutMode: {
+      type: String,
+      default: '0'
     }
   },
   data () {
@@ -301,14 +319,19 @@ export default {
             })
             .sort((a, b) => {
               return (
-                a.value - b.value ||
+                //
+                this.layoutMode === '0'
+                  ? b.value - a.value ||
+                d3.descending(
+                  b.data[this.branchLengthKey],
+                  a.data[this.branchLengthKey])
+                  : a.value - b.value ||
                 d3.descending(
                   a.data[this.branchLengthKey],
                   b.data[this.branchLengthKey]
                 )
               )
             })
-
           let i = 0
           rootNode.each((n) => {
             i++
@@ -394,15 +417,17 @@ export default {
           }
         }
 
-        const root = nodes.find(n => { return n.type === 'root' })
+        const root = nodes.find((n) => {
+          return n.type === 'root'
+        })
         if (root) {
           visitPreOrder(root, (node) => {
             let branchLength = 0
             if (node.data && this.branchLengthKey in node.data) {
               branchLength =
-              node.data[this.branchLengthKey] > 0
-                ? node.data[this.branchLengthKey]
-                : 0
+                node.data[this.branchLengthKey] > 0
+                  ? node.data[this.branchLengthKey]
+                  : 0
             }
             node.rootDist = 0
             if (node.parent) {

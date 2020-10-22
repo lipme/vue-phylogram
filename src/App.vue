@@ -25,7 +25,13 @@
           <input type="checkbox" v-model="displayInnerNodes" />
           <br />
           <br />Label width:
-          <input type="range" min="20" max="500" class="slider" v-model="labelWidth" />
+          <input
+            type="range"
+            min="20"
+            max="500"
+            class="slider"
+            v-model="labelWidth"
+          />
           <br />
           <br />Circular layout:
           <input type="checkbox" v-model="circular" />
@@ -36,6 +42,15 @@
           <br />Show pies:
           <input type="checkbox" v-model="showPies" />
           <br />
+          <br />Layout mode:
+          <input
+            type="range"
+            min="0"
+            max="1"
+            class="slider"
+            v-model="layoutMode"
+          />
+          <br />
           <br />Selected node ids :
           <br />
           <input type="text" name="selection" v-model="selected" />
@@ -45,7 +60,7 @@
           <input type="text" name="collapse" v-model="collapsed" />
           <br />
           <br />
-          <div v-if="treeType=='jsonExample'">
+          <div v-if="treeType == 'jsonExample'">
             <b>Metadata:</b>
             <br />Pies:
             <br />
@@ -65,15 +80,30 @@
 
           <br />Type of tree:
           <br />
-          <input type="radio" name="treeType" v-model="treeType" value="jsonExample" />
+          <input
+            type="radio"
+            name="treeType"
+            v-model="treeType"
+            value="jsonExample"
+          />
           <label for="treeType">Json example (see source)</label>
           <br />
 
-          <input type="radio" name="treeType" v-model="treeType" value="smallNewick" />
+          <input
+            type="radio"
+            name="treeType"
+            v-model="treeType"
+            value="smallNewick"
+          />
           <label for="treeType">Small newick</label>
           <br />
 
-          <input type="radio" name="treeType" v-model="treeType" value="largeNewick" />
+          <input
+            type="radio"
+            name="treeType"
+            v-model="treeType"
+            value="largeNewick"
+          />
           <label for="treeType">Large newick</label>
           <br />Copy and paste newick:
           <textarea v-model="newick" rows="10" cols="40" />
@@ -81,7 +111,7 @@
       </div>
       <div id="rightbox">
         <Phylogram
-          v-if="! displayFromTreeObject"
+          v-if="!displayFromTreeObject"
           :key="phylogramKey"
           :width="1000"
           :height="600"
@@ -100,6 +130,7 @@
           :label-styles="metadata.labelStyles"
           :selected="selected"
           :collapsed="collapsed"
+          :layout-mode="layoutMode"
           @click-node="clickNodeFn"
         ></Phylogram>
         <Phylogram
@@ -126,7 +157,9 @@
           :node-styles="metadatas.inputTree.nodeStyles"
           :selected="selected"
           :collapsed="collapsed"
+          :layout-mode="layoutMode"
           @click-node="clickNodeFn"
+          @click-outside="clickOutside"
         ></Phylogram>
       </div>
     </div>
@@ -162,6 +195,7 @@ export default {
       },
       rightAngle: true,
       branchLengths: true,
+      layoutMode: '0',
       metadatas: {
         inputTree: {
           pies: {
@@ -369,6 +403,9 @@ export default {
     clickNodeFn (e, node) {
       this.$refs.phylo.deselectAll()
       this.$refs.phylo.selectNode(node)
+    },
+    clickOutside () {
+      this.$refs.phylo.deselectAll()
     }
   }
 }
