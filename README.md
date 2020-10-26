@@ -396,6 +396,18 @@ Use the "selected" props and put the node ids separateb by commas.
 <Phylogram :inputTree="tree" :collapsed="AB,CD">
 ~~~
 
+## Layout mode
+
+By default, branches are not ordered (layout-mode=0)
+To sort the branches by ascending length:
+~~~
+<Phylogram :inputTree="tree" :layout-mode="1">
+~~~
+
+To sort the branches by descending length:
+~~~
+<Phylogram :inputTree="tree" :layout-mode="2">
+~~~
 
 ## Events
 

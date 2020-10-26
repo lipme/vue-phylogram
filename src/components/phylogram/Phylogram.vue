@@ -233,7 +233,10 @@ export default {
     },
     layoutMode: {
       type: String,
-      default: '0'
+      default: '0',
+      validator: function (value) {
+        return ['0', '1', '2'].indexOf(value) !== -1
+      }
     }
   },
   data () {
@@ -310,28 +313,31 @@ export default {
         if (this.d3RootNodeProxy !== null) {
           return this.d3RootNodeProxy
         } else {
-          const rootNode = d3
+          let rootNode = d3
             .hierarchy(this.newickTree, function (node) {
               return node[component.branchKey]
             })
             .sum(function (d) {
               return d[component.branchKey] ? 1 : 0
             })
-            .sort((a, b) => {
-              return (
+          if (this.layoutMode !== '0') {
+            rootNode = rootNode
+              .sort((a, b) => {
+                return (
                 //
-                this.layoutMode === '0'
-                  ? b.value - a.value ||
+                  this.layoutMode === '1'
+                    ? b.value - a.value ||
                 d3.descending(
                   b.data[this.branchLengthKey],
                   a.data[this.branchLengthKey])
-                  : a.value - b.value ||
+                    : a.value - b.value ||
                 d3.descending(
                   a.data[this.branchLengthKey],
                   b.data[this.branchLengthKey]
                 )
-              )
-            })
+                )
+              })
+          }
           let i = 0
           rootNode.each((n) => {
             i++

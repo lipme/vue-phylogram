@@ -43,13 +43,11 @@
           <input type="checkbox" v-model="showPies" />
           <br />
           <br />Layout mode:
-          <input
-            type="range"
-            min="0"
-            max="1"
-            class="slider"
-            v-model="layoutMode"
-          />
+          <select name="" id="layoutMode" v-model='layoutMode'>
+            <option value="0">Branches not ordered</option>
+            <option value="1">Branches ordered by ascending length</option>
+            <option value="2">Branches ordered by descending length</option>
+          </select>
           <br />
           <br />Selected node ids :
           <br />
