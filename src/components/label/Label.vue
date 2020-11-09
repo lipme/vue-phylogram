@@ -24,6 +24,7 @@
     </rect>
     <text
       ref="text"
+      id="text"
       :dx="optionsLabel.x"
       :dy="optionsLabel.y"
       :text-anchor="optionsLabel['text-anchor']"
@@ -31,6 +32,8 @@
       :transform="optionsLabel.transform"
       :fill="color"
       :font-weight="fontWeight"
+      :textLength="textLength"
+      lengthAdjust="spacingAndGlyphs"
     >
       {{this.label}}
       <animateTransform attributeName="transform"
@@ -62,7 +65,7 @@ export default {
     },
     label: {
       type: String,
-      default: null
+      default: ''
     },
     circular: {
       type: Boolean,
@@ -88,6 +91,7 @@ export default {
       type: String,
       default: 'normal'
     }
+
   },
 
   computed: {
@@ -127,6 +131,7 @@ export default {
         'font-size': this.fontSize + 'px'
       }
     },
+
     isSurrounded () {
       return this.label !== null && this.label !== '' && (this.background !== '' || this.rectBorderWidth > 0)
     },
@@ -142,13 +147,16 @@ export default {
     rectX () {
       // const margin = (this.circular && this.x > 180) ? this.optionsLabel.x - this.rectMargin * 3 : this.rectMargin * 2
       // return this.optionsLabel.x - margin
-      return (this.circular && this.x > 180) ? this.rectMargin * 3 : this.optionsLabel.x - this.rectMargin * 2
+      return (this.circular && this.x > 180) ? this.rectMargin * 3 : this.optionsLabel.x - this.rectMargin - this.rectBorderWidth
     },
     rectFillOpacity () {
       return this.background ? '100%' : '0%'
     },
+    textLength () {
+      return 2 * this.fontSize * this.label.length / 4
+    },
     rectWidth () {
-      return 2 * this.fontSize * this.label.length / 4 + this.rectBorderWidth + this.rectMargin * 4
+      return this.textLength + 2 * (this.rectBorderWidth + this.rectMargin)
     }
 
   }
