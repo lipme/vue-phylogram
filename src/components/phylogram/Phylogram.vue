@@ -501,11 +501,12 @@ export default {
       }
     },
     linkWidth () {
-      const scale = d3.scaleLog().domain([3, 500]).range([3, 0.02])
+      const scale = d3.scaleLog().domain([3, 500]).range([3, 0.4])
+
       return scale(this.d3Nodes.length)
     },
     nodeWidth () {
-      const scale = d3.scaleLog().domain([3, 500]).range([10, 0.1])
+      const scale = d3.scaleLog().domain([3, 500]).range([10, 1])
       return scale(this.d3Nodes.length)
     },
     maxY () {
