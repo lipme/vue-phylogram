@@ -35,6 +35,10 @@
   "bugs": {
     "email": "ludovic.cottret@inrae.fr"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lipme/vue-phylogram.git"
+  },
   "main": "./dist/vue-phylogram.common.js",
   "scripts": {
     "serve": "vue-cli-service serve",
