@@ -56,6 +56,9 @@
  *     }
  *   ]
  * }
+ *
+ * 2020 : Completed by Ludovic Cottret, LIPM
+ *
  */
 (function (exports) {
   exports.parse = function (s) {
