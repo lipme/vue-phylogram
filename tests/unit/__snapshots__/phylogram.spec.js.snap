@@ -34,56 +34,56 @@ exports[`Phylogram component Tree from inputTree with different branch key works
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
           <link-stub
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
           <link-stub
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
           <link-stub
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
           <link-stub
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
           <link-stub
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
           <link-stub
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
           <link-stub
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
         </g>
@@ -95,40 +95,49 @@ exports[`Phylogram component Tree from inputTree with different branch key works
             fill="greenyellow"
             id="ABCDE"
             show="true"
-            size="7.874067520329519"
+            size="8.067334109390472"
             strokeColor="darkblue"
-            x="136.5"
+            x="253.5"
             y="0"
           />
           <node-stub
             fill="lightsalmon"
             id="ABCD"
-            size="7.874067520329519"
+            size="8.067334109390472"
             strokeColor="darkblue"
-            x="234"
+            x="156"
             y="88.8888888888889"
           />
           <node-stub
             fill="lightsalmon"
             id="AB"
-            size="7.874067520329519"
+            size="8.067334109390472"
             strokeColor="darkblue"
-            x="156"
+            x="78"
             y="222.22222222222223"
           />
           <node-stub
             fill="lightsalmon"
             id="CD"
-            size="7.874067520329519"
+            size="8.067334109390472"
             strokeColor="darkblue"
-            x="312"
+            x="234"
             y="177.7777777777778"
           />
           <node-stub
             fill="steelblue"
             id="E"
             show="true"
-            size="7.874067520329519"
+            size="8.067334109390472"
+            strokeColor="darkblue"
+            x="351"
+            y="311.1111111111111"
+          />
+          <node-stub
+            fill="steelblue"
+            id="A"
+            show="true"
+            size="8.067334109390472"
             strokeColor="darkblue"
             x="39"
             y="311.1111111111111"
@@ -137,36 +146,27 @@ exports[`Phylogram component Tree from inputTree with different branch key works
             fill="steelblue"
             id="B"
             show="true"
-            size="7.874067520329519"
+            size="8.067334109390472"
             strokeColor="darkblue"
             x="117"
             y="355.5555555555556"
           />
           <node-stub
             fill="steelblue"
-            id="A"
-            show="true"
-            size="7.874067520329519"
-            strokeColor="darkblue"
-            x="195"
-            y="311.1111111111111"
-          />
-          <node-stub
-            fill="steelblue"
             id="C"
             show="true"
-            size="7.874067520329519"
+            size="8.067334109390472"
             strokeColor="darkblue"
-            x="273"
+            x="195"
             y="400"
           />
           <node-stub
             fill="steelblue"
             id="D"
             show="true"
-            size="7.874067520329519"
+            size="8.067334109390472"
             strokeColor="darkblue"
-            x="351"
+            x="273"
             y="311.1111111111111"
           />
         </g>
@@ -181,10 +181,11 @@ exports[`Phylogram component Tree from inputTree with different branch key works
             color="black"
             fontWeight="normal"
             id="ABCDE"
-            size="7.874067520329519"
+            label=""
+            size="8.067334109390472"
             style="display: none;"
-            x="136.5"
-            y="15.748135040659038"
+            x="253.5"
+            y="16.134668218780945"
           />
           <label-stub
             background=""
@@ -193,10 +194,11 @@ exports[`Phylogram component Tree from inputTree with different branch key works
             color="black"
             fontWeight="normal"
             id="ABCD"
-            size="7.874067520329519"
+            label=""
+            size="8.067334109390472"
             style="display: none;"
-            x="234"
-            y="104.63702392954794"
+            x="156"
+            y="105.02355710766984"
           />
           <label-stub
             background=""
@@ -205,10 +207,11 @@ exports[`Phylogram component Tree from inputTree with different branch key works
             color="black"
             fontWeight="normal"
             id="AB"
-            size="7.874067520329519"
+            label=""
+            size="8.067334109390472"
             style="display: none;"
-            x="156"
-            y="237.97035726288127"
+            x="78"
+            y="238.35689044100317"
           />
           <label-stub
             background=""
@@ -218,10 +221,10 @@ exports[`Phylogram component Tree from inputTree with different branch key works
             fontWeight="normal"
             id="CD"
             label="CD"
-            size="7.874067520329519"
+            size="8.067334109390472"
             style="display: none;"
-            x="312"
-            y="193.52591281843684"
+            x="234"
+            y="193.91244599655874"
           />
           <label-stub
             background=""
@@ -231,21 +234,9 @@ exports[`Phylogram component Tree from inputTree with different branch key works
             fontWeight="normal"
             id="E"
             label="E"
-            size="7.874067520329519"
-            x="39"
-            y="326.85924615177015"
-          />
-          <label-stub
-            background=""
-            borderColor="black"
-            borderWidth="0"
-            color="black"
-            fontWeight="normal"
-            id="B"
-            label="B"
-            size="7.874067520329519"
-            x="117"
-            y="371.30369059621466"
+            size="8.067334109390472"
+            x="351"
+            y="327.245779329892"
           />
           <label-stub
             background=""
@@ -255,9 +246,21 @@ exports[`Phylogram component Tree from inputTree with different branch key works
             fontWeight="normal"
             id="A"
             label="A"
-            size="7.874067520329519"
-            x="195"
-            y="326.85924615177015"
+            size="8.067334109390472"
+            x="39"
+            y="327.245779329892"
+          />
+          <label-stub
+            background=""
+            borderColor="black"
+            borderWidth="0"
+            color="black"
+            fontWeight="normal"
+            id="B"
+            label="B"
+            size="8.067334109390472"
+            x="117"
+            y="371.6902237743366"
           />
           <label-stub
             background=""
@@ -267,9 +270,9 @@ exports[`Phylogram component Tree from inputTree with different branch key works
             fontWeight="normal"
             id="C"
             label="C"
-            size="7.874067520329519"
-            x="273"
-            y="415.74813504065906"
+            size="8.067334109390472"
+            x="195"
+            y="416.1346682187809"
           />
           <label-stub
             background=""
@@ -279,9 +282,9 @@ exports[`Phylogram component Tree from inputTree with different branch key works
             fontWeight="normal"
             id="D"
             label="D"
-            size="7.874067520329519"
-            x="351"
-            y="326.85924615177015"
+            size="8.067334109390472"
+            x="273"
+            y="327.245779329892"
           />
         </g>
          
@@ -294,7 +297,7 @@ exports[`Phylogram component Tree from inputTree with different branch key works
             rightAngle="true"
             source="[object Object]"
             stroke="grey"
-            strokeWidth="1.1800364247768669"
+            strokeWidth="1.2208371491341792"
             target="[object Object]"
           />
           <link-stub
@@ -302,7 +305,7 @@ exports[`Phylogram component Tree from inputTree with different branch key works
             rightAngle="true"
             source="[object Object]"
             stroke="grey"
-            strokeWidth="1.1800364247768669"
+            strokeWidth="1.2208371491341792"
             target="[object Object]"
           />
           <link-stub
@@ -310,7 +313,7 @@ exports[`Phylogram component Tree from inputTree with different branch key works
             rightAngle="true"
             source="[object Object]"
             stroke="grey"
-            strokeWidth="1.1800364247768669"
+            strokeWidth="1.2208371491341792"
             target="[object Object]"
           />
           <link-stub
@@ -318,7 +321,7 @@ exports[`Phylogram component Tree from inputTree with different branch key works
             rightAngle="true"
             source="[object Object]"
             stroke="grey"
-            strokeWidth="1.1800364247768669"
+            strokeWidth="1.2208371491341792"
             target="[object Object]"
           />
           <link-stub
@@ -326,7 +329,7 @@ exports[`Phylogram component Tree from inputTree with different branch key works
             rightAngle="true"
             source="[object Object]"
             stroke="grey"
-            strokeWidth="1.1800364247768669"
+            strokeWidth="1.2208371491341792"
             target="[object Object]"
           />
         </g>
@@ -372,56 +375,56 @@ exports[`Phylogram component Tree from inputTree with different length key works
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
           <link-stub
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
           <link-stub
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
           <link-stub
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
           <link-stub
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
           <link-stub
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
           <link-stub
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
           <link-stub
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
         </g>
@@ -433,40 +436,49 @@ exports[`Phylogram component Tree from inputTree with different length key works
             fill="greenyellow"
             id="ABCDE"
             show="true"
-            size="7.874067520329519"
+            size="8.067334109390472"
             strokeColor="darkblue"
-            x="136.5"
+            x="253.5"
             y="0"
           />
           <node-stub
             fill="lightsalmon"
             id="ABCD"
-            size="7.874067520329519"
+            size="8.067334109390472"
             strokeColor="darkblue"
-            x="234"
+            x="156"
             y="88.8888888888889"
           />
           <node-stub
             fill="lightsalmon"
             id="AB"
-            size="7.874067520329519"
+            size="8.067334109390472"
             strokeColor="darkblue"
-            x="156"
+            x="78"
             y="222.22222222222223"
           />
           <node-stub
             fill="lightsalmon"
             id="CD"
-            size="7.874067520329519"
+            size="8.067334109390472"
             strokeColor="darkblue"
-            x="312"
+            x="234"
             y="177.7777777777778"
           />
           <node-stub
             fill="steelblue"
             id="E"
             show="true"
-            size="7.874067520329519"
+            size="8.067334109390472"
+            strokeColor="darkblue"
+            x="351"
+            y="311.1111111111111"
+          />
+          <node-stub
+            fill="steelblue"
+            id="A"
+            show="true"
+            size="8.067334109390472"
             strokeColor="darkblue"
             x="39"
             y="311.1111111111111"
@@ -475,36 +487,27 @@ exports[`Phylogram component Tree from inputTree with different length key works
             fill="steelblue"
             id="B"
             show="true"
-            size="7.874067520329519"
+            size="8.067334109390472"
             strokeColor="darkblue"
             x="117"
             y="355.5555555555556"
           />
           <node-stub
             fill="steelblue"
-            id="A"
-            show="true"
-            size="7.874067520329519"
-            strokeColor="darkblue"
-            x="195"
-            y="311.1111111111111"
-          />
-          <node-stub
-            fill="steelblue"
             id="C"
             show="true"
-            size="7.874067520329519"
+            size="8.067334109390472"
             strokeColor="darkblue"
-            x="273"
+            x="195"
             y="400"
           />
           <node-stub
             fill="steelblue"
             id="D"
             show="true"
-            size="7.874067520329519"
+            size="8.067334109390472"
             strokeColor="darkblue"
-            x="351"
+            x="273"
             y="311.1111111111111"
           />
         </g>
@@ -519,10 +522,11 @@ exports[`Phylogram component Tree from inputTree with different length key works
             color="black"
             fontWeight="normal"
             id="ABCDE"
-            size="7.874067520329519"
+            label=""
+            size="8.067334109390472"
             style="display: none;"
-            x="136.5"
-            y="15.748135040659038"
+            x="253.5"
+            y="16.134668218780945"
           />
           <label-stub
             background=""
@@ -531,10 +535,11 @@ exports[`Phylogram component Tree from inputTree with different length key works
             color="black"
             fontWeight="normal"
             id="ABCD"
-            size="7.874067520329519"
+            label=""
+            size="8.067334109390472"
             style="display: none;"
-            x="234"
-            y="104.63702392954794"
+            x="156"
+            y="105.02355710766984"
           />
           <label-stub
             background=""
@@ -543,10 +548,11 @@ exports[`Phylogram component Tree from inputTree with different length key works
             color="black"
             fontWeight="normal"
             id="AB"
-            size="7.874067520329519"
+            label=""
+            size="8.067334109390472"
             style="display: none;"
-            x="156"
-            y="237.97035726288127"
+            x="78"
+            y="238.35689044100317"
           />
           <label-stub
             background=""
@@ -556,10 +562,10 @@ exports[`Phylogram component Tree from inputTree with different length key works
             fontWeight="normal"
             id="CD"
             label="CD"
-            size="7.874067520329519"
+            size="8.067334109390472"
             style="display: none;"
-            x="312"
-            y="193.52591281843684"
+            x="234"
+            y="193.91244599655874"
           />
           <label-stub
             background=""
@@ -569,21 +575,9 @@ exports[`Phylogram component Tree from inputTree with different length key works
             fontWeight="normal"
             id="E"
             label="E"
-            size="7.874067520329519"
-            x="39"
-            y="326.85924615177015"
-          />
-          <label-stub
-            background=""
-            borderColor="black"
-            borderWidth="0"
-            color="black"
-            fontWeight="normal"
-            id="B"
-            label="B"
-            size="7.874067520329519"
-            x="117"
-            y="371.30369059621466"
+            size="8.067334109390472"
+            x="351"
+            y="327.245779329892"
           />
           <label-stub
             background=""
@@ -593,9 +587,21 @@ exports[`Phylogram component Tree from inputTree with different length key works
             fontWeight="normal"
             id="A"
             label="A"
-            size="7.874067520329519"
-            x="195"
-            y="326.85924615177015"
+            size="8.067334109390472"
+            x="39"
+            y="327.245779329892"
+          />
+          <label-stub
+            background=""
+            borderColor="black"
+            borderWidth="0"
+            color="black"
+            fontWeight="normal"
+            id="B"
+            label="B"
+            size="8.067334109390472"
+            x="117"
+            y="371.6902237743366"
           />
           <label-stub
             background=""
@@ -605,9 +611,9 @@ exports[`Phylogram component Tree from inputTree with different length key works
             fontWeight="normal"
             id="C"
             label="C"
-            size="7.874067520329519"
-            x="273"
-            y="415.74813504065906"
+            size="8.067334109390472"
+            x="195"
+            y="416.1346682187809"
           />
           <label-stub
             background=""
@@ -617,9 +623,9 @@ exports[`Phylogram component Tree from inputTree with different length key works
             fontWeight="normal"
             id="D"
             label="D"
-            size="7.874067520329519"
-            x="351"
-            y="326.85924615177015"
+            size="8.067334109390472"
+            x="273"
+            y="327.245779329892"
           />
         </g>
          
@@ -632,7 +638,7 @@ exports[`Phylogram component Tree from inputTree with different length key works
             rightAngle="true"
             source="[object Object]"
             stroke="grey"
-            strokeWidth="1.1800364247768669"
+            strokeWidth="1.2208371491341792"
             target="[object Object]"
           />
           <link-stub
@@ -640,7 +646,7 @@ exports[`Phylogram component Tree from inputTree with different length key works
             rightAngle="true"
             source="[object Object]"
             stroke="grey"
-            strokeWidth="1.1800364247768669"
+            strokeWidth="1.2208371491341792"
             target="[object Object]"
           />
           <link-stub
@@ -648,7 +654,7 @@ exports[`Phylogram component Tree from inputTree with different length key works
             rightAngle="true"
             source="[object Object]"
             stroke="grey"
-            strokeWidth="1.1800364247768669"
+            strokeWidth="1.2208371491341792"
             target="[object Object]"
           />
           <link-stub
@@ -656,7 +662,7 @@ exports[`Phylogram component Tree from inputTree with different length key works
             rightAngle="true"
             source="[object Object]"
             stroke="grey"
-            strokeWidth="1.1800364247768669"
+            strokeWidth="1.2208371491341792"
             target="[object Object]"
           />
           <link-stub
@@ -664,7 +670,7 @@ exports[`Phylogram component Tree from inputTree with different length key works
             rightAngle="true"
             source="[object Object]"
             stroke="grey"
-            strokeWidth="1.1800364247768669"
+            strokeWidth="1.2208371491341792"
             target="[object Object]"
           />
         </g>
@@ -710,56 +716,56 @@ exports[`Phylogram component Tree from inputTree works 1`] = `
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
           <link-stub
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
           <link-stub
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
           <link-stub
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
           <link-stub
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
           <link-stub
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
           <link-stub
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
           <link-stub
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
         </g>
@@ -771,40 +777,49 @@ exports[`Phylogram component Tree from inputTree works 1`] = `
             fill="greenyellow"
             id="ABCDE"
             show="true"
-            size="7.874067520329519"
+            size="8.067334109390472"
             strokeColor="darkblue"
-            x="136.5"
+            x="253.5"
             y="0"
           />
           <node-stub
             fill="lightsalmon"
             id="ABCD"
-            size="7.874067520329519"
+            size="8.067334109390472"
             strokeColor="darkblue"
-            x="234"
+            x="156"
             y="88.8888888888889"
           />
           <node-stub
             fill="lightsalmon"
             id="AB"
-            size="7.874067520329519"
+            size="8.067334109390472"
             strokeColor="darkblue"
-            x="156"
+            x="78"
             y="222.22222222222223"
           />
           <node-stub
             fill="lightsalmon"
             id="CD"
-            size="7.874067520329519"
+            size="8.067334109390472"
             strokeColor="darkblue"
-            x="312"
+            x="234"
             y="177.7777777777778"
           />
           <node-stub
             fill="steelblue"
             id="E"
             show="true"
-            size="7.874067520329519"
+            size="8.067334109390472"
+            strokeColor="darkblue"
+            x="351"
+            y="311.1111111111111"
+          />
+          <node-stub
+            fill="steelblue"
+            id="A"
+            show="true"
+            size="8.067334109390472"
             strokeColor="darkblue"
             x="39"
             y="311.1111111111111"
@@ -813,36 +828,27 @@ exports[`Phylogram component Tree from inputTree works 1`] = `
             fill="steelblue"
             id="B"
             show="true"
-            size="7.874067520329519"
+            size="8.067334109390472"
             strokeColor="darkblue"
             x="117"
             y="355.5555555555556"
           />
           <node-stub
             fill="steelblue"
-            id="A"
-            show="true"
-            size="7.874067520329519"
-            strokeColor="darkblue"
-            x="195"
-            y="311.1111111111111"
-          />
-          <node-stub
-            fill="steelblue"
             id="C"
             show="true"
-            size="7.874067520329519"
+            size="8.067334109390472"
             strokeColor="darkblue"
-            x="273"
+            x="195"
             y="400"
           />
           <node-stub
             fill="steelblue"
             id="D"
             show="true"
-            size="7.874067520329519"
+            size="8.067334109390472"
             strokeColor="darkblue"
-            x="351"
+            x="273"
             y="311.1111111111111"
           />
         </g>
@@ -857,10 +863,11 @@ exports[`Phylogram component Tree from inputTree works 1`] = `
             color="black"
             fontWeight="normal"
             id="ABCDE"
-            size="7.874067520329519"
+            label=""
+            size="8.067334109390472"
             style="display: none;"
-            x="136.5"
-            y="15.748135040659038"
+            x="253.5"
+            y="16.134668218780945"
           />
           <label-stub
             background=""
@@ -869,10 +876,11 @@ exports[`Phylogram component Tree from inputTree works 1`] = `
             color="black"
             fontWeight="normal"
             id="ABCD"
-            size="7.874067520329519"
+            label=""
+            size="8.067334109390472"
             style="display: none;"
-            x="234"
-            y="104.63702392954794"
+            x="156"
+            y="105.02355710766984"
           />
           <label-stub
             background=""
@@ -881,10 +889,11 @@ exports[`Phylogram component Tree from inputTree works 1`] = `
             color="black"
             fontWeight="normal"
             id="AB"
-            size="7.874067520329519"
+            label=""
+            size="8.067334109390472"
             style="display: none;"
-            x="156"
-            y="237.97035726288127"
+            x="78"
+            y="238.35689044100317"
           />
           <label-stub
             background=""
@@ -894,10 +903,10 @@ exports[`Phylogram component Tree from inputTree works 1`] = `
             fontWeight="normal"
             id="CD"
             label="CD"
-            size="7.874067520329519"
+            size="8.067334109390472"
             style="display: none;"
-            x="312"
-            y="193.52591281843684"
+            x="234"
+            y="193.91244599655874"
           />
           <label-stub
             background=""
@@ -907,21 +916,9 @@ exports[`Phylogram component Tree from inputTree works 1`] = `
             fontWeight="normal"
             id="E"
             label="E"
-            size="7.874067520329519"
-            x="39"
-            y="326.85924615177015"
-          />
-          <label-stub
-            background=""
-            borderColor="black"
-            borderWidth="0"
-            color="black"
-            fontWeight="normal"
-            id="B"
-            label="B"
-            size="7.874067520329519"
-            x="117"
-            y="371.30369059621466"
+            size="8.067334109390472"
+            x="351"
+            y="327.245779329892"
           />
           <label-stub
             background=""
@@ -931,9 +928,21 @@ exports[`Phylogram component Tree from inputTree works 1`] = `
             fontWeight="normal"
             id="A"
             label="A"
-            size="7.874067520329519"
-            x="195"
-            y="326.85924615177015"
+            size="8.067334109390472"
+            x="39"
+            y="327.245779329892"
+          />
+          <label-stub
+            background=""
+            borderColor="black"
+            borderWidth="0"
+            color="black"
+            fontWeight="normal"
+            id="B"
+            label="B"
+            size="8.067334109390472"
+            x="117"
+            y="371.6902237743366"
           />
           <label-stub
             background=""
@@ -943,9 +952,9 @@ exports[`Phylogram component Tree from inputTree works 1`] = `
             fontWeight="normal"
             id="C"
             label="C"
-            size="7.874067520329519"
-            x="273"
-            y="415.74813504065906"
+            size="8.067334109390472"
+            x="195"
+            y="416.1346682187809"
           />
           <label-stub
             background=""
@@ -955,9 +964,9 @@ exports[`Phylogram component Tree from inputTree works 1`] = `
             fontWeight="normal"
             id="D"
             label="D"
-            size="7.874067520329519"
-            x="351"
-            y="326.85924615177015"
+            size="8.067334109390472"
+            x="273"
+            y="327.245779329892"
           />
         </g>
          
@@ -970,7 +979,7 @@ exports[`Phylogram component Tree from inputTree works 1`] = `
             rightAngle="true"
             source="[object Object]"
             stroke="grey"
-            strokeWidth="1.1800364247768669"
+            strokeWidth="1.2208371491341792"
             target="[object Object]"
           />
           <link-stub
@@ -978,7 +987,7 @@ exports[`Phylogram component Tree from inputTree works 1`] = `
             rightAngle="true"
             source="[object Object]"
             stroke="grey"
-            strokeWidth="1.1800364247768669"
+            strokeWidth="1.2208371491341792"
             target="[object Object]"
           />
           <link-stub
@@ -986,7 +995,7 @@ exports[`Phylogram component Tree from inputTree works 1`] = `
             rightAngle="true"
             source="[object Object]"
             stroke="grey"
-            strokeWidth="1.1800364247768669"
+            strokeWidth="1.2208371491341792"
             target="[object Object]"
           />
           <link-stub
@@ -994,7 +1003,7 @@ exports[`Phylogram component Tree from inputTree works 1`] = `
             rightAngle="true"
             source="[object Object]"
             stroke="grey"
-            strokeWidth="1.1800364247768669"
+            strokeWidth="1.2208371491341792"
             target="[object Object]"
           />
           <link-stub
@@ -1002,7 +1011,7 @@ exports[`Phylogram component Tree from inputTree works 1`] = `
             rightAngle="true"
             source="[object Object]"
             stroke="grey"
-            strokeWidth="1.1800364247768669"
+            strokeWidth="1.2208371491341792"
             target="[object Object]"
           />
         </g>
@@ -1048,56 +1057,56 @@ exports[`Phylogram component Tree from newick works 1`] = `
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
           <link-stub
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
           <link-stub
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
           <link-stub
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
           <link-stub
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
           <link-stub
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
           <link-stub
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
           <link-stub
             rightAngle="true"
             source="[object Object]"
             stroke="black"
-            strokeWidth="2.3600728495537338"
+            strokeWidth="2.4416742982683584"
             target="[object Object]"
           />
         </g>
@@ -1107,80 +1116,80 @@ exports[`Phylogram component Tree from newick works 1`] = `
         >
           <node-stub
             fill="greenyellow"
-            id="node8"
+            id="node11"
             show="true"
-            size="7.874067520329519"
+            size="8.067334109390472"
             strokeColor="darkblue"
-            x="136.5"
+            x="253.5"
             y="200"
           />
           <node-stub
             fill="lightsalmon"
-            id="node6"
-            size="7.874067520329519"
+            id="node8"
+            size="8.067334109390472"
             strokeColor="darkblue"
-            x="234"
+            x="156"
             y="260"
           />
           <node-stub
             fill="lightsalmon"
             id="node2"
-            size="7.874067520329519"
+            size="8.067334109390472"
             strokeColor="darkblue"
-            x="156"
+            x="78"
             y="320"
           />
           <node-stub
             fill="lightsalmon"
-            id="node5"
-            size="7.874067520329519"
+            id="node6"
+            size="8.067334109390472"
             strokeColor="darkblue"
-            x="312"
+            x="234"
             y="300"
           />
           <node-stub
             fill="steelblue"
             id="E"
             show="true"
-            size="7.874067520329519"
+            size="8.067334109390472"
+            strokeColor="darkblue"
+            x="351"
+            y="340"
+          />
+          <node-stub
+            fill="steelblue"
+            id="A"
+            show="true"
+            size="8.067334109390472"
             strokeColor="darkblue"
             x="39"
-            y="340"
+            y="360"
           />
           <node-stub
             fill="steelblue"
             id="B"
             show="true"
-            size="7.874067520329519"
+            size="8.067334109390472"
             strokeColor="darkblue"
             x="117"
             y="380"
           />
           <node-stub
             fill="steelblue"
-            id="A"
-            show="true"
-            size="7.874067520329519"
-            strokeColor="darkblue"
-            x="195"
-            y="360"
-          />
-          <node-stub
-            fill="steelblue"
             id="C"
             show="true"
-            size="7.874067520329519"
+            size="8.067334109390472"
             strokeColor="darkblue"
-            x="273"
+            x="195"
             y="400"
           />
           <node-stub
             fill="steelblue"
             id="D"
             show="true"
-            size="7.874067520329519"
+            size="8.067334109390472"
             strokeColor="darkblue"
-            x="351"
+            x="273"
             y="360"
           />
         </g>
@@ -1194,12 +1203,12 @@ exports[`Phylogram component Tree from newick works 1`] = `
             borderWidth="0"
             color="black"
             fontWeight="normal"
-            id="node8"
-            label=""
-            size="7.874067520329519"
+            id="node11"
+            label="node11"
+            size="8.067334109390472"
             style="display: none;"
-            x="136.5"
-            y="215.74813504065904"
+            x="253.5"
+            y="216.13466821878094"
           />
           <label-stub
             background=""
@@ -1207,12 +1216,12 @@ exports[`Phylogram component Tree from newick works 1`] = `
             borderWidth="0"
             color="black"
             fontWeight="normal"
-            id="node6"
-            label=""
-            size="7.874067520329519"
+            id="node8"
+            label="node8"
+            size="8.067334109390472"
             style="display: none;"
-            x="234"
-            y="275.74813504065906"
+            x="156"
+            y="276.1346682187809"
           />
           <label-stub
             background=""
@@ -1221,11 +1230,11 @@ exports[`Phylogram component Tree from newick works 1`] = `
             color="black"
             fontWeight="normal"
             id="node2"
-            label=""
-            size="7.874067520329519"
+            label="node2"
+            size="8.067334109390472"
             style="display: none;"
-            x="156"
-            y="335.74813504065906"
+            x="78"
+            y="336.1346682187809"
           />
           <label-stub
             background=""
@@ -1233,12 +1242,12 @@ exports[`Phylogram component Tree from newick works 1`] = `
             borderWidth="0"
             color="black"
             fontWeight="normal"
-            id="node5"
-            label=""
-            size="7.874067520329519"
+            id="node6"
+            label="node6"
+            size="8.067334109390472"
             style="display: none;"
-            x="312"
-            y="315.74813504065906"
+            x="234"
+            y="316.1346682187809"
           />
           <label-stub
             background=""
@@ -1248,21 +1257,9 @@ exports[`Phylogram component Tree from newick works 1`] = `
             fontWeight="normal"
             id="E"
             label="E"
-            size="7.874067520329519"
-            x="39"
-            y="355.74813504065906"
-          />
-          <label-stub
-            background=""
-            borderColor="black"
-            borderWidth="0"
-            color="black"
-            fontWeight="normal"
-            id="B"
-            label="B"
-            size="7.874067520329519"
-            x="117"
-            y="395.74813504065906"
+            size="8.067334109390472"
+            x="351"
+            y="356.1346682187809"
           />
           <label-stub
             background=""
@@ -1272,9 +1269,21 @@ exports[`Phylogram component Tree from newick works 1`] = `
             fontWeight="normal"
             id="A"
             label="A"
-            size="7.874067520329519"
-            x="195"
-            y="375.74813504065906"
+            size="8.067334109390472"
+            x="39"
+            y="376.1346682187809"
+          />
+          <label-stub
+            background=""
+            borderColor="black"
+            borderWidth="0"
+            color="black"
+            fontWeight="normal"
+            id="B"
+            label="B"
+            size="8.067334109390472"
+            x="117"
+            y="396.1346682187809"
           />
           <label-stub
             background=""
@@ -1284,9 +1293,9 @@ exports[`Phylogram component Tree from newick works 1`] = `
             fontWeight="normal"
             id="C"
             label="C"
-            size="7.874067520329519"
-            x="273"
-            y="415.74813504065906"
+            size="8.067334109390472"
+            x="195"
+            y="416.1346682187809"
           />
           <label-stub
             background=""
@@ -1296,9 +1305,9 @@ exports[`Phylogram component Tree from newick works 1`] = `
             fontWeight="normal"
             id="D"
             label="D"
-            size="7.874067520329519"
-            x="351"
-            y="375.74813504065906"
+            size="8.067334109390472"
+            x="273"
+            y="376.1346682187809"
           />
         </g>
          
@@ -1311,7 +1320,7 @@ exports[`Phylogram component Tree from newick works 1`] = `
             rightAngle="true"
             source="[object Object]"
             stroke="grey"
-            strokeWidth="1.1800364247768669"
+            strokeWidth="1.2208371491341792"
             target="[object Object]"
           />
           <link-stub
@@ -1319,7 +1328,7 @@ exports[`Phylogram component Tree from newick works 1`] = `
             rightAngle="true"
             source="[object Object]"
             stroke="grey"
-            strokeWidth="1.1800364247768669"
+            strokeWidth="1.2208371491341792"
             target="[object Object]"
           />
           <link-stub
@@ -1327,7 +1336,7 @@ exports[`Phylogram component Tree from newick works 1`] = `
             rightAngle="true"
             source="[object Object]"
             stroke="grey"
-            strokeWidth="1.1800364247768669"
+            strokeWidth="1.2208371491341792"
             target="[object Object]"
           />
           <link-stub
@@ -1335,7 +1344,7 @@ exports[`Phylogram component Tree from newick works 1`] = `
             rightAngle="true"
             source="[object Object]"
             stroke="grey"
-            strokeWidth="1.1800364247768669"
+            strokeWidth="1.2208371491341792"
             target="[object Object]"
           />
           <link-stub
@@ -1343,7 +1352,7 @@ exports[`Phylogram component Tree from newick works 1`] = `
             rightAngle="true"
             source="[object Object]"
             stroke="grey"
-            strokeWidth="1.1800364247768669"
+            strokeWidth="1.2208371491341792"
             target="[object Object]"
           />
         </g>

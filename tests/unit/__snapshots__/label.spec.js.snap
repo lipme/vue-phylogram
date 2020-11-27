@@ -13,7 +13,10 @@ exports[`Label component background not set when length label is null 1`] = `
     fill="black"
     font-size="9px"
     font-weight="normal"
+    id="text"
+    lengthAdjust="spacingAndGlyphs"
     text-anchor="start"
+    textLength="0"
   >
     
     
@@ -41,8 +44,8 @@ exports[`Label component background set correctly 1`] = `
     height="10.8"
     stroke="black"
     stroke-width="0"
-    width="29.7"
-    x="5.4"
+    width="26.1"
+    x="7.2"
     y="-5.1"
   >
     <animatetransform
@@ -61,7 +64,10 @@ exports[`Label component background set correctly 1`] = `
     fill="black"
     font-size="9px"
     font-weight="normal"
+    id="text"
+    lengthAdjust="spacingAndGlyphs"
     text-anchor="start"
+    textLength="22.5"
   >
     
     label
@@ -91,7 +97,10 @@ exports[`Label component borderColor has no effect when no label 1`] = `
     fill="black"
     font-size="9px"
     font-weight="normal"
+    id="text"
+    lengthAdjust="spacingAndGlyphs"
     text-anchor="start"
+    textLength="0"
   >
     
     
@@ -119,8 +128,8 @@ exports[`Label component borderColor set correctly 1`] = `
     height="10.8"
     stroke="red"
     stroke-width="9"
-    width="38.7"
-    x="5.4"
+    width="44.1"
+    x="-1.7999999999999998"
     y="-5.1"
   >
     <animatetransform
@@ -139,7 +148,10 @@ exports[`Label component borderColor set correctly 1`] = `
     fill="black"
     font-size="9px"
     font-weight="normal"
+    id="text"
+    lengthAdjust="spacingAndGlyphs"
     text-anchor="start"
+    textLength="22.5"
   >
     
     label
@@ -169,7 +181,10 @@ exports[`Label component borderWidth has no effect when no label 1`] = `
     fill="black"
     font-size="9px"
     font-weight="normal"
+    id="text"
+    lengthAdjust="spacingAndGlyphs"
     text-anchor="start"
+    textLength="0"
   >
     
     
@@ -197,8 +212,8 @@ exports[`Label component borderWidth set correctly 1`] = `
     height="10.8"
     stroke="black"
     stroke-width="9"
-    width="38.7"
-    x="5.4"
+    width="44.1"
+    x="-1.7999999999999998"
     y="-5.1"
   >
     <animatetransform
@@ -217,7 +232,10 @@ exports[`Label component borderWidth set correctly 1`] = `
     fill="black"
     font-size="9px"
     font-weight="normal"
+    id="text"
+    lengthAdjust="spacingAndGlyphs"
     text-anchor="start"
+    textLength="22.5"
   >
     
     label
@@ -247,7 +265,10 @@ exports[`Label component circular mode set correctly 1`] = `
     fill="black"
     font-size="9px"
     font-weight="normal"
+    id="text"
+    lengthAdjust="spacingAndGlyphs"
     text-anchor="start"
+    textLength="0"
   >
     
     
@@ -277,7 +298,10 @@ exports[`Label component color set correctly 1`] = `
     fill="red"
     font-size="9px"
     font-weight="normal"
+    id="text"
+    lengthAdjust="spacingAndGlyphs"
     text-anchor="start"
+    textLength="0"
   >
     
     
@@ -307,7 +331,10 @@ exports[`Label component default label renders correctly 1`] = `
     fill="black"
     font-size="9px"
     font-weight="normal"
+    id="text"
+    lengthAdjust="spacingAndGlyphs"
     text-anchor="start"
+    textLength="0"
   >
     
     
@@ -337,7 +364,10 @@ exports[`Label component font-weight set correctly 1`] = `
     fill="black"
     font-size="9px"
     font-weight="bold"
+    id="text"
+    lengthAdjust="spacingAndGlyphs"
     text-anchor="start"
+    textLength="0"
   >
     
     
@@ -367,7 +397,10 @@ exports[`Label component label set correctly 1`] = `
     fill="black"
     font-size="9px"
     font-weight="normal"
+    id="text"
+    lengthAdjust="spacingAndGlyphs"
     text-anchor="start"
+    textLength="22.5"
   >
     
     label
@@ -397,7 +430,10 @@ exports[`Label component size set correctly 1`] = `
     fill="black"
     font-size="1.5px"
     font-weight="normal"
+    id="text"
+    lengthAdjust="spacingAndGlyphs"
     text-anchor="start"
+    textLength="0"
   >
     
     
@@ -427,7 +463,10 @@ exports[`Label component x set correctly 1`] = `
     fill="black"
     font-size="9px"
     font-weight="normal"
+    id="text"
+    lengthAdjust="spacingAndGlyphs"
     text-anchor="start"
+    textLength="0"
   >
     
     
@@ -457,7 +496,10 @@ exports[`Label component y set correctly 1`] = `
     fill="black"
     font-size="9px"
     font-weight="normal"
+    id="text"
+    lengthAdjust="spacingAndGlyphs"
     text-anchor="start"
+    textLength="0"
   >
     
     
