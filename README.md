@@ -5,7 +5,7 @@
 
 Vue component for displaying phylogenetic trees
 
-![Gif](public/images/exampleAnimated.gif)
+![Gif](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/exampleAnimated.gif)
 
 
 ## Installation
@@ -40,7 +40,7 @@ import { VuePhylogram } from 'vue-phylogram';
 
 The following tree can be represented by two formats : newick or json object.
 
-![Simple tree](public/images/simpleExample.png)
+![Simple tree](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/simpleExample.png)
 
 
 ### From newick
@@ -137,7 +137,7 @@ A cladogram does not represent the branch lengths instead of the phylogram.
 
 ### Display a phylogram (default)
 
-![Phylogram](public/images/phylogram.png)
+![Phylogram](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/phylogram.png)
 
 ~~~~
 <Phylogram :newick="newick"></Phylogram>
@@ -157,7 +157,7 @@ or
 
 ### Display a cladogram
 
-![Cladogram](public/images/cladogram.png)
+![Cladogram](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/cladogram.png)
 
 ~~~~
 <Phylogram :newick="newick" :branch-lengths="false" ></Phylogram>
@@ -182,7 +182,7 @@ or
 ### Display tree with smooth angles 
 
 
-![Smooth Phylogram](public/images/phylogramSmooth.png)
+![Smooth Phylogram](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/phylogramSmooth.png)
 
 ~~~~
 <Phylogram :newick="newick" :right-angle="false" ></Phylogram>
@@ -190,7 +190,7 @@ or
 
 ## Circular layout
 
-![Circular](public/images/circular.png)
+![Circular](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/circular.png)
 
 
 By default, the tree is displayed in a linear way. If you want to display the tree as a circle:
@@ -250,7 +250,7 @@ If you want to increase or reduce the width of the space assigned to the labels,
 
 ### Branch colors
 
-![Color branches](public/images/colorBranches.png)
+![Color branches](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/colorBranches.png)
 
 
 ~~~
@@ -278,7 +278,7 @@ branchStyles: {
 
 ### Node styles
 
-![Node Styles](public/images/nodeStyles.png)
+![Node Styles](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/nodeStyles.png)
 
 Size and color can be set for each leaf node
 
@@ -305,7 +305,7 @@ nodeStyles: {
 <Phylogram :inputTree="tree" :label-styles="labelStyles">
 ~~~
 
-![Label Styles](public/images/labelStyles.png)
+![Label Styles](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/labelStyles.png)
 
 Background, border and stroke colors can set for each label.
 
@@ -336,7 +336,7 @@ Background, border and stroke colors can set for each label.
 
 ### Display pies on nodes
 
-![Pies](public/images/pies.png)
+![Pies](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/pies.png)
 
 Hover a part of the pie to display the corresponding values.
 
