@@ -66,8 +66,8 @@
               :x="node.x"
               :y="
                 alignLabels && node.type === 'leaf'
-                  ? maxY
-                  : node.y + getNodeSize(node) * 2
+                  ? (maxY + nodeWidth * 1.5)
+                  : node.y + nodeWidth * 2
               "
               :label="node.data.name"
               :circular="circular"
@@ -81,6 +81,7 @@
               :borderWidth="getLabelBorderWidth(node)"
               :borderColor="getLabelBorderColor(node)"
               :font-weight="getLabelFontWeight(node)"
+              :offsetX="nodeWidth * 1.5"
             />
           </g>
           <g v-show="alignLabels" transform="translate(10, 10)">
@@ -88,8 +89,8 @@
               v-for="node in d3Leaves"
               v-show="getDisplayLabel(node)"
               :key="node.id"
-              :source="{ x: node.x, y: node.y + nodeWidth }"
-              :target="{ x: node.x, y: maxY }"
+              :source="{ x: node.x, y: node.y + nodeWidth *1.5 }"
+              :target="{ x: node.x, y: maxY + nodeWidth *2}"
               :right-angle="rightAngle"
               :circular="circular"
               :stroke-width="linkWidth / 2"
@@ -514,16 +515,10 @@ export default {
       }
     },
     linkWidth () {
-      if (this.d3Nodes.length > 2000) { return 0.05 };
-
-      const scale = d3.scaleLog().domain([3, 2000]).range([3, 0.05])
-
-      return scale(this.d3Nodes.length)
+      return this.nodeWidth / 4
     },
     nodeWidth () {
-      if (this.d3Nodes.length > 2000) { return 0.25 };
-      const scale = d3.scaleLog().domain([3, 2000]).range([10, 0.25])
-      return scale(this.d3Nodes.length)
+      return this.d3Leaves.length < 10 ? 10 : this.height / this.d3Leaves.length / 2
     },
     maxY () {
       return d3.max(this.d3Nodes.map((n) => n.y))

@@ -321,6 +321,7 @@ export default {
               {
                 length: 0.3,
                 id: 'AB',
+                name: 'AB',
                 branchset: [
                   {
                     name: 'A',
