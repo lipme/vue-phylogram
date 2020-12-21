@@ -108,7 +108,7 @@ export default {
 
   computed: {
     fontSize () {
-      return this.size * 1.5
+      return this.size * 1.2
     },
     textClass () {
       if (this.circular && this.x > 180) {
