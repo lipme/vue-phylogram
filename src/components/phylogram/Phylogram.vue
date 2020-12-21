@@ -514,15 +514,15 @@ export default {
       }
     },
     linkWidth () {
-      if (this.d3Nodes.length > 1000) { return 0.1 };
+      if (this.d3Nodes.length > 2000) { return 0.05 };
 
-      const scale = d3.scaleLog().domain([3, 1000]).range([3, 0.1])
+      const scale = d3.scaleLog().domain([3, 2000]).range([3, 0.05])
 
       return scale(this.d3Nodes.length)
     },
     nodeWidth () {
-      if (this.d3Nodes.length > 1000) { return 0.5 };
-      const scale = d3.scaleLog().domain([3, 1000]).range([10, 0.5])
+      if (this.d3Nodes.length > 2000) { return 0.25 };
+      const scale = d3.scaleLog().domain([3, 2000]).range([10, 0.25])
       return scale(this.d3Nodes.length)
     },
     maxY () {
