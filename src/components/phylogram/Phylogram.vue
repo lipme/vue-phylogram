@@ -514,16 +514,10 @@ export default {
       }
     },
     linkWidth () {
-      if (this.d3Nodes.length > 2000) { return 0.05 };
-
-      const scale = d3.scaleLog().domain([3, 2000]).range([3, 0.05])
-
-      return scale(this.d3Nodes.length)
+      return this.nodeWidth / 4
     },
     nodeWidth () {
-      if (this.d3Nodes.length > 2000) { return 0.25 };
-      const scale = d3.scaleLog().domain([3, 2000]).range([10, 0.25])
-      return scale(this.d3Nodes.length)
+      return this.d3Leaves.length < 10 ? 10 : this.height / this.d3Leaves.length / 2
     },
     maxY () {
       return d3.max(this.d3Nodes.map((n) => n.y))
