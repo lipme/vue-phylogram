@@ -80,12 +80,12 @@ export default {
       const coords = [
         { x: 0, y: 0 },
         {
-          x: this.size * 2,
-          y: -this.size * 2
+          x: this.size * 1.5,
+          y: -this.size * 1.5
         },
         {
-          x: this.size * 2,
-          y: this.size * 2
+          x: this.size * 1.5,
+          y: this.size * 1.5
         }
       ]
       return `${coords[0].x} ${coords[0].y},${coords[1].x} ${coords[1].y}, ${coords[2].x} ${coords[2].y}`

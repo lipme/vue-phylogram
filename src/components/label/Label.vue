@@ -102,6 +102,10 @@ export default {
     fontWeight: {
       type: String,
       default: 'normal'
+    },
+    offsetX: {
+      type: Number,
+      default: 10
     }
 
   },
@@ -127,17 +131,10 @@ export default {
       }
     },
     optionsLabel () {
-      // const transform = ''
-      let anchor = 'start'
-      let x = 1.5 * this.size
-
-      if (this.circular && this.x > 180) {
-        anchor = 'end'
-        x = -1.5 * this.size
-      }
+      const anchor = (this.circular && this.x > 180) ? 'end' : 'start'
 
       return {
-        x: x,
+        x: (this.circular && this.x > 180) ? -this.offsetX : this.offsetX,
         y: 0 + this.size / 2,
         'text-anchor': anchor,
         'font-size': this.fontSize + 'px'
