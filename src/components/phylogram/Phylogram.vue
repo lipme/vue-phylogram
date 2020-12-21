@@ -18,6 +18,7 @@
       :zoomEnabled="true"
       :fit="false"
       :center="true"
+      :maxZoom=50
     >
       <svg
         id="svgphylo"
@@ -513,12 +514,15 @@ export default {
       }
     },
     linkWidth () {
-      const scale = d3.scaleLog().domain([3, 500]).range([3, 0.4])
+      if (this.d3Nodes.length > 1000) { return 0.1 };
+
+      const scale = d3.scaleLog().domain([3, 1000]).range([3, 0.1])
 
       return scale(this.d3Nodes.length)
     },
     nodeWidth () {
-      const scale = d3.scaleLog().domain([3, 500]).range([10, 1])
+      if (this.d3Nodes.length > 1000) { return 0.5 };
+      const scale = d3.scaleLog().domain([3, 1000]).range([10, 0.5])
       return scale(this.d3Nodes.length)
     },
     maxY () {
