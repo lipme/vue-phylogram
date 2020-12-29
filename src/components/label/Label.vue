@@ -21,10 +21,11 @@
       :fill-opacity="rectFillOpacity"
       :x="rectX"
       :y="rectY"
-      :height="fontSize+rectMargin"
+      :height="fontSize+2*rectMargin"
       :stroke-width="rectBorderWidth"
       :stroke="borderColor"
       :width="rectWidth"
+
     >
      <animateTransform attributeName="transform"
              type="scale"
@@ -46,6 +47,8 @@
       :font-weight="fontWeight"
       :textLength="textLength"
       lengthAdjust="spacingAndGlyphs"
+      @mouseover="mouseover"
+      @mouseleave="mouseleave"
     >
       {{this.label}}
       <animateTransform attributeName="transform"
@@ -111,6 +114,12 @@ export default {
   },
 
   computed: {
+    transformText () {
+      const translationX = -2 * this.offsetX - this.textLength
+      const translationY = 0 - this.rectMargin
+      return this.textClass === 'reverse' ? 'rotate(180)translate(' + translationX + ',' + translationY + ')' : ''
+    },
+
     fontSize () {
       return this.size * 1.2
     },
@@ -131,13 +140,16 @@ export default {
       }
     },
     optionsLabel () {
-      const anchor = (this.circular && this.x > 180) ? 'end' : 'start'
+      // const anchor = (this.circular && this.x > 180) ? 'end' : 'start'
+      const anchor = 'start'
 
       return {
-        x: (this.circular && this.x > 180) ? -this.offsetX : this.offsetX,
-        y: 0 + this.size / 2,
+        // x: (this.circular && this.x > 180) ? -this.offsetX : this.offsetX,
+        x: this.offsetX,
+        y: this.size / 2,
         'text-anchor': anchor,
-        'font-size': this.fontSize + 'px'
+        'font-size': this.fontSize + 'px',
+        transform: this.transformText
       }
     },
 
@@ -151,12 +163,14 @@ export default {
       return this.fontSize / 10 * this.borderWidth
     },
     rectY () {
-      return this.optionsLabel.y - this.fontSize + this.rectMargin / 2
+      return this.optionsLabel.y - this.fontSize
     },
     rectX () {
       // const margin = (this.circular && this.x > 180) ? this.optionsLabel.x - this.rectMargin * 3 : this.rectMargin * 2
       // return this.optionsLabel.x - margin
-      return (this.circular && this.x > 180) ? this.rectMargin * 3 : this.optionsLabel.x - this.rectMargin - this.rectBorderWidth
+      const x = this.optionsLabel.x
+      return x - this.rectMargin - this.rectBorderWidth
+      // return (this.circular && this.x > 180) ? this.offsetX : this.optionsLabel.x - this.rectMargin - this.rectBorderWidth
     },
     rectFillOpacity () {
       return this.background ? '100%' : '0%'
@@ -168,40 +182,19 @@ export default {
       return this.textLength + 2 * (this.rectBorderWidth + this.rectMargin)
     }
 
+  },
+  methods: {
+    mouseover () {
+      this.size = this.size * 2
+    },
+    mouseleave () {
+      this.size = this.size / 2
+    }
   }
 }
 </script>
 
 <style scoped>
-
-.selected text {
-  font-weight: bold;
-  transition: all 0.5s;
-}
-
-/* .selected rect {
-  transition: all 0.5s;
-  transform: scale(1.5);
-} */
-
-.nodeLabel:hover text {
-  transition: all 0.5s;
-  transform: scale(1.5);
-}
-
-.nodeLabel:hover rect {
-  transition: all 0.5s;
-  transform: scale(1.5);
-}
-
-.reverse:hover text {
-  transition: all 0.5s;
-  transform: scale(1.5) rotate(180deg);
-}
-
-.reverse text {
-  transform: rotate(180deg);
-}
 
 text {
   font-family: "Helvetica Neue, Helvetica, sans-serif";
