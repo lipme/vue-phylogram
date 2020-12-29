@@ -16,7 +16,7 @@
       @svgpanzoom="registerSvgPanZoom"
       :style="svgStyle"
       :zoomEnabled="true"
-      :fit="false"
+      :fit="true"
       :center="true"
       :maxZoom=50
     >
@@ -37,31 +37,31 @@
               :right-angle="rightAngle"
               :circular="circular"
               :stroke-width="link.selected ? linkWidth * 1.5 : linkWidth"
-              :stroke="getBranchColor(link)"
+              :stroke="link.color"
             />
           </g>
           <g transform="translate(10, 10)">
             <Node
               v-for="node in d3Nodes"
-              :show="getNodeShow(node)"
+              :show="node.show"
               :key="node.id"
               :x="node.x"
               :y="node.y"
               :circular="circular"
               :id="node.data.id"
-              :size="getNodeSize(node)"
-              :fill="getNodeFillColor(node)"
-              :stroke-color="getNodeStrokeColor(node)"
+              :size="node.sizeFactor * nodeWidth"
+              :fill="node.fill"
+              :stroke-color="node.strokeColor"
               @contextmenu.native.prevent="rightClickNode($event, node)"
               @click.native.prevent="clickNode($event, node)"
               @mouseover.native.prevent="hoverNode($event, node)"
-              :collapsed="isCollapsed(node)"
+              :collapsed="node.collapsed"
             />
           </g>
-          <g transform="translate(10, 10)">
+          <g transform="translate(10, 10)" v-if="displayLeafLabels || displayInnerLabels">
             <Label
-              v-for="node in d3Nodes"
-              v-show="getDisplayLabel(node)"
+              v-for="node in nodesWithDisplayedLabel"
+              v-show="node.displayLabel"
               :key="node.id"
               :x="node.x"
               :y="
@@ -72,22 +72,21 @@
               :label="node.data.name"
               :circular="circular"
               :id="node.data.id"
-              :size="getNodeSize(node)"
+              :size="node.sizeFactor * nodeWidth"
               @contextmenu.native.prevent="rightClickLabel($event, node)"
               @click="clickLabel($event, node)"
               @mouseover.native.prevent="hoverLabel($event, node)"
-              :color="getLabelColor(node)"
-              :background="getLabelBackgroundColor(node)"
-              :borderWidth="getLabelBorderWidth(node)"
-              :borderColor="getLabelBorderColor(node)"
-              :font-weight="getLabelFontWeight(node)"
+              :color="node.labelColor"
+              :background="node.labelBackgroundColor"
+              :borderWidth="node.labelBorderWidth"
+              :borderColor="node.labelBorderColor"
+              :font-weight="node.labelFontWeight"
               :offsetX="nodeWidth * 1.5"
             />
           </g>
-          <g v-show="alignLabels" transform="translate(10, 10)">
+          <g v-if="alignLabels && displayLeafLabels" transform="translate(10, 10)">
             <Link
               v-for="node in d3Leaves"
-              v-show="getDisplayLabel(node)"
               :key="node.id"
               :source="{ x: node.x, y: node.y + nodeWidth *1.5 }"
               :target="{ x: node.x, y: maxY + nodeWidth *2}"
@@ -135,6 +134,8 @@ import Node from '@/components/node'
 import Link from '@/components/link'
 import Label from '@/components/label'
 import PieNode from '@/components/pieNode'
+
+let globalT1
 
 export default {
   name: 'VuePhylogram',
@@ -271,8 +272,17 @@ export default {
       console.error('newick and input-tree props can not coexist')
       this.error = true
     }
+    globalT1 = performance.now() // ;
+  },
+  beforeMount () {
+    const t1 = performance.now() // end time
+
+    console.log('Time taken to reach beforeMount after created:' + (t1 - globalT1) + ' milliseconds')
   },
   mounted () {
+    const t1 = performance.now() // end time
+
+    console.log('Time taken to mount after created:' + (t1 - globalT1) + ' milliseconds')
     if (this.error === false) {
       this.selectFromProp()
       this.collapseFromProp()
@@ -323,6 +333,8 @@ export default {
      */
     d3RootNode: {
       get: function () {
+        const t0 = performance.now() // start time
+
         const component = this
         if (this.d3RootNodeProxy !== null) {
           return this.d3RootNodeProxy
@@ -358,6 +370,8 @@ export default {
             n.selected = false
             n.data.id = n.data.id ? n.data.id : i
           })
+          const t1 = performance.now() // end time
+          console.log('Time taken to execute d3RootNode function:' + (t1 - t0) + ' milliseconds')
 
           return rootNode
         }
@@ -393,6 +407,8 @@ export default {
      * Array of d3 nodes
      */
     d3Nodes () {
+      const t0 = performance.now() // start time
+
       const root = this.d3RootNode
       let nodes = this.d3Cluster(
         root.sum(function (d) {
@@ -411,6 +427,29 @@ export default {
           }
           n.type = type
           n.id = i
+
+          n.sizeFactor = this.getNodeSizeFactor(n)
+
+          n.fill = this.getNodeFillColor(n)
+
+          n.strokeColor = this.getNodeStrokeColor(n)
+
+          n.collapsed = this.isCollapsed(n)
+
+          n.show = this.getNodeShow(n)
+
+          n.displayLabel = this.getDisplayLabel(n)
+
+          n.labelColor = this.getLabelColor(n)
+
+          n.labelBackgroundColor = this.getLabelBackgroundColor(n)
+
+          n.labelBorderWidth = this.getLabelBorderWidth(n)
+
+          n.labelBorderColor = this.getLabelBorderColor(n)
+
+          n.labelFontWeight = this.getLabelFontWeight(n)
+
           return n
         })
 
@@ -466,6 +505,8 @@ export default {
           })
         }
       }
+      const t1 = performance.now() // end time
+      console.log('Time taken to execute d3Nodes function:' + (t1 - t0) + ' milliseconds')
 
       return nodes
     },
@@ -476,8 +517,11 @@ export default {
      * Array of d3 links
      */
     d3Links () {
-      return this.d3Nodes
+      const t0 = performance.now() // start time
+
+      const links = this.d3Nodes
         .map((n) => {
+          let link = null
           if (n.parent) {
             let selected = false
             if (
@@ -487,7 +531,7 @@ export default {
               selected = true
             }
 
-            return {
+            link = {
               source: {
                 x: n.parent.x,
                 y: n.parent.y,
@@ -498,11 +542,16 @@ export default {
               id: n.id,
               selected: selected
             }
-          } else {
-            return null
+
+            link.color = this.getBranchColor(link)
           }
+          return link
         })
         .filter((n) => n !== null)
+      const t1 = performance.now() // end time
+
+      console.log('Time taken to execute d3Links function:' + (t1 - t0) + ' milliseconds')
+      return links
     },
     /**
      * Translation string for the main svg
@@ -542,21 +591,10 @@ export default {
     },
     hasNodeStyles () {
       return !(!this.nodeStyles || this.nodeStyles.length === 0)
+    },
+    nodesWithDisplayedLabel () {
+      return this.d3Nodes.filter(node => this.getDisplayLabel(node))
     }
-    // selectedNodes: {
-    //   get: function () {
-    //     if (this.selectedNodesProxy !== null) {
-    //       return this.selectedNodesProxy
-    //     } else {
-    //       console.log('select :' + this.select.split(','))
-    //       return this.select.split(',')
-    //     }
-    //   },
-    //   set: function (selected) {
-    //     console.log('set selected nodes')
-    //     this.selectedNodesProxy = selected
-    //   }
-    // }
   },
   methods: {
     /**
@@ -599,9 +637,6 @@ export default {
       })
 
       this.$emit('select-nodes', this.selectedNodes)
-
-      // I don't knwow why but the reactivity does not work here...
-      // this.$forceUpdate()
     },
     deselectNode (node) {
       const descendants = node.descendants()
@@ -616,7 +651,12 @@ export default {
       this.$emit('select-nodes', this.selectedNodes)
     },
     deselectAll (node) {
+      const t0 = performance.now() // start time
+
       this.deselectNode(this.d3RootNode)
+      const t1 = performance.now() // end time
+
+      console.log('Time taken to execute deselectAll function:' + (t1 - t0) + ' milliseconds')
     },
     getD3Node (id) {
       const elts = this.d3Nodes.filter((n) => n.data.id === id)
@@ -735,18 +775,16 @@ export default {
         return 'brown'
       }
     },
-    getNodeSize (node) {
-      const baseWidth = this.nodeWidth
-
+    getNodeSizeFactor (node) {
       if (this.hasNodeStyles) {
         if (node.data.id in this.nodeStyles) {
           if ('size' in this.nodeStyles[node.data.id]) {
-            return this.nodeStyles[node.data.id].size * baseWidth
+            return this.nodeStyles[node.data.id].size
           }
         }
       }
 
-      return this.nodeWidth
+      return 1
     },
     getNodeShow (node) {
       if (node.type === 'root') {
@@ -824,6 +862,8 @@ export default {
       return !!node.data._branchset
     },
     selectFromProp () {
+      const t0 = performance.now() // start time
+
       const nodeIds = this.selected.split(',')
       nodeIds.forEach((id) => {
         const node = this.getD3Node(id)
@@ -831,8 +871,13 @@ export default {
           this.selectNode(node)
         }
       })
+      const t1 = performance.now() // end time
+
+      console.log('Time taken to execute selectFromProp function:' + (t1 - t0) + ' milliseconds')
     },
     collapseFromProp () {
+      const t0 = performance.now() // start time
+
       const nodeIds = this.collapsed.split(',')
       nodeIds.forEach((id) => {
         const node = this.getD3Node(id)
@@ -840,6 +885,9 @@ export default {
           this.collapse(node)
         }
       })
+      const t1 = performance.now() // end time
+
+      console.log('Time taken to execute collapseFromProp function:' + (t1 - t0) + ' milliseconds')
     },
     registerSvgPanZoom (svgpanzoom) {
       this.svgpanzoom = svgpanzoom
