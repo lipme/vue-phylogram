@@ -6,7 +6,7 @@ exports[`Node component collapsed mode set correctly 1`] = `
 >
   <polygon
     fill="steelblue"
-    points="0 0,12 -12, 12 12"
+    points="0 0,9 -9, 9 9"
     stroke="darkblue"
     stroke-width="1.2"
   />
