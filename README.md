@@ -380,6 +380,64 @@ If you want to hide pies :
 <Phylogram :inputTree="tree" :pies="pies" :show-pies="false">
 ~~~
 
+### Display glyphs beside leaves
+
+![Pies](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/glyphs.png)
+
+~~~
+<Phylogram :inputTree="tree" :glyphs="glyphs">
+~~~
+
+The glyphs must be an array with this format :
+
+~~~
+glyphs: [
+            {
+              label: 'Good/Bad',
+              categories: [
+                {
+                  label: 'good',
+                  style: { fill: 'green' },
+                  ids: ['A', 'C']
+                },
+                {
+                  label: 'bad',
+                  style: { fill: 'red' },
+                  ids: ['D', 'E']
+                }
+              ]
+            },
+            {
+              label: 'Yes/No',
+              categories: [
+                {
+                  label: 'yes',
+                  style: { fill: 'cyan' },
+                  ids: ['B']
+                },
+                {
+                  label: 'no',
+                  style: { fill: 'purple' },
+                  ids: ['A', 'E']
+                }
+              ]
+            }
+          ]
+~~~
+
+If you want do hide glyphs:
+
+~~~
+<Phylogram :inputTree="tree" :glyphs="glyphs" :show-glyphs="false">
+~~~
+
+If you don't want that a tooltip is displayed when a glyph is hovered:
+
+~~~
+<Phylogram :inputTree="tree" :glyphs="glyphs" :show-glyph-labels="false">
+~~~
+
+
 ## Select nodes from props
 
 Use the "selected" props and put the node ids separateb by commas.
