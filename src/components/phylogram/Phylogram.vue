@@ -18,7 +18,7 @@
       :zoomEnabled="true"
       :fit="true"
       :center="true"
-      :maxZoom=50
+      :maxZoom="50"
     >
       <svg
         id="svgphylo"
@@ -58,17 +58,16 @@
               :collapsed="node.collapsed"
             />
           </g>
-          <g transform="translate(10, 10)" v-if="displayLeafLabels || displayInnerLabels">
+          <g
+            transform="translate(10, 10)"
+            v-if="displayLeafLabels || displayInnerLabels"
+          >
             <Label
               v-for="node in nodesWithDisplayedLabel"
               v-show="node.displayLabel"
               :key="node.id"
               :x="node.x"
-              :y="
-                alignLabels && node.type === 'leaf'
-                  ? (maxY + nodeWidth * 1.5)
-                  : node.y + nodeWidth * 2
-              "
+              :y="positionLabel(node)"
               :label="node.data.name"
               :circular="circular"
               :id="node.data.id"
@@ -84,12 +83,15 @@
               :offsetX="nodeWidth * 1.5"
             />
           </g>
-          <g v-if="alignLabels && displayLeafLabels" transform="translate(10, 10)">
+          <g
+            v-if="alignLabels && displayLeafLabels"
+            transform="translate(10, 10)"
+          >
             <Link
               v-for="node in d3Leaves"
               :key="node.id"
-              :source="{ x: node.x, y: node.y + nodeWidth *1.5 }"
-              :target="{ x: node.x, y: maxY + nodeWidth *2}"
+              :source="{ x: node.x, y: node.y + nodeWidth * 1.5 }"
+              :target="{ x: node.x, y: maxY + nodeWidth }"
               :right-angle="rightAngle"
               :circular="circular"
               :stroke-width="linkWidth / 2"
@@ -118,6 +120,23 @@
               :data="pies[node.data.id].data ? pies[node.data.id].data : []"
             />
           </g>
+          <g v-if="hasGlyphs && showGlyphs" transform="translate(10, 10)">
+            <template v-for="node in d3Leaves">
+              <template v-for="(glyph, glyphIndex) in node.glyphs">
+                <component
+                  :is="glyphComponent"
+                  :key="node.data.id + glyphIndex"
+                  :x="node.x"
+                  :y="positionGlyph(node, glyphIndex)"
+                  :style="glyph.style"
+                  :label="glyph.label"
+                  :size="nodeWidth"
+                  :show-label="showGlyphLabels"
+                  :circular="circular"
+                ></component>
+              </template>
+            </template>
+          </g>
         </g>
       </svg>
     </SvgPanZoom>
@@ -134,8 +153,8 @@ import Node from '@/components/node'
 import Link from '@/components/link'
 import Label from '@/components/label'
 import PieNode from '@/components/pieNode'
-
-let globalT1
+import GlyphCircle from '@/components/glyph/GlyphCircle.vue'
+import GlyphRect from '@/components/glyph/GlyphRect.vue'
 
 export default {
   name: 'VuePhylogram',
@@ -144,7 +163,9 @@ export default {
     Link,
     Label,
     PieNode,
-    SvgPanZoom
+    SvgPanZoom,
+    GlyphCircle,
+    GlyphRect
   },
   props: {
     branchLengthKey: {
@@ -252,7 +273,27 @@ export default {
       validator: function (value) {
         return ['0', '1', '2'].indexOf(value) !== -1
       }
+    },
+    glyphs: {
+      type: Array,
+      default: () => []
+    },
+    showGlyphs: {
+      type: Boolean,
+      default: true
+    },
+    showGlyphLabels: {
+      type: Boolean,
+      default: true
+    },
+    glyphType: {
+      type: String,
+      default: 'rectangle',
+      validator: function (value) {
+        return ['circle', 'rectangle'].indexOf(value) !== -1
+      }
     }
+
   },
   data () {
     return {
@@ -261,6 +302,7 @@ export default {
       newickTreeProxy: null,
       collapsedNodes: [],
       error: false
+
     }
   },
   created () {
@@ -272,17 +314,8 @@ export default {
       console.error('newick and input-tree props can not coexist')
       this.error = true
     }
-    globalT1 = performance.now() // ;
-  },
-  beforeMount () {
-    const t1 = performance.now() // end time
-
-    console.log('Time taken to reach beforeMount after created:' + (t1 - globalT1) + ' milliseconds')
   },
   mounted () {
-    const t1 = performance.now() // end time
-
-    console.log('Time taken to mount after created:' + (t1 - globalT1) + ' milliseconds')
     if (this.error === false) {
       this.selectFromProp()
       this.collapseFromProp()
@@ -333,8 +366,6 @@ export default {
      */
     d3RootNode: {
       get: function () {
-        const t0 = performance.now() // start time
-
         const component = this
         if (this.d3RootNodeProxy !== null) {
           return this.d3RootNodeProxy
@@ -347,22 +378,22 @@ export default {
               return d[component.branchKey] ? 1 : 0
             })
           if (this.layoutMode !== '0') {
-            rootNode = rootNode
-              .sort((a, b) => {
-                return (
+            rootNode = rootNode.sort((a, b) => {
+              return (
                 //
-                  this.layoutMode === '1'
-                    ? b.value - a.value ||
-                d3.descending(
-                  b.data[this.branchLengthKey],
-                  a.data[this.branchLengthKey])
-                    : a.value - b.value ||
-                d3.descending(
-                  a.data[this.branchLengthKey],
-                  b.data[this.branchLengthKey]
-                )
-                )
-              })
+                this.layoutMode === '1'
+                  ? b.value - a.value ||
+                      d3.descending(
+                        b.data[this.branchLengthKey],
+                        a.data[this.branchLengthKey]
+                      )
+                  : a.value - b.value ||
+                      d3.descending(
+                        a.data[this.branchLengthKey],
+                        b.data[this.branchLengthKey]
+                      )
+              )
+            })
           }
           let i = 0
           rootNode.each((n) => {
@@ -370,8 +401,6 @@ export default {
             n.selected = false
             n.data.id = n.data.id ? n.data.id : i
           })
-          const t1 = performance.now() // end time
-          console.log('Time taken to execute d3RootNode function:' + (t1 - t0) + ' milliseconds')
 
           return rootNode
         }
@@ -407,8 +436,6 @@ export default {
      * Array of d3 nodes
      */
     d3Nodes () {
-      const t0 = performance.now() // start time
-
       const root = this.d3RootNode
       let nodes = this.d3Cluster(
         root.sum(function (d) {
@@ -449,6 +476,19 @@ export default {
           n.labelBorderColor = this.getLabelBorderColor(n)
 
           n.labelFontWeight = this.getLabelFontWeight(n)
+
+          n.glyphs = []
+          if (this.hasGlyphs) {
+            this.glyphs.forEach((glyph, glyphIndex) => {
+              glyph.categories.forEach(c => {
+                const ids = c.ids
+                if (ids.includes(n.data.id)) {
+                  const glyphNode = { label: c.label, style: c.style, idx: glyphIndex }
+                  n.glyphs.push(glyphNode)
+                }
+              })
+            })
+          }
 
           return n
         })
@@ -505,8 +545,6 @@ export default {
           })
         }
       }
-      const t1 = performance.now() // end time
-      console.log('Time taken to execute d3Nodes function:' + (t1 - t0) + ' milliseconds')
 
       return nodes
     },
@@ -550,7 +588,9 @@ export default {
         .filter((n) => n !== null)
       const t1 = performance.now() // end time
 
-      console.log('Time taken to execute d3Links function:' + (t1 - t0) + ' milliseconds')
+      console.log(
+        'Time taken to execute d3Links function:' + (t1 - t0) + ' milliseconds'
+      )
       return links
     },
     /**
@@ -567,10 +607,12 @@ export default {
       return this.nodeWidth / 4
     },
     nodeWidth () {
-      return this.d3Leaves.length < 10 ? 10 : this.height / this.d3Leaves.length / 2
+      return this.d3Leaves.length < 10
+        ? 10
+        : this.height / this.d3Leaves.length / 2
     },
     maxY () {
-      return d3.max(this.d3Nodes.map((n) => n.y))
+      return d3.max(this.d3Nodes.map((n) => n.y + n.sizeFactor * this.nodeWidth))
     },
     hasPieMetadata () {
       if (!this.pies || this.pies.length === 0) {
@@ -593,7 +635,13 @@ export default {
       return !(!this.nodeStyles || this.nodeStyles.length === 0)
     },
     nodesWithDisplayedLabel () {
-      return this.d3Nodes.filter(node => this.getDisplayLabel(node))
+      return this.d3Nodes.filter((node) => this.getDisplayLabel(node))
+    },
+    hasGlyphs () {
+      return this.glyphs && this.glyphs.length > 0
+    },
+    glyphComponent () {
+      return this.glyphType === 'circle' ? 'GlyphCircle' : 'GlyphRect'
     }
   },
   methods: {
@@ -656,7 +704,11 @@ export default {
       this.deselectNode(this.d3RootNode)
       const t1 = performance.now() // end time
 
-      console.log('Time taken to execute deselectAll function:' + (t1 - t0) + ' milliseconds')
+      console.log(
+        'Time taken to execute deselectAll function:' +
+          (t1 - t0) +
+          ' milliseconds'
+      )
     },
     getD3Node (id) {
       const elts = this.d3Nodes.filter((n) => n.data.id === id)
@@ -873,7 +925,11 @@ export default {
       })
       const t1 = performance.now() // end time
 
-      console.log('Time taken to execute selectFromProp function:' + (t1 - t0) + ' milliseconds')
+      console.log(
+        'Time taken to execute selectFromProp function:' +
+          (t1 - t0) +
+          ' milliseconds'
+      )
     },
     collapseFromProp () {
       const t0 = performance.now() // start time
@@ -887,7 +943,24 @@ export default {
       })
       const t1 = performance.now() // end time
 
-      console.log('Time taken to execute collapseFromProp function:' + (t1 - t0) + ' milliseconds')
+      console.log(
+        'Time taken to execute collapseFromProp function:' +
+          (t1 - t0) +
+          ' milliseconds'
+      )
+    },
+    positionLabel (node) {
+      const offset = this.hasGlyphs && this.showGlyphs ? this.glyphs.length * this.nodeWidth : 0
+
+      return (this.alignLabels && node.type === 'leaf'
+        ? (this.maxY + this.nodeWidth)
+        : node.y + this.nodeWidth * node.sizeFactor + this.nodeWidth) + offset
+    },
+    positionGlyph (node, index) {
+      const offset = index * this.nodeWidth
+      return (this.alignLabels && node.type === 'leaf'
+        ? (this.maxY + this.nodeWidth)
+        : node.y + this.nodeWidth * node.sizeFactor + this.nodeWidth) + offset
     },
     registerSvgPanZoom (svgpanzoom) {
       this.svgpanzoom = svgpanzoom
