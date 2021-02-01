@@ -55,6 +55,16 @@
           <br />Show pies:
           <input type="checkbox" v-model="showPies" />
           <br />
+          <br />Show glyphs:
+          <input type="checkbox" v-model="showGlyphs" />
+          <br />
+          <br />
+          <br />Type glyphs:
+          <select name="" id="glyphType" v-model='glyphType'>
+            <option value="rectangle">rectangle</option>
+            <option value="circle">circle</option>
+          </select>
+          <br />
           <br />Layout mode:
           <select name="" id="layoutMode" v-model='layoutMode'>
             <option value="0">Branches not ordered</option>
@@ -169,6 +179,9 @@
           :selected="selected"
           :collapsed="collapsed"
           :layout-mode="layoutMode"
+          :glyphs="metadatas.inputTree.glyphs"
+          :glyphType="glyphType"
+          :showGlyphs="showGlyphs"
           @click-node="clickNodeFn"
           @click-outside="clickOutside"
         ></Phylogram>
@@ -207,6 +220,8 @@ export default {
       rightAngle: true,
       branchLengths: true,
       layoutMode: '0',
+      showGlyphs: true,
+      glyphType: 'rectangle',
       metadatas: {
         inputTree: {
           pies: {
@@ -280,7 +295,39 @@ export default {
             AB: {
               size: 2
             }
-          }
+          },
+          glyphs: [
+            {
+              label: 'Good/Bad',
+              categories: [
+                {
+                  label: 'good',
+                  style: { fill: 'green' },
+                  ids: ['A', 'C']
+                },
+                {
+                  label: 'bad',
+                  style: { fill: 'red' },
+                  ids: ['D', 'E']
+                }
+              ]
+            },
+            {
+              label: 'Yes/No',
+              categories: [
+                {
+                  label: 'yes',
+                  style: { fill: 'cyan' },
+                  ids: ['B']
+                },
+                {
+                  label: 'no',
+                  style: { fill: 'purple' },
+                  ids: ['A', 'E']
+                }
+              ]
+            }
+          ]
         },
         smallNewick: {
           labelStyles: {
