@@ -128,7 +128,7 @@
                   :key="node.data.id + glyphIndex"
                   :x="node.x"
                   :y="positionGlyph(node, glyphIndex)"
-                  :style="glyph.style"
+                  :glyphStyle="glyph.style"
                   :label="glyph.label"
                   :size="nodeWidth"
                   :show-label="showGlyphLabels"
