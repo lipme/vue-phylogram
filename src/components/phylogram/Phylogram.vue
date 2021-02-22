@@ -549,7 +549,7 @@ export default {
       return nodes
     },
     d3Leaves () {
-      return this.d3Nodes.filter((n) => n.type === 'leaf')
+      return this.d3RootNode.leaves()
     },
     /**
      * Array of d3 links
@@ -654,6 +654,7 @@ export default {
           return n.rootDist
         })
         return d3
+          .scaleLinear()
           .scaleLinear()
           .domain([0, d3.max(rootDists)])
           .range([
