@@ -1,5 +1,5 @@
 <template>
-  <rect :height="size" :width="size" :style="rectStyle" :transform="transformAttribute">
+  <rect :height="size" :width="size" :style="glyphStyle" :transform="transformAttribute">
     <title v-if="showLabel" style="text-align:left">
       {{ label }}
     </title>

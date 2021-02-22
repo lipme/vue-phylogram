@@ -27,7 +27,7 @@ export const glyph = {
       type: Boolean,
       default: false
     },
-    style: {
+    glyphStyle: {
       type: Object,
       default () {
         return {}
