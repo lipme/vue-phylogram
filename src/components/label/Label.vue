@@ -110,9 +110,12 @@ export default {
       type: Number,
       default: 10
     }
-
   },
-
+  data () {
+    return {
+      hover: false
+    }
+  },
   computed: {
     transformText () {
       const translationX = -2 * this.offsetX - this.textLength
@@ -121,7 +124,7 @@ export default {
     },
 
     fontSize () {
-      return this.size * 1.2
+      return this.hover ? this.size * 2 * 1.2 : this.size * 1.2
     },
     textClass () {
       if (this.circular && this.x > 180) {
@@ -185,10 +188,10 @@ export default {
   },
   methods: {
     mouseover () {
-      this.size = this.size * 2
+      this.hover = true
     },
     mouseleave () {
-      this.size = this.size / 2
+      this.hover = false
     }
   }
 }
