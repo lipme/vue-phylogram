@@ -609,7 +609,7 @@ export default {
     nodeWidth () {
       return this.d3Leaves.length < 10
         ? 10
-        : this.height / this.d3Leaves.length / 2
+        : this.height / this.d3Leaves.length / 1.5
     },
     maxY () {
       return d3.max(this.d3Nodes.map((n) => n.y + n.sizeFactor * this.nodeWidth))
