@@ -655,7 +655,6 @@ export default {
         })
         return d3
           .scaleLinear()
-          .scaleLinear()
           .domain([0, d3.max(rootDists)])
           .range([
             0,
