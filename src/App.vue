@@ -98,7 +98,13 @@
             {{ this.metadatas.inputTree.labelStyles }}
             <br />
           </div>
-
+          <br />
+          Load newick
+          <file-upload-field
+            label
+            button-label="Load newick file"
+            @load="loadNewick"
+          ></file-upload-field>
           <br />Type of tree:
           <br />
           <input
@@ -116,7 +122,7 @@
             v-model="treeType"
             value="smallNewick"
           />
-          <label for="treeType">Small newick</label>
+          <label for="treeType">Small newick example</label>
           <br />
 
           <input
@@ -125,7 +131,7 @@
             v-model="treeType"
             value="largeNewick"
           />
-          <label for="treeType">Large newick</label>
+          <label for="treeType">Large newick example</label>
           <br />Copy and paste newick:
           <textarea v-model="newick" rows="10" cols="40" />
         </form>
@@ -193,6 +199,8 @@
 <script>
 import Phylogram from './components/phylogram'
 
+import FileUploadField from '@/components/file/FileGetContentField'
+
 import { bigNewick } from './examples/bigNewick.js'
 
 import { smallNewick } from './examples/smallNewick.js'
@@ -200,7 +208,8 @@ import { smallNewick } from './examples/smallNewick.js'
 export default {
   name: 'App',
   components: {
-    Phylogram
+    Phylogram,
+    FileUploadField
   },
   data () {
     return {
@@ -415,11 +424,11 @@ export default {
       collapsed: 'AB'
     }
   },
-  watch: {
-    treeType () {
-      this.newickProxy = null
-    }
-  },
+  // watch: {
+  //   treeType () {
+  //     this.newickProxy = null
+  //   }
+  // },
 
   computed: {
     displayFromTreeObject () {
@@ -453,8 +462,10 @@ export default {
         return 0
       } else if (this.treeType === 'smallNewick') {
         return 1
-      } else {
+      } else if (this.treeType === 'bigNewick') {
         return 2
+      } else {
+        return 3
       }
     }
   },
@@ -465,6 +476,11 @@ export default {
     },
     clickOutside () {
       this.$refs.phylo.deselectAll()
+    },
+    loadNewick (newick) {
+      console.log({ load: newick })
+      this.newick = newick
+      this.treeType = 'upload'
     }
   }
 }
