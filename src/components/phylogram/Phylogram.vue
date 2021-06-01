@@ -417,7 +417,7 @@ export default {
         return d3
           .cluster()
           .size([
-            this.height - this.margin.top,
+            this.height,
             this.width - this.margin.left - this.margin.right - this.labelWidth
           ])
           .separation(function (a, b) {
