@@ -88,11 +88,9 @@
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
-  ,
   "lint-staged": {
     "src/**/*.{js,vue}": [
-      "vue-cli-service lint",
-      "git add"
+      "vue-cli-service lint"
     ]
   },
   "files": [
