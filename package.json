@@ -7,7 +7,7 @@
     "d3",
     "phylogeny"
   ],
-  "version": "2.1.2",
+  "version": "3.0.0",
   "private": false,
   "license": "Apache-2.0",
   "author": {
@@ -47,7 +47,12 @@
     "test:unit:update": "vue-cli-service test:unit -u",
     "lint": "vue-cli-service lint",
     "build-npm": "vue-cli-service build --target lib --name vue-phylogram ./src/components/index.js",
-    "publish-npm": "npm publish --access public"
+    "publish-npm": "npm publish --access public",
+    "release": "HUSKY=0 standard-version",
+    "release:minor": "HUSKY=0 standard-version --release-as minor",
+    "release:patch": "HUSKY=0 standard-version --release-as patch",
+    "release:major": "HUSKY=0 standard-version --release-as major",
+    "prepare": "husky install"
   },
   "dependencies": {
     "core-js": "^3.6.4",
@@ -56,6 +61,8 @@
     "vue-svg-pan-zoom": "^1.1.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
     "@vue/cli-plugin-babel": "~4.2.0",
     "@vue/cli-plugin-eslint": "~4.2.0",
     "@vue/cli-plugin-unit-jest": "~4.2.0",
@@ -64,13 +71,27 @@
     "@vue/test-utils": "1.0.0-beta.31",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.3",
+    "commitizen": "^4.2.4",
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-vue": "^6.1.2",
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0",
+    "standard-version": "^9.3.0",
     "vue-template-compiler": "^2.6.11"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,vue}": [
+      "vue-cli-service lint"
+    ]
   },
   "files": [
     "dist/*"
