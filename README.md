@@ -56,7 +56,9 @@ The following tree can be represented by two formats : newick or json object.
 		....
 ~~~~
 
-### From Json object
+### From Json String
+
+Be careful, after the version 2.1.2, inputTree is not an object anymore but a String.
 
 ~~~~
 <Phylogram :inputTree="tree"></Phylogram>
@@ -72,53 +74,56 @@ Each node can have these attributes :
 ~~~~
  data () {
     return {
-		tree: {
-        id: 'ABCDE',
-        branchset: [
+		tree: `{
+        "id": "ABCDE",
+        "branchset": [
           {
-            id: 'ABCD',
-            length: 0.2,
-            branchset: [
+            "id": "ABCD",
+            "length": 0.2,
+            "branchset": [
               {
-                length: 0.3,
-                id: 'AB',
-                branchset: [
+                "length": 0.3,
+                "id": "AB",
+                "name": "AB",
+                "branchset": [
                   {
-                    name: 'A',
-                    id: 'A',
-                    length: 0.2
+                    "name": "A",
+                    "id": "A",
+                    "length": 0.2
                   },
                   {
-                    id: 'B',
-                    name: 'B',
-                    length: 0.3
+                    "id": "B",
+                    "name": "B",
+                    "length": 0.3
                   }
                 ]
               },
               {
-                length: 0.2,
-                id: 'CD',
-                branchset: [
+                "length": 0.2,
+                "id": "CD",
+                "name": "CD",
+                "branchset": [
                   {
-                    id: 'C',
-                    name: 'C',
-                    length: 0.5
+                    "id": "C",
+                    "name": "C",
+                    "length": 0.5
                   },
                   {
-                    id: 'D',
-                    name: 'D',
-                    length: 0.3
+                    "id": "D",
+                    "name": "D",
+                    "length": 0.3
                   }
                 ]
               }
             ]
           },
           {
-            name: 'E',
-            length: 0.7
+            "id": "E",
+            "name": "E",
+            "length": 0.7
           }
         ]
-      }
+      }`
 		....
 ~~~~
 

@@ -208,8 +208,8 @@ export default {
       default: null
     },
     inputTree: {
-      type: Object,
-      default: null
+      type: String,
+      default: ''
     },
     rightAngle: {
       type: Boolean,
@@ -353,7 +353,7 @@ export default {
           if (this.newick) {
             return Newick.parse(this.newick)
           } else {
-            return this.inputTree
+            return JSON.parse(this.inputTree)
           }
         }
       },
@@ -555,8 +555,6 @@ export default {
      * Array of d3 links
      */
     d3Links () {
-      const t0 = performance.now() // start time
-
       const links = this.d3Nodes
         .map((n) => {
           let link = null
@@ -586,11 +584,7 @@ export default {
           return link
         })
         .filter((n) => n !== null)
-      const t1 = performance.now() // end time
 
-      console.log(
-        'Time taken to execute d3Links function:' + (t1 - t0) + ' milliseconds'
-      )
       return links
     },
     /**
@@ -699,16 +693,7 @@ export default {
       this.$emit('select-nodes', this.selectedNodes)
     },
     deselectAll (node) {
-      const t0 = performance.now() // start time
-
       this.deselectNode(this.d3RootNode)
-      const t1 = performance.now() // end time
-
-      console.log(
-        'Time taken to execute deselectAll function:' +
-          (t1 - t0) +
-          ' milliseconds'
-      )
     },
     getD3Node (id) {
       const elts = this.d3Nodes.filter((n) => n.data.id === id)
@@ -914,8 +899,6 @@ export default {
       return !!node.data._branchset
     },
     selectFromProp () {
-      const t0 = performance.now() // start time
-
       const nodeIds = this.selected.split(',')
       nodeIds.forEach((id) => {
         const node = this.getD3Node(id)
@@ -923,17 +906,8 @@ export default {
           this.selectNode(node)
         }
       })
-      const t1 = performance.now() // end time
-
-      console.log(
-        'Time taken to execute selectFromProp function:' +
-          (t1 - t0) +
-          ' milliseconds'
-      )
     },
     collapseFromProp () {
-      const t0 = performance.now() // start time
-
       const nodeIds = this.collapsed.split(',')
       nodeIds.forEach((id) => {
         const node = this.getD3Node(id)
@@ -941,13 +915,6 @@ export default {
           this.collapse(node)
         }
       })
-      const t1 = performance.now() // end time
-
-      console.log(
-        'Time taken to execute collapseFromProp function:' +
-          (t1 - t0) +
-          ' milliseconds'
-      )
     },
     positionLabel (node) {
       const offset = this.hasGlyphs && this.showGlyphs ? this.glyphs.length * this.nodeWidth : 0
