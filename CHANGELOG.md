@@ -1,0 +1,11 @@
+# Changelog
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [2.1.3](https://github.com/lipme/vue-phylogram/compare/v2.1.2...v2.1.3) (2021-06-21)
+
+
+### Bug Fixes
+
+* **props:** merge hotfix perfTree ([3963b11](https://github.com/lipme/vue-phylogram/commit/3963b112311b483a32824ffc53e55ba99e978cf8))
+* inputTree as a String and not Object ([a3824c2](https://github.com/lipme/vue-phylogram/commit/a3824c2735e5aea20161abec35009412ebf8f24a))
