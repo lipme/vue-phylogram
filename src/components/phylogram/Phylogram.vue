@@ -332,9 +332,12 @@ export default {
       this.deselectAll()
       this.selectFromProp()
     },
-    collapsed () {
+    collapsed (v) {
       this.expandAll()
       this.collapseFromProp()
+    },
+    collapsedNodes (v) {
+      this.$emit('collapse-nodes', v)
     }
   },
   computed: {
@@ -445,7 +448,7 @@ export default {
         .descendants()
         .map((n, i) => {
           let type = 'leaf'
-          if (n.children) {
+          if (n.children || n._children) {
             if (n.depth === 0) {
               type = 'root'
             } else {
@@ -461,7 +464,7 @@ export default {
 
           n.strokeColor = this.getNodeStrokeColor(n)
 
-          n.collapsed = this.isCollapsed(n)
+          n.collapsed = this.collapsedNodes.includes(n.data.id)
 
           n.show = this.getNodeShow(n)
 
@@ -549,7 +552,7 @@ export default {
       return nodes
     },
     d3Leaves () {
-      return this.d3RootNode.leaves()
+      return this.d3Nodes.filter(n => n.type === 'leaf')
     },
     /**
      * Array of d3 links
@@ -754,7 +757,7 @@ export default {
       return this.isSelected(node) ? 'bold' : 'normal'
     },
     getDisplayLabel (node) {
-      return node.data[this.branchKey]
+      return node.children
         ? this.displayInnerLabels
         : this.displayLeafLabels
     },
@@ -827,76 +830,40 @@ export default {
       if (node.type === 'root') {
         return true
       }
-      return node.data[this.branchKey]
+      return node.children
         ? this.displayInnerNodes
         : this.displayLeaves
     },
     toggleCollapse (node) {
       if (node.children) {
         this.collapse(node)
-      } else if (node.data._branchset) {
+      } else if (node._children) {
         this.expand(node)
       }
     },
     collapse (node) {
-      this.newickTree = this._collapseNode(
-        node.data.id,
-        this.newickTree,
-        false
-      )
-      this.collapsedNodes.push(node.data.id)
-      this.$emit('collapse-nodes', this.collapsedNodes)
-    },
-    _collapseNode (id, node, collapseChildren) {
-      if (node.id === id) {
-        collapseChildren = true
+      if (node.children && !this.collapsedNodes.includes(node.data.id)) {
+        node._children = node.children
+        node.children = null
+        this.collapsedNodes.push(node.data.id)
       }
-      if (node[this.branchKey]) {
-        node[this.branchKey].forEach((n) =>
-          this._collapseNode(id, n, collapseChildren)
-        )
-      }
-      if (node[this.branchKey] && collapseChildren) {
-        node._branchset = node[this.branchKey]
-        node[this.branchKey] = null
-      }
-      return node
     },
     expand (node) {
-      this.newickTree = this._expandNode(node.data.id, this.newickTree, false)
-      const ind = this.collapsedNodes.indexOf(node.data.id)
-      this.collapsedNodes.splice(ind, 1)
-      this.$emit('collapse-nodes', this.collapsedNodes)
-    },
-    _expandNode (id, node, expandChildren) {
-      if (node.id === id) {
-        expandChildren = true
+      if (node._children && this.collapsedNodes.includes(node.data.id)) {
+        node.children = node._children
+        node._children = null
+        const ind = this.collapsedNodes.indexOf(node.data.id)
+        this.collapsedNodes.splice(ind, 1)
       }
-      const selected = this.selectedNodes.includes(node.id)
-
-      if (node[this.branchKey]) {
-        node[this.branchKey].forEach((n) => {
-          if (selected) this.selectedNodes.push(n.id)
-          this._expandNode(id, n, expandChildren)
-        })
-      }
-      if (node._branchset) {
-        node._branchset.forEach((n) => {
-          if (selected) this.selectedNodes.push(n.id)
-          this._expandNode(id, n, expandChildren)
-        })
-      }
-      if (node._branchset && expandChildren) {
-        node[this.branchKey] = node._branchset
-        node._branchset = null
-      }
-      return node
     },
     expandAll () {
-      this.expand(this.d3RootNode)
+      this.collapsedNodes.forEach((id) => {
+        const node = this.getD3Node(id)
+        if (node !== null) { this.expand(node) }
+      })
     },
     isCollapsed (node) {
-      return !!node.data._branchset
+      return !!node._children
     },
     selectFromProp () {
       const nodeIds = this.selected.split(',')
@@ -908,8 +875,8 @@ export default {
       })
     },
     collapseFromProp () {
-      const nodeIds = this.collapsed.split(',')
-      nodeIds.forEach((id) => {
+      const v = this.collapsed.split(',')
+      v.forEach((id) => {
         const node = this.getD3Node(id)
         if (node !== null) {
           this.collapse(node)
