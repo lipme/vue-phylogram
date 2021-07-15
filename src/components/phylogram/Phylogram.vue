@@ -158,7 +158,6 @@ import Label from '@/components/label'
 import PieNode from '@/components/pieNode'
 import GlyphCircle from '@/components/glyph/GlyphCircle.vue'
 import GlyphRect from '@/components/glyph/GlyphRect.vue'
-import Support from '../support/Support.vue'
 
 export default {
   name: 'VuePhylogram',
@@ -169,8 +168,7 @@ export default {
     PieNode,
     SvgPanZoom,
     GlyphCircle,
-    GlyphRect,
-    Support
+    GlyphRect
   },
   props: {
     branchLengthKey: {
