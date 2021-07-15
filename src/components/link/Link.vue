@@ -11,7 +11,11 @@
 // See the License for the specific language governing permissions and
 //    limitations under the License.
 <template>
+<g class="link" >
+  <title v-if="support">Support value : {{support}}</title>
   <path
+    title="link"
+    :id="id"
     class="link"
     :d="path"
     fill="none"
@@ -28,6 +32,20 @@
       dur="2s"
     />
   </path>
+  <!-- <text
+      class="support"
+      :transform="transformSupport"
+      :font-size="supportFontSize"
+      :fill="supportColor"
+      lengthAdjust="spacingAndGlyphs"
+    >
+    {{this.support}}
+  </text> -->
+  <text :font-size="supportFontSize" dy="2px" dx="2px">
+     <textPath :xlink:href="xRefId" startOffset="30%">{{this.support}}</textPath>
+  </text>
+    </g>
+
 </template>
 
 <script>
@@ -35,6 +53,9 @@ import * as d3Shape from 'd3-shape'
 
 export default {
   props: {
+    id: {
+      type: String, default: 'link'
+    },
     stroke: {
       type: String,
       default: 'black'
@@ -72,9 +93,24 @@ export default {
     dashed: {
       type: Boolean,
       default: false
+    },
+    support: {
+      type: String,
+      default: ''
+    },
+    supportColor: {
+      type: String,
+      default: 'black'
+    },
+    supportFontSize: {
+      type: Number,
+      default: 12.0
     }
   },
   computed: {
+    xRefId () {
+      return '#' + this.id
+    },
     path () {
       if (this.rightAngle === false) {
         if (this.circular === false) {
@@ -94,6 +130,9 @@ export default {
     dashAttribute () {
       const step = this.strokeWidth * 5
       return this.dashed ? step + ',' + step : ''
+    },
+    transformSupport () {
+      return 'translate(' + ((this.source.y + this.target.y) / 2) + ',' + ((this.target.x - this.supportFontSize / 2)) + ')'
     }
   },
   methods: {
@@ -245,4 +284,5 @@ path:hover {
   transition: all 0.5s;
   stroke: red;
 }
+
 </style>

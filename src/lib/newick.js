@@ -64,7 +64,7 @@
   exports.parse = function (s) {
     var ancestors = []
     var tree = {}
-    var tokens = s.split(/\s*(;|\(|\)|,|:)\s*/)
+    var tokens = s.split(/\s*(;|\(|\)|,|:|\[|\])\s*/)
 
     let nodeIndex = 0
 
@@ -87,6 +87,17 @@
           tree = ancestors.pop()
           break
         case ':': // optional length next
+          break
+        case '[': // Support
+          tree.support = ''
+          i = i + 1
+          var letterSupport = tokens[i]
+
+          while (letterSupport !== ']') {
+            tree.support += letterSupport
+            i++
+            letterSupport = tokens[i]
+          }
           break
         default:
           var x = tokens[i - 1]
