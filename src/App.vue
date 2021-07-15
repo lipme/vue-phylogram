@@ -16,124 +16,111 @@
     <div id="tablerow">
       <div id="leftbox">
         <form>
-          Display tree with right angles
-          <input type="checkbox" v-model="rightAngle" />
-          <br />
-          <br />Display branch lengths
-          <input type="checkbox" v-model="branchLengths" />
-          <br />
-          <br />
-          <br />Display Leaf Labels
-          <input type="checkbox" v-model="displayLeafLabels" />
-          <br />
-          <br />
-          <br />Display inner Labels
-          <input type="checkbox" v-model="displayInnerLabels" />
-          <br />
-          <br />
-          <br />Display leaves
-          <input type="checkbox" v-model="displayLeaves" />
-          <br />
-          <br />Display inner nodes
-          <input type="checkbox" v-model="displayInnerNodes" />
-          <br />
-          <br />Label width:
-          <input
-            type="range"
-            min="20"
-            max="500"
-            class="slider"
-            v-model="labelWidth"
-          />
-          <br />
-          <br />Circular layout:
-          <input type="checkbox" v-model="circular" />
-          <br />
-          <br />Align Labels:
-          <input type="checkbox" v-model="alignLabels" />
-          <br />
-          <br />Show pies:
-          <input type="checkbox" v-model="showPies" />
-          <br />
-          <br />Show glyphs:
-          <input type="checkbox" v-model="showGlyphs" />
-          <br />
-          <br />
-          <br />Type glyphs:
-          <select name="" id="glyphType" v-model='glyphType'>
-            <option value="rectangle">rectangle</option>
-            <option value="circle">circle</option>
-          </select>
-          <br />
-          <br />Layout mode:
-          <select name="" id="layoutMode" v-model='layoutMode'>
-            <option value="0">Branches not ordered</option>
-            <option value="1">Branches ordered by ascending length</option>
-            <option value="2">Branches ordered by descending length</option>
-          </select>
-          <br />
-          <br />Selected node ids :
-          <br />
-          <input type="text" name="selection" v-model="selected" />
-          <br />
-          <br />Collapsed node ids :
-          <br />
-          <input type="text" name="collapse" v-model="collapsed" />
-          <br />
-          <br />
-          <div v-if="treeType == 'jsonExample'">
-            <b>Metadata:</b>
-            <br />Pies:
+          <fieldset>
+            <legend>Data</legend>
+            <file-upload-field
+              label
+              button-label="Load newick file"
+              @load="loadNewick"
+            ></file-upload-field>
+            <br />Type of tree:
             <br />
-            {{ this.metadatas.inputTree.pies }}
+            <input
+              type="radio"
+              name="treeType"
+              v-model="treeType"
+              value="jsonExample"
+            />
+            <label for="treeType">Json example (see source)</label>
             <br />
-            <br />Branch Styles:
-            <br />
-            {{ this.metadatas.inputTree.branchStyles }}
-            <br />Node Styles:
-            <br />
-            {{ this.metadatas.inputTree.nodeStyles }}
-            <br />Label Styles:
-            <br />
-            {{ this.metadatas.inputTree.labelStyles }}
-            <br />
-          </div>
-          <br />
-          Load newick
-          <file-upload-field
-            label
-            button-label="Load newick file"
-            @load="loadNewick"
-          ></file-upload-field>
-          <br />Type of tree:
-          <br />
-          <input
-            type="radio"
-            name="treeType"
-            v-model="treeType"
-            value="jsonExample"
-          />
-          <label for="treeType">Json example (see source)</label>
-          <br />
 
-          <input
-            type="radio"
-            name="treeType"
-            v-model="treeType"
-            value="smallNewick"
-          />
-          <label for="treeType">Small newick example</label>
-          <br />
+            <input
+              type="radio"
+              name="treeType"
+              v-model="treeType"
+              value="smallNewick"
+            />
+            <label for="treeType">Small newick example</label>
+            <br />
+            <input
+              type="radio"
+              name="treeType"
+              v-model="treeType"
+              value="largeNewick"
+            />
+            <label for="treeType">Large newick example</label>
+          </fieldset>
 
-          <input
-            type="radio"
-            name="treeType"
-            v-model="treeType"
-            value="largeNewick"
-          />
-          <label for="treeType">Large newick example</label>
-          <br />Copy and paste newick:
-          <textarea v-model="newick" rows="10" cols="40" />
+          <fieldset>
+            <legend>Links</legend>
+            Right angle links
+            <input type="checkbox" v-model="rightAngle" />
+            <br />Display branch lengths
+            <input type="checkbox" v-model="branchLengths" />
+            <br />Display support values
+            <input type="checkbox" v-model="displaySupport" />
+          </fieldset>
+
+          <fieldset>
+            <legend>Nodes</legend>
+            Display leaves
+            <input type="checkbox" v-model="displayLeaves" />
+            <br />Display inner nodes
+            <input type="checkbox" v-model="displayInnerNodes" />
+          </fieldset>
+
+          <fieldset>
+            <legend>Labels</legend>
+            Display Leaf Labels
+            <input type="checkbox" v-model="displayLeafLabels" />
+            <br />Display inner Labels
+            <input type="checkbox" v-model="displayInnerLabels" />
+            <br />Label width:
+            <input
+              type="range"
+              min="20"
+              max="500"
+              class="slider"
+              v-model="labelWidth"
+            />
+            <br />Align Labels:
+            <input type="checkbox" v-model="alignLabels" />
+          </fieldset>
+
+          <fieldset>
+            <legend>Layout</legend>
+            Circular layout:
+            <input type="checkbox" v-model="circular" />
+            <select name="" id="layoutMode" v-model='layoutMode'>
+              <option value="0">Branches not ordered</option>
+              <option value="1">Branches ordered by ascending length</option>
+              <option value="2">Branches ordered by descending length</option>
+            </select>
+          </fieldset>
+
+          <fieldset>
+            <legend>Metadata</legend>
+            <b>Only on the json example</b> <br/>
+            Show pies:
+            <input type="checkbox" v-model="showPies" />
+            <br />Show glyphs:
+            <input type="checkbox" v-model="showGlyphs" />
+            <br />Type glyphs:
+            <select name="" id="glyphType" v-model='glyphType'>
+              <option value="rectangle">rectangle</option>
+              <option value="circle">circle</option>
+            </select>
+          </fieldset>
+
+          <fieldset>
+            <legend>Selected nodes</legend>
+            <input type="text" name="selection" v-model="selected" />
+          </fieldset>
+
+          <fieldset>
+            <legend>Collapsed nodes</legend>
+            <input type="text" name="collapse" v-model="collapsed" />
+          </fieldset>
         </form>
       </div>
       <div id="rightbox">
@@ -149,6 +136,7 @@
           :margin="margin"
           :displayInnerLabels="displayInnerLabels"
           :displayLeafLabels="displayLeafLabels"
+          :displayLeaves="displayLeaves"
           :displayInnerNodes="displayInnerNodes"
           :labelWidth="Number(labelWidth)"
           :circular="circular"
@@ -158,6 +146,7 @@
           :selected="selected"
           :collapsed="collapsed"
           :layout-mode="layoutMode"
+          :displaySupport="displaySupport"
           @click-node="clickNodeFn"
         ></Phylogram>
         <Phylogram
@@ -188,6 +177,7 @@
           :glyphs="metadatas.inputTree.glyphs"
           :glyphType="glyphType"
           :showGlyphs="showGlyphs"
+          :displaySupport="displaySupport"
           @click-node="clickNodeFn"
           @click-outside="clickOutside"
         ></Phylogram>
@@ -217,6 +207,7 @@ export default {
       displayLeafLabels: true,
       displayLeaves: true,
       displayInnerNodes: false,
+      displaySupport: false,
       alignLabels: false,
       labelWidth: 200,
       circular: false,
@@ -509,4 +500,8 @@ export default {
   background-color: rgb(226, 215, 236);
   padding: 20px;
 }
+legend {
+  font-weight: bold;
+}
+
 </style>

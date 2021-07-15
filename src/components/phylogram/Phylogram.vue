@@ -38,6 +38,9 @@
               :circular="circular"
               :stroke-width="link.selected ? linkWidth * 1.5 : linkWidth"
               :stroke="link.color"
+              :support="link.support"
+              :supportFontSize="nodeWidth"
+              :id="link.id"
             />
           </g>
           <g transform="translate(10, 10)">
@@ -155,6 +158,7 @@ import Label from '@/components/label'
 import PieNode from '@/components/pieNode'
 import GlyphCircle from '@/components/glyph/GlyphCircle.vue'
 import GlyphRect from '@/components/glyph/GlyphRect.vue'
+import Support from '../support/Support.vue'
 
 export default {
   name: 'VuePhylogram',
@@ -165,7 +169,8 @@ export default {
     PieNode,
     SvgPanZoom,
     GlyphCircle,
-    GlyphRect
+    GlyphRect,
+    Support
   },
   props: {
     branchLengthKey: {
@@ -292,6 +297,10 @@ export default {
       validator: function (value) {
         return ['circle', 'rectangle'].indexOf(value) !== -1
       }
+    },
+    displaySupport: {
+      type: Boolean,
+      default: true
     }
 
   },
@@ -578,8 +587,9 @@ export default {
                 data: n.parent.data
               },
               target: { x: n.x, y: n.y, selected: n.selected, data: n.data },
-              id: n.id,
-              selected: selected
+              id: n.id + '__' + n.parent.id,
+              selected: selected,
+              support: this.displaySupport ? n.parent.data.support : ''
             }
 
             link.color = this.getBranchColor(link)

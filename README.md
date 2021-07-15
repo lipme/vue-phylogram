@@ -251,6 +251,31 @@ If you want to increase or reduce the width of the space assigned to the labels,
 <Phylogram :newick="newick" :label-width=400 ></Phylogram>
 ~~~~
 
+## Display support values
+
+Support values (e.g bootstrap values) can be read from newick string following the two ways described [here]([https://link](https://www.megasoftware.net/mega4/WebHelp/glossary/rh_newick_format.htm).
+
+In the json object, the source node must have a key called "support":
+
+~~~
+"branchset": [
+          {
+            "id": "ABCD",
+            "support":85,
+            "length": 0.2,
+            "branchset": [
+              {
+                "length": 0.3,
+                "id": "AB",
+                "support":90,
+                "name": "AB",
+                "branchset": [
+                ...
+~~~
+          
+          
+
+
 ## Metadata
 
 ### Branch colors
