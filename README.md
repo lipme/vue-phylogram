@@ -193,7 +193,7 @@ or
 <Phylogram :newick="newick" :right-angle="false" ></Phylogram>
 ~~~~
 
-## Circular layout
+## Circular layout
 
 ![Circular](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/circular.png)
 
@@ -227,7 +227,7 @@ The leaf labels are displayed by default. To hide them:
 <Phylogram :newick="newick" :display-leaf-labels="false" ></Phylogram>
 ~~~~
 
-## Display inner labels
+## Display inner labels
 
 The inner labels are hidden by default. To show them:
 ~~~~
@@ -251,7 +251,7 @@ If you want to increase or reduce the width of the space assigned to the labels,
 <Phylogram :newick="newick" :label-width=400 ></Phylogram>
 ~~~~
 
-## Display support values
+## Display support values
 
 Support values (e.g bootstrap values) can be read from newick string following the two ways described [here]([https://link](https://www.megasoftware.net/mega4/WebHelp/glossary/rh_newick_format.htm).
 
@@ -329,7 +329,7 @@ nodeStyles: {
         },
 ~~~
 
-### Label styles 
+### Label styles 
 
 ~~~
 <Phylogram :inputTree="tree" :label-styles="labelStyles">
@@ -410,7 +410,7 @@ If you want to hide pies :
 <Phylogram :inputTree="tree" :pies="pies" :show-pies="false">
 ~~~
 
-### Display glyphs beside leaves
+### Display glyphs beside leaves
 
 ![Pies](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/glyphs.png)
 
@@ -484,7 +484,7 @@ Use the "selected" props and put the node ids separateb by commas.
 <Phylogram :inputTree="tree" :collapsed="AB,CD">
 ~~~
 
-## Layout mode
+## Layout mode
 
 By default, branches are not ordered (layout-mode=0)
 To sort the branches by ascending length:
