@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.3](https://github.com/lipme/vue-phylogram/compare/v3.1.2...v3.1.3) (2021-09-02)
+
+
+### Bug Fixes
+
+* **options:** supportValue to false by default ([d11e38e](https://github.com/lipme/vue-phylogram/commit/d11e38ef467c77b3983ad0e609d7de0831cf8e12))
+
 ### [3.1.2](https://github.com/lipme/vue-phylogram/compare/v3.1.1...v3.1.2) (2021-08-16)
 
 ## [3.1.1](https://github.com/lipme/vue-phylogram/compare/v3.1.0...v3.1.1) (2021-07-15)
