@@ -46,7 +46,7 @@ The following tree can be represented by two formats : newick or json object.
 ### From newick
 
 ~~~~
-<Phylogram :newick="newick"></Phylogram>
+<vue-phylogram :newick="newick"></vue-phylogram>
 ~~~~
 
 ~~~~
@@ -61,7 +61,7 @@ The following tree can be represented by two formats : newick or json object.
 Be careful, after the version 2.1.2, inputTree is not an object anymore but a String.
 
 ~~~~
-<Phylogram :inputTree="tree"></Phylogram>
+<vue-phylogram :inputTree="tree"></vue-phylogram>
 ~~~~
 
 Each node can have these attributes :
@@ -145,19 +145,19 @@ A cladogram does not represent the branch lengths instead of the phylogram.
 ![Phylogram](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/phylogram.png)
 
 ~~~~
-<Phylogram :newick="newick"></Phylogram>
+<vue-phylogram :newick="newick"></vue-phylogram>
 ~~~~
 
 or
 
 ~~~~
-<Phylogram :newick="newick" :branch-lengths="true" ></Phylogram>
+<vue-phylogram :newick="newick" :branch-lengths="true" ></vue-phylogram>
 ~~~~
 
 or
 
 ~~~~
-<Phylogram :newick="newick" branch-lengths ></Phylogram>
+<vue-phylogram :newick="newick" branch-lengths ></vue-phylogram>
 ~~~~
 
 ### Display a cladogram
@@ -165,7 +165,7 @@ or
 ![Cladogram](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/cladogram.png)
 
 ~~~~
-<Phylogram :newick="newick" :branch-lengths="false" ></Phylogram>
+<vue-phylogram :newick="newick" :branch-lengths="false" ></vue-phylogram>
 ~~~~
 
 
@@ -176,11 +176,11 @@ or
 
 
 ~~~~
-<Phylogram :newick="newick" right-angle></Phylogram>
+<vue-phylogram :newick="newick" right-angle></vue-phylogram>
 ~~~~
 
 ~~~~
-<Phylogram :newick="newick" :right-angle="true" ></Phylogram>
+<vue-phylogram :newick="newick" :right-angle="true" ></vue-phylogram>
 ~~~~
 
 
@@ -190,7 +190,7 @@ or
 ![Smooth Phylogram](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/phylogramSmooth.png)
 
 ~~~~
-<Phylogram :newick="newick" :right-angle="false" ></Phylogram>
+<vue-phylogram :newick="newick" :right-angle="false" ></vue-phylogram>
 ~~~~
 
 ## Circular layout
@@ -201,7 +201,7 @@ or
 By default, the tree is displayed in a linear way. If you want to display the tree as a circle:
 
 ~~~~
-<Phylogram :newick="newick" circular ></Phylogram>
+<vue-phylogram :newick="newick" circular ></vue-phylogram>
 ~~~~
 
 ## Display leaves
@@ -209,7 +209,7 @@ By default, the tree is displayed in a linear way. If you want to display the tr
 Leaves are displayed by default. To hide them:
 
 ~~~~
-<Phylogram :newick="newick" :display-leaves="false" ></Phylogram>
+<vue-phylogram :newick="newick" :display-leaves="false" ></vue-phylogram>
 ~~~~
 
 ## Display inner nodes
@@ -217,21 +217,21 @@ Leaves are displayed by default. To hide them:
 Inner nodes are hiddent by default. To show them:
 
 ~~~~
-<Phylogram :newick="newick" :display-inner-nodes="true" ></Phylogram>
+<vue-phylogram :newick="newick" :display-inner-nodes="true" ></vue-phylogram>
 ~~~~
 
 ## Display leaf labels
 
 The leaf labels are displayed by default. To hide them:
 ~~~~
-<Phylogram :newick="newick" :display-leaf-labels="false" ></Phylogram>
+<vue-phylogram :newick="newick" :display-leaf-labels="false" ></vue-phylogram>
 ~~~~
 
 ## Display inner labels
 
 The inner labels are hidden by default. To show them:
 ~~~~
-<Phylogram :newick="newick" :display-inner-labels="true" ></Phylogram>
+<vue-phylogram :newick="newick" :display-inner-labels="true" ></vue-phylogram>
 ~~~~
 
 
@@ -240,7 +240,7 @@ The inner labels are hidden by default. To show them:
 By default, labels are displayed close to the nodes. If you want to right align them :
 
 ~~~~
-<Phylogram :newick="newick" align-labels ></Phylogram>
+<vue-phylogram :newick="newick" align-labels ></vue-phylogram>
 ~~~~
 
 ## Space for labels
@@ -248,7 +248,7 @@ By default, labels are displayed close to the nodes. If you want to right align 
 If you want to increase or reduce the width of the space assigned to the labels, use the label-width prop:
 
 ~~~~
-<Phylogram :newick="newick" :label-width=400 ></Phylogram>
+<vue-phylogram :newick="newick" :label-width=400 ></vue-phylogram>
 ~~~~
 
 ## Display support values
@@ -284,7 +284,7 @@ In the json object, the source node must have a key called "support":
 
 
 ~~~
-<Phylogram :inputTree="tree" :branch-styles="branchStyles">
+<vue-phylogram :inputTree="tree" :branch-styles="branchStyles">
 ~~~
 
 The branches are identified by the node that they reach (type:'to') or that they start from (type:'from') or both (type:'both') (default)
@@ -313,7 +313,7 @@ branchStyles: {
 Size and color can be set for each leaf node
 
 ~~~
-<Phylogram :inputTree="tree" :node-styles="nodeStyles">
+<vue-phylogram :inputTree="tree" :node-styles="nodeStyles">
 ~~~
 
 ~~~
@@ -332,7 +332,7 @@ nodeStyles: {
 ### Label styles 
 
 ~~~
-<Phylogram :inputTree="tree" :label-styles="labelStyles">
+<vue-phylogram :inputTree="tree" :label-styles="labelStyles">
 ~~~
 
 ![Label Styles](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/labelStyles.png)
@@ -340,7 +340,7 @@ nodeStyles: {
 Background, border and stroke colors can set for each label.
 
 ~~~
-<Phylogram :inputTree="tree" :label-styles="labelStyles">
+<vue-phylogram :inputTree="tree" :label-styles="labelStyles">
 ~~~
 
 ~~~
@@ -371,7 +371,7 @@ Background, border and stroke colors can set for each label.
 Hover a part of the pie to display the corresponding values.
 
 ~~~
-<Phylogram :inputTree="tree" :pies="pies">
+<vue-phylogram :inputTree="tree" :pies="pies">
 ~~~
 
 Be careful, the ids of the nodes must be well specified. 
@@ -407,7 +407,7 @@ pies: {
 If you want to hide pies : 
 
 ~~~
-<Phylogram :inputTree="tree" :pies="pies" :show-pies="false">
+<vue-phylogram :inputTree="tree" :pies="pies" :show-pies="false">
 ~~~
 
 ### Display glyphs beside leaves
@@ -415,7 +415,7 @@ If you want to hide pies :
 ![Pies](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/glyphs.png)
 
 ~~~
-<Phylogram :inputTree="tree" :glyphs="glyphs">
+<vue-phylogram :inputTree="tree" :glyphs="glyphs">
 ~~~
 
 The glyphs must be an array with this format :
@@ -458,13 +458,13 @@ glyphs: [
 If you want do hide glyphs:
 
 ~~~
-<Phylogram :inputTree="tree" :glyphs="glyphs" :show-glyphs="false">
+<vue-phylogram :inputTree="tree" :glyphs="glyphs" :show-glyphs="false">
 ~~~
 
 If you don't want that a tooltip is displayed when a glyph is hovered:
 
 ~~~
-<Phylogram :inputTree="tree" :glyphs="glyphs" :show-glyph-labels="false">
+<vue-phylogram :inputTree="tree" :glyphs="glyphs" :show-glyph-labels="false">
 ~~~
 
 
@@ -473,7 +473,7 @@ If you don't want that a tooltip is displayed when a glyph is hovered:
 Use the "selected" props and put the node ids separateb by commas.
 
 ~~~
-<Phylogram :inputTree="tree" :selected="AB,E">
+<vue-phylogram :inputTree="tree" :selected="AB,E">
 ~~~
 
 ## Collapse nodes from props
@@ -481,7 +481,7 @@ Use the "selected" props and put the node ids separateb by commas.
 Use the "selected" props and put the node ids separateb by commas.
 
 ~~~
-<Phylogram :inputTree="tree" :collapsed="AB,CD">
+<vue-phylogram :inputTree="tree" :collapsed="AB,CD">
 ~~~
 
 ## Layout mode
@@ -489,12 +489,12 @@ Use the "selected" props and put the node ids separateb by commas.
 By default, branches are not ordered (layout-mode=0)
 To sort the branches by ascending length:
 ~~~
-<Phylogram :inputTree="tree" :layout-mode="1">
+<vue-phylogram :inputTree="tree" :layout-mode="1">
 ~~~
 
 To sort the branches by descending length:
 ~~~
-<Phylogram :inputTree="tree" :layout-mode="2">
+<vue-phylogram :inputTree="tree" :layout-mode="2">
 ~~~
 
 ## Events

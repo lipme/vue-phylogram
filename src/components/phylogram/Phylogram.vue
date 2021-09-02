@@ -298,7 +298,7 @@ export default {
     },
     displaySupport: {
       type: Boolean,
-      default: true
+      default: false
     }
 
   },
