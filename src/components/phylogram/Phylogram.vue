@@ -125,8 +125,7 @@
           </g>
           <g v-if="hasGlyphs && showGlyphs" transform="translate(10, 10)">
             <template v-for="node in d3Leaves">
-              <template v-for="(glyph, glyphIndex) in node.glyphs">
-                <component
+                <component v-for="(glyph, glyphIndex) in node.glyphs"
                   :is="glyphComponent"
                   :key="node.data.id + glyphIndex"
                   :x="node.x"
@@ -137,7 +136,6 @@
                   :show-label="showGlyphLabels"
                   :circular="circular"
                 ></component>
-              </template>
             </template>
           </g>
         </g>
