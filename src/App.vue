@@ -13,8 +13,11 @@
 //    limitations under the License.
 <template>
   <div id="app">
-    <div id="tablerow">
-      <div id="leftbox">
+    <header>
+      <h1 class="title">Vue-phylogram</h1>
+      <h2 class="title">Vue component for displaying phylogenetic trees</h2>
+    </header>
+      <nav>
         <form>
           <div class="tabs">
             <div class="tab">
@@ -169,9 +172,10 @@
         </div>
       </div>
       </form>
-    </div>
-    <div id="rightbox">
+    </nav>
+    <main>
       <Phylogram
+        class="phylogram"
         v-if="!displayFromTreeObject"
         :key="phylogramKey"
         :width="1000"
@@ -197,6 +201,7 @@
         @click-node="clickNodeFn"
       ></Phylogram>
       <Phylogram
+        class="phylogram"
         v-else
         :key="phylogramKey"
         :width="1000"
@@ -228,8 +233,7 @@
         @click-node="clickNodeFn"
         @click-outside="clickOutside"
       ></Phylogram>
-    </div>
-  </div>
+    </main>
   </div>
 </template>
 
@@ -525,39 +529,47 @@ export default {
 </script>
 
 <style lang="scss">
-#app {
-  color: #2c3e50;
-  margin-top: 60px;
-  width: 100%;
-  display: table;
-}
-#tablerow {
-  display: table-row;
-  width: 100%;
-}
-#leftbox {
-  vertical-align: top;
-  width: 25%;
-  display: table-cell;
-  background-color: beige;
-  padding: 20px;
-}
-#rightbox {
-  display: table-cell;
-  background-color: rgb(226, 215, 236);
-  padding: 20px;
-}
-legend {
-  font-weight: bold;
-}
-
 $midnight: #2c3e50;
 $clouds: #ecf0f1;
 
+#app {
+  color: $midnight;
+  display: grid;
+    grid-template-rows: 1fr 5fr;
+    grid-template-columns: 2fr 8fr;
+    grid-template-areas:
+      "header header"
+      "nav main";
+    grid-gap: .25em;
+}
+
+header {
+  grid-area: header;
+  background-color: $midnight;
+  color: $clouds;
+  height: 100%;
+  // display: flex;
+  // align-items: center;
+}
+
+.title {
+    margin: auto;
+}
+
+nav {
+  grid-area: nav;
+  background-color: $midnight;
+}
+
+main {
+  grid-area: main;
+  background-color: $clouds;
+}
+
 // General
 body {
+  background-color: $clouds;
   color: $midnight;
-  background: $clouds;
   padding: 0 1em 1em;
 }
 
@@ -570,6 +582,7 @@ h1 {
 h2 {
   margin: 0 0 .5em;
   font-weight: normal;
+  text-align: center;
 }
 
 .tab-input {
@@ -658,5 +671,12 @@ h2 {
     max-height: 100vh;
     padding: 1em;
   }
+
+}
+
+.phylogram {
+  border: solid;
+  width: 1000px;
+  height: 600px;
 }
 </style>
