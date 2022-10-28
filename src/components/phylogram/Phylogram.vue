@@ -297,6 +297,10 @@ export default {
     displaySupport: {
       type: Boolean,
       default: true
+    },
+    defaultColors: {
+      type: Object,
+      default: () => { return { leave_fill: 'pink' } }
     }
 
   },
@@ -814,7 +818,12 @@ export default {
       if (node.type === 'inner') {
         return 'lightsalmon'
       }
-      return 'steelblue'
+
+      if ('leave_fill' in this.defaultColors) {
+        return this.defaultColors.leave_fill
+      }
+
+      return undefined
     },
     getNodeStrokeColor (node) {
       if (this.selectedNodes.includes(node.data.id)) {
@@ -953,3 +962,6 @@ export default {
   }
 }
 </script>
+<style>
+
+</style>
