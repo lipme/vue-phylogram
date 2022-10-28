@@ -121,6 +121,18 @@
             <legend>Collapsed nodes</legend>
             <input type="text" name="collapse" v-model="collapsed" />
           </fieldset>
+          <fieldSet v-if="displayFromTreeObject">
+            <legend>Specific node styles (node-styles props)</legend>
+            <code>{{ metadatas.inputTree.nodeStyles }}</code>
+          </fieldSet>
+          <fieldSet v-if="displayFromTreeObject">
+            <legend>Specific label styles (label-styles props)</legend>
+            <code>{{ metadatas.inputTree.labelStyles }}</code>
+          </fieldSet>
+          <fieldSet v-if="displayFromTreeObject">
+            <legend>Specific branch styles (branch-styles props)</legend>
+            <code>{{ metadatas.inputTree.branchStyles }}</code>
+          </fieldSet>
         </form>
       </div>
       <div id="rightbox">
