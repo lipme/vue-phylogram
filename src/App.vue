@@ -16,185 +16,220 @@
     <div id="tablerow">
       <div id="leftbox">
         <form>
-          <fieldset>
-            <legend>Data</legend>
-            <file-upload-field
-              label
-              button-label="Load newick file"
-              @load="loadNewick"
-            ></file-upload-field>
-            <br />Type of tree:
-            <br />
-            <input
-              type="radio"
-              name="treeType"
-              v-model="treeType"
-              value="jsonExample"
-            />
-            <label for="treeType">Json example (see source)</label>
-            <br />
+          <div class="tabs">
+            <div class="tab">
+              <input class="tab-input" name="accordion" type="radio" id="data">
+              <label class="tab-label" for="data">Input data</label>
+              <div class="tab-content">
+                Load an example:
+                <br />
+                <input
+                  type="radio"
+                  name="treeType"
+                  v-model="treeType"
+                  value="jsonExample"
+                />
+                <label for="treeType">Json example (see source)</label>
+                <br />
+                <input
+                  type="radio"
+                  name="treeType"
+                  v-model="treeType"
+                  value="smallNewick"
+                />
+                <label for="treeType">Small newick example</label>
+                <br />
+                <input
+                  type="radio"
+                  name="treeType"
+                  v-model="treeType"
+                  value="largeNewick"
+                />
+                <label for="treeType">Large newick example</label>
+                <br /><br />
+                Or your own newick file:<br /><br />
+                <file-upload-field label button-label="Load newick file" @load="loadNewick"></file-upload-field>
+              </div>
+            </div>
 
-            <input
-              type="radio"
-              name="treeType"
-              v-model="treeType"
-              value="smallNewick"
-            />
-            <label for="treeType">Small newick example</label>
-            <br />
-            <input
-              type="radio"
-              name="treeType"
-              v-model="treeType"
-              value="largeNewick"
-            />
-            <label for="treeType">Large newick example</label>
-          </fieldset>
+            <div class="tab">
+              <input class="tab-input" name="accordion" type="radio" id="links">
+              <label class="tab-label" for="links">Branch options</label>
+              <div class="tab-content">
+                Right angle links
+                <input type="checkbox" v-model="rightAngle" />
+                <br />Display branch lengths
+                <input type="checkbox" v-model="branchLengths" />
+                <br />Display support values
+                <input type="checkbox" v-model="displaySupport" />
+              </div>
+            </div>
 
-          <fieldset>
-            <legend>Links</legend>
-            Right angle links
-            <input type="checkbox" v-model="rightAngle" />
-            <br />Display branch lengths
-            <input type="checkbox" v-model="branchLengths" />
-            <br />Display support values
-            <input type="checkbox" v-model="displaySupport" />
-          </fieldset>
+            <div class="tab">
+              <input class="tab-input" name="accordion" type="radio" id="nodes">
+              <label class="tab-label" for="nodes">Node options</label>
+              <div class="tab-content">
+                Display leaves
+                <input type="checkbox" v-model="displayLeaves" />
+                <br />Display inner nodes
+                <input type="checkbox" v-model="displayInnerNodes" />
+              </div>
+            </div>
 
-          <fieldset>
-            <legend>Nodes</legend>
-            Display leaves
-            <input type="checkbox" v-model="displayLeaves" />
-            <br />Display inner nodes
-            <input type="checkbox" v-model="displayInnerNodes" />
-          </fieldset>
+            <div class="tab">
+              <input class="tab-input" name="accordion" type="radio" id="labels">
+              <label class="tab-label" for="labels">Label options</label>
+              <div class="tab-content">
+                Display Leaf Labels
+                <input type="checkbox" v-model="displayLeafLabels" />
+                <br />Display inner Labels
+                <input type="checkbox" v-model="displayInnerLabels" />
+                <br />Label width:
+                <input
+                  type="range"
+                  min="20"
+                  max="500"
+                  class="slider"
+                  v-model="labelWidth"
+                />
+                <br />Align Labels:
+                <input type="checkbox" v-model="alignLabels" />
 
-          <fieldset>
-            <legend>Labels</legend>
-            Display Leaf Labels
-            <input type="checkbox" v-model="displayLeafLabels" />
-            <br />Display inner Labels
-            <input type="checkbox" v-model="displayInnerLabels" />
-            <br />Label width:
-            <input
-              type="range"
-              min="20"
-              max="500"
-              class="slider"
-              v-model="labelWidth"
-            />
-            <br />Align Labels:
-            <input type="checkbox" v-model="alignLabels" />
-          </fieldset>
+              </div>
+            </div>
 
-          <fieldset>
-            <legend>Layout</legend>
-            Circular layout:
-            <input type="checkbox" v-model="circular" />
-            <select name="" id="layoutMode" v-model='layoutMode'>
-              <option value="0">Branches not ordered</option>
-              <option value="1">Branches ordered by ascending length</option>
-              <option value="2">Branches ordered by descending length</option>
-            </select>
-          </fieldset>
+          <div class="tab">
+            <input class="tab-input" name="accordion" type="radio" id="layout">
+            <label class="tab-label" for="layout">Layout options</label>
+            <div class="tab-content">
+              Circular layout:
+              <input type="checkbox" v-model="circular" />
+              <select name="" id="layoutMode" v-model='layoutMode'>
+                <option value="0">Branches not ordered</option>
+                <option value="1">Branches ordered by ascending length</option>
+                <option value="2">Branches ordered by descending length</option>
+              </select>
 
-          <fieldset>
-            <legend>Metadata</legend>
-            <b>Only on the json example</b> <br/>
-            Show pies:
-            <input type="checkbox" v-model="showPies" />
-            <br />Show glyphs:
-            <input type="checkbox" v-model="showGlyphs" />
-            <br />Type glyphs:
-            <select name="" id="glyphType" v-model='glyphType'>
-              <option value="rectangle">rectangle</option>
-              <option value="circle">circle</option>
-            </select>
-          </fieldset>
+            </div>
+          </div>
 
-          <fieldset>
-            <legend>Selected nodes</legend>
+          <div class="tab">
+            <input class="tab-input" name="accordion" type="radio" id="metadata">
+            <label class="tab-label" for="metadata">Metadata</label>
+            <div class="tab-content">
+              <b>Only on the json example</b> <br/>
+              Show pies:
+              <input type="checkbox" v-model="showPies" />
+              <br />Show glyphs:
+              <input type="checkbox" v-model="showGlyphs" />
+              <br />Type glyphs:
+              <select name="" id="glyphType" v-model='glyphType'>
+                <option value="rectangle">rectangle</option>
+                <option value="circle">circle</option>
+              </select>
+          </div>
+        </div>
+
+        <div class="tab">
+          <input class="tab-input" name="accordion" type="radio" id="selected">
+          <label class="tab-label" for="selected">Selected nodes</label>
+          <div class="tab-content">
             <input type="text" name="selection" v-model="selected" />
-          </fieldset>
+          </div>
+        </div>
 
-          <fieldset>
-            <legend>Collapsed nodes</legend>
+        <div class="tab">
+          <input class="tab-input" name="accordion" type="radio" id="collapsed">
+          <label class="tab-label" for="collapsed">Collapsed nodes</label>
+          <div class="tab-content">
             <input type="text" name="collapse" v-model="collapsed" />
-          </fieldset>
-          <fieldSet v-if="displayFromTreeObject">
-            <legend>Specific node styles (node-styles props)</legend>
+          </div>
+        </div>
+
+        <div class="tab" v-if="displayFromTreeObject">
+          <input class="tab-input" name="accordion" type="radio" id="nodeStyles">
+          <label class="tab-label" for="nodeStyles">Specific node styles (node-styles props)</label>
+          <div class="tab-content">
             <code>{{ metadatas.inputTree.nodeStyles }}</code>
-          </fieldSet>
-          <fieldSet v-if="displayFromTreeObject">
-            <legend>Specific label styles (label-styles props)</legend>
+          </div>
+        </div>
+        <div class="tab" v-if="displayFromTreeObject">
+          <input class="tab-input" name="accordion" type="radio" id="labelStyles">
+          <label class="tab-label" for="labelStyles">Specific label styles (label-styles props)</label>
+          <div class="tab-content">
             <code>{{ metadatas.inputTree.labelStyles }}</code>
-          </fieldSet>
-          <fieldSet v-if="displayFromTreeObject">
-            <legend>Specific branch styles (branch-styles props)</legend>
+          </div>
+        </div>
+        <div class="tab" v-if="displayFromTreeObject">
+          <input class="tab-input" name="accordion" type="radio" id="branchStyles">
+          <label class="tab-label" for="branchStyles">Specific branch styles (branch-styles props)</label>
+          <div class="tab-content">
             <code>{{ metadatas.inputTree.branchStyles }}</code>
-          </fieldSet>
-        </form>
+          </div>
+        </div>
       </div>
-      <div id="rightbox">
-        <Phylogram
-          v-if="!displayFromTreeObject"
-          :key="phylogramKey"
-          :width="1000"
-          :height="600"
-          ref="phylo"
-          :newick="newick"
-          :right-angle="rightAngle"
-          :branch-lengths="branchLengths"
-          :margin="margin"
-          :displayInnerLabels="displayInnerLabels"
-          :displayLeafLabels="displayLeafLabels"
-          :displayLeaves="displayLeaves"
-          :displayInnerNodes="displayInnerNodes"
-          :labelWidth="Number(labelWidth)"
-          :circular="circular"
-          :align-labels="alignLabels"
-          :show-pies="showPies"
-          :label-styles="metadata.labelStyles"
-          :selected="selected"
-          :collapsed="collapsed"
-          :layout-mode="layoutMode"
-          :displaySupport="displaySupport"
-          @click-node="clickNodeFn"
-        ></Phylogram>
-        <Phylogram
-          v-else
-          :key="phylogramKey"
-          :width="1000"
-          :height="600"
-          ref="phylo"
-          :inputTree="tree"
-          :right-angle="rightAngle"
-          :branch-lengths="branchLengths"
-          :margin="margin"
-          :displayInnerLabels="displayInnerLabels"
-          :displayLeafLabels="displayLeafLabels"
-          :displayLeaves="displayLeaves"
-          :displayInnerNodes="displayInnerNodes"
-          :labelWidth="Number(labelWidth)"
-          :circular="circular"
-          :align-labels="alignLabels"
-          :pies="metadatas.inputTree.pies"
-          :show-pies="showPies"
-          :label-styles="metadatas.inputTree.labelStyles"
-          :branch-styles="metadatas.inputTree.branchStyles"
-          :node-styles="metadatas.inputTree.nodeStyles"
-          :selected="selected"
-          :collapsed="collapsed"
-          :layout-mode="layoutMode"
-          :glyphs="metadatas.inputTree.glyphs"
-          :glyphType="glyphType"
-          :showGlyphs="showGlyphs"
-          :displaySupport="displaySupport"
-          @click-node="clickNodeFn"
-          @click-outside="clickOutside"
-        ></Phylogram>
-      </div>
+      </form>
     </div>
+    <div id="rightbox">
+      <Phylogram
+        v-if="!displayFromTreeObject"
+        :key="phylogramKey"
+        :width="1000"
+        :height="600"
+        ref="phylo"
+        :newick="newick"
+        :right-angle="rightAngle"
+        :branch-lengths="branchLengths"
+        :margin="margin"
+        :displayInnerLabels="displayInnerLabels"
+        :displayLeafLabels="displayLeafLabels"
+        :displayLeaves="displayLeaves"
+        :displayInnerNodes="displayInnerNodes"
+        :labelWidth="Number(labelWidth)"
+        :circular="circular"
+        :align-labels="alignLabels"
+        :show-pies="showPies"
+        :label-styles="metadata.labelStyles"
+        :selected="selected"
+        :collapsed="collapsed"
+        :layout-mode="layoutMode"
+        :displaySupport="displaySupport"
+        @click-node="clickNodeFn"
+      ></Phylogram>
+      <Phylogram
+        v-else
+        :key="phylogramKey"
+        :width="1000"
+        :height="600"
+        ref="phylo"
+        :inputTree="tree"
+        :right-angle="rightAngle"
+        :branch-lengths="branchLengths"
+        :margin="margin"
+        :displayInnerLabels="displayInnerLabels"
+        :displayLeafLabels="displayLeafLabels"
+        :displayLeaves="displayLeaves"
+        :displayInnerNodes="displayInnerNodes"
+        :labelWidth="Number(labelWidth)"
+        :circular="circular"
+        :align-labels="alignLabels"
+        :pies="metadatas.inputTree.pies"
+        :show-pies="showPies"
+        :label-styles="metadatas.inputTree.labelStyles"
+        :branch-styles="metadatas.inputTree.branchStyles"
+        :node-styles="metadatas.inputTree.nodeStyles"
+        :selected="selected"
+        :collapsed="collapsed"
+        :layout-mode="layoutMode"
+        :glyphs="metadatas.inputTree.glyphs"
+        :glyphType="glyphType"
+        :showGlyphs="showGlyphs"
+        :displaySupport="displaySupport"
+        @click-node="clickNodeFn"
+        @click-outside="clickOutside"
+      ></Phylogram>
+    </div>
+  </div>
   </div>
 </template>
 
@@ -489,7 +524,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 #app {
   color: #2c3e50;
   margin-top: 60px;
@@ -516,4 +551,112 @@ legend {
   font-weight: bold;
 }
 
+$midnight: #2c3e50;
+$clouds: #ecf0f1;
+
+// General
+body {
+  color: $midnight;
+  background: $clouds;
+  padding: 0 1em 1em;
+}
+
+h1 {
+  margin: 0;
+  line-height: 2;
+  text-align: center;
+}
+
+h2 {
+  margin: 0 0 .5em;
+  font-weight: normal;
+}
+
+.tab-input {
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+}
+
+.row {
+  display: flex;
+  .col {
+    flex: 1;
+
+    &:last-child {
+      margin-left: 1em;
+    }
+  }
+}
+
+/* Accordion styles */
+.tabs {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.5);
+}
+
+.tab {
+  width: 100%;
+  color: white;
+  overflow: hidden;
+
+  &-label {
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+    background: $midnight;
+    font-weight: bold;
+    cursor: pointer;
+
+    /* Icon */
+    &:hover {
+      background: darken($midnight, 10%);
+    }
+
+    &::after {
+      content: "\276F";
+      width: 1em;
+      height: 1em;
+      text-align: center;
+      transition: all .35s;
+    }
+  }
+
+  &-content {
+    max-height: 0;
+    padding: 0 1em;
+    color: $midnight;
+    background: white;
+    transition: all .35s;
+  }
+
+  &-close {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1em;
+    font-size: 0.75em;
+    background: $midnight;
+    cursor: pointer;
+
+    &:hover {
+      background: darken($midnight, 10%);
+    }
+  }
+}
+
+.tab-input:checked {
+  +.tab-label {
+    background: darken($midnight, 10%);
+
+    &::after {
+      transform: rotate(90deg);
+    }
+  }
+
+  ~.tab-content {
+    max-height: 100vh;
+    padding: 1em;
+  }
+}
 </style>
