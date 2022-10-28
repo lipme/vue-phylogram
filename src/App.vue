@@ -149,6 +149,20 @@
           </div>
         </div>
 
+        <div class="tab">
+          <input class="tab-input" name="accordion" type="radio" id="nodeColors">
+          <label class="tab-label" for="nodeColors">Default node colors</label>
+          <div class="tab-content">
+            Choose a default color for nodes according to their types
+            <table>
+              <tr><td>Leaves</td><td><input type="color" name="leaveFillColor" v-model="leaveFillColor" /></td></tr>
+              <tr><td>Inner nodes</td><td><input type="color" name="innerNodeFillColor" v-model="innerNodeFillColor" /></td></tr>
+              <tr><td>Root</td><td><input type="color" name="rootFillColor" v-model="rootFillColor" /></td></tr>
+              <tr><td>Selected nodes</td><td><input type="color" name="selectedFillColor" v-model="selectedFillColor" /></td></tr>
+            </table>
+          </div>
+        </div>
+
         <div class="tab" v-if="displayFromTreeObject">
           <input class="tab-input" name="accordion" type="radio" id="nodeStyles">
           <label class="tab-label" for="nodeStyles">Specific node styles (node-styles props)</label>
@@ -198,6 +212,7 @@
         :collapsed="collapsed"
         :layout-mode="layoutMode"
         :displaySupport="displaySupport"
+        :defaultColors="nodeDefaultColors"
         @click-node="clickNodeFn"
       ></Phylogram>
       <Phylogram
@@ -230,6 +245,7 @@
         :glyphType="glyphType"
         :showGlyphs="showGlyphs"
         :displaySupport="displaySupport"
+        :defaultColors="nodeDefaultColors"
         @click-node="clickNodeFn"
         @click-outside="clickOutside"
       ></Phylogram>
@@ -273,6 +289,10 @@ export default {
       layoutMode: '0',
       showGlyphs: true,
       glyphType: 'rectangle',
+      leaveFillColor: '#4682B4',
+      innerNodeFillColor: '#FFA07A',
+      rootFillColor: '#ADFF2F',
+      selectedFillColor: '#FF0000',
       metadatas: {
         inputTree: {
           pies: {
@@ -508,6 +528,14 @@ export default {
         return 2
       } else {
         return 3
+      }
+    },
+    nodeDefaultColors () {
+      return {
+        leave_fill: this.leaveFillColor,
+        inner_node_fill: this.innerNodeFillColor,
+        root_fill: this.rootFillColor,
+        selected_fill: this.selectedFillColor
       }
     }
   },
