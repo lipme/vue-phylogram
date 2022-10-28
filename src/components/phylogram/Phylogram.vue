@@ -300,7 +300,14 @@ export default {
     },
     defaultColors: {
       type: Object,
-      default: () => { return { leave_fill: 'pink' } }
+      default: () => {
+        return {
+          leave_fill: 'steelblue',
+          inner_node_fill: 'lightsalmon',
+          root_fill: 'greenyellow',
+          selected_fill: 'red'
+        }
+      }
     }
 
   },
@@ -802,28 +809,48 @@ export default {
     },
     getNodeFillColor (node) {
       if (this.selectedNodes.includes(node.data.id)) {
-        return 'red'
+        // Get default color for selected nodes
+        if ('selected_fill' in this.defaultColors) {
+          return this.defaultColors.selected_fill
+        }
       }
 
       if (this.hasNodeStyles) {
+        // Check if the node has a specific style
         if (node.data.id in this.nodeStyles) {
           if ('color' in this.nodeStyles[node.data.id]) {
             return this.nodeStyles[node.data.id].color
           }
         }
       }
-      if (node.type === 'root') {
-        return 'greenyellow'
-      }
-      if (node.type === 'inner') {
-        return 'lightsalmon'
+
+      // Otherwise, check the default color depending
+      // on the node type.
+
+      let color
+
+      switch (node.type) {
+        case 'root':
+          if ('root_fill' in this.defaultColors) {
+            color = this.defaultColors.root_fill
+          }
+          break
+        case 'inner':
+          if ('inner_node_fill' in this.defaultColors) {
+            color = this.defaultColors.inner_node_fill
+          }
+          break
+        case 'leaf':
+          if ('leave_fill' in this.defaultColors) {
+            color = this.defaultColors.leave_fill
+          }
+          break
+        default:
+          color = undefined
+          break
       }
 
-      if ('leave_fill' in this.defaultColors) {
-        return this.defaultColors.leave_fill
-      }
-
-      return undefined
+      return color
     },
     getNodeStrokeColor (node) {
       if (this.selectedNodes.includes(node.data.id)) {
