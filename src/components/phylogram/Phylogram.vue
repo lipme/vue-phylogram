@@ -309,7 +309,9 @@ export default {
           leave_stroke: 'steelblue',
           inner_stroke: 'royalblue',
           root_stroke: 'darkolivegreen',
-          selected_stroke: 'red'
+          selected_stroke: 'red',
+          branch: 'black',
+          selectedBranch: 'red'
         }
       }
     }
@@ -800,7 +802,7 @@ export default {
     },
     getBranchColor (link) {
       if (link.selected) {
-        return 'red'
+        return this.defaultColors.selectedBranch
       }
 
       if (this.hasBranchStyles) {
@@ -825,7 +827,7 @@ export default {
           }
         }
       }
-      return 'black'
+      return this.defaultColors.branch
     },
     getNodeColor (node, type) {
       if (this.selectedNodes.includes(node.data.id)) {

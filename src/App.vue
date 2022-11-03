@@ -189,6 +189,24 @@
           </div>
         </div>
 
+        <div class="tab">
+          <input class="tab-input" name="accordion" type="radio" id="branchColors">
+          <label class="tab-label" for="branchColors">Default branch colors</label>
+          <div class="tab-content">
+            Choose a default color for branches
+            <table>
+              <tr>
+                <td>All branches</td>
+                <td><input type="color" name="branchColor" v-model="branchColor" /></td>
+              </tr>
+              <tr>
+                <td>Selected branches</td>
+                <td><input type="color" name="selectedBranchColor" v-model="selectedBranchColor" /></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
         <div class="tab" v-if="displayFromTreeObject">
           <input class="tab-input" name="accordion" type="radio" id="nodeStyles">
           <label class="tab-label" for="nodeStyles">Specific node styles (node-styles props)</label>
@@ -196,11 +214,11 @@
             <code>{{ metadatas.inputTree.nodeStyles }}</code>
           </div>
         </div>
-        <div class="tab" v-if="displayFromTreeObject">
+        <div class="tab" >
           <input class="tab-input" name="accordion" type="radio" id="labelStyles">
           <label class="tab-label" for="labelStyles">Specific label styles (label-styles props)</label>
           <div class="tab-content">
-            <code>{{ metadatas.inputTree.labelStyles }}</code>
+            <code > {{ metadata.labelStyles }}</code>
           </div>
         </div>
         <div class="tab" v-if="displayFromTreeObject">
@@ -238,8 +256,9 @@
         :collapsed="collapsed"
         :layout-mode="layoutMode"
         :displaySupport="displaySupport"
-        :defaultColors="nodeDefaultColors"
+        :defaultColors="defaultColors"
         @click-node="clickNodeFn"
+        @click-outside="clickOutside"
       ></Phylogram>
       <Phylogram
         class="phylogram"
@@ -271,7 +290,7 @@
         :glyphType="glyphType"
         :showGlyphs="showGlyphs"
         :displaySupport="displaySupport"
-        :defaultColors="nodeDefaultColors"
+        :defaultColors="defaultColors"
         @click-node="clickNodeFn"
         @click-outside="clickOutside"
       ></Phylogram>
@@ -323,6 +342,8 @@ export default {
       innerNodeStrokeColor: '#4169E1',
       rootStrokeColor: '#556B2F',
       selectedStrokeColor: '#FF0000',
+      branchColor: '#000000',
+      selectedBranchColor: '#FF0000',
       metadatas: {
         inputTree: {
           pies: {
@@ -395,6 +416,9 @@ export default {
             },
             AB: {
               size: 2
+            },
+            D: {
+              stroke: 'darkgreen'
             }
           },
           glyphs: [
@@ -560,7 +584,7 @@ export default {
         return 3
       }
     },
-    nodeDefaultColors () {
+    defaultColors () {
       return {
         leaf_fill: this.leaveFillColor,
         inner_fill: this.innerNodeFillColor,
@@ -569,7 +593,9 @@ export default {
         leaf_stroke: this.leaveStrokeColor,
         inner_stroke: this.innerNodeStrokeColor,
         root_stroke: this.rootStrokeColor,
-        selected_stroke: this.selectedStrokeColor
+        selected_stroke: this.selectedStrokeColor,
+        branch: this.branchColor,
+        selectedBranch: this.selectedBranchColor
       }
     }
   },
