@@ -2,14 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [3.1.3](https://github.com/lipme/vue-phylogram/compare/v3.1.2...v3.1.3) (2021-09-02)
+## [3.2.0](https://github.com/lipme/vue-phylogram/compare/v3.2.0...v3.1.1) (2022-11-03)
 
+### Features
+
+* choose the default colors for nodes and branches according to their types
+
+## [3.1.3](https://github.com/lipme/vue-phylogram/compare/v3.1.2...v3.1.3) (2021-09-02)
 
 ### Bug Fixes
 
 * **options:** supportValue to false by default ([d11e38e](https://github.com/lipme/vue-phylogram/commit/d11e38ef467c77b3983ad0e609d7de0831cf8e12))
 
-### [3.1.2](https://github.com/lipme/vue-phylogram/compare/v3.1.1...v3.1.2) (2021-08-16)
+## [3.1.2](https://github.com/lipme/vue-phylogram/compare/v3.1.1...v3.1.2) (2021-08-16)
 
 ## [3.1.1](https://github.com/lipme/vue-phylogram/compare/v3.1.0...v3.1.1) (2021-07-15)
 
@@ -20,10 +25,10 @@ All notable changes to this project will be documented in this file. See [standa
 ### [3.0.1](https://github.com/lipme/vue-phylogram/compare/v3.0.0...v3.0.1) (2021-06-22)
 
 ### Bug Fixes
+
 * collapse faster ([7da4fccc])(https://github.com/lipme/vue-phylogram/commit/7da4fccc2627a42a212892935886ed3a0613c608))
 
 ## [3.0.0](https://github.com/lipme/vue-phylogram/compare/v2.1.3...v3.0.0) (2021-06-21)
-
 
 ### Breaking change
 

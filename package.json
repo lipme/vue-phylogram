@@ -52,11 +52,13 @@
     "release:minor": "HUSKY=0 standard-version --release-as minor",
     "release:patch": "HUSKY=0 standard-version --release-as patch",
     "release:major": "HUSKY=0 standard-version --release-as major",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "deploy": "node scripts/gh-pages-deploy.js"
   },
   "dependencies": {
     "core-js": "^3.6.4",
     "d3": "^5.15.1",
+    "package.json": "^2.0.1",
     "vue": "^2.6.11",
     "vue-svg-pan-zoom": "^1.1.0"
   },
@@ -78,6 +80,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-vue": "^6.1.2",
+    "execa": "latest",
     "husky": "^6.0.0",
     "lint-staged": "^11.0.0",
     "node-sass": "^7.0.3",
