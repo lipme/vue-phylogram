@@ -30,9 +30,9 @@ npm install --save vue-phylogram
 
 ## Import in a .vue file
 
-~~~~
+~~~javascript
 import { VuePhylogram } from 'vue-phylogram';
-~~~~
+~~~
 
 ## Data Sources
 
@@ -42,24 +42,24 @@ The following tree can be represented by two formats : newick or json object.
 
 ### From newick
 
-~~~~
+~~~html
 <Phylogram :newick="newick"></Phylogram>
-~~~~
+~~~
 
-~~~~
+~~~javascript
  data () {
     return {
   newick : "(((A:0.2, B:0.3):0.3,(C:0.5, D:0.3):0.2):0.3, E:0.7):1.0"
   ....
-~~~~
+~~~
 
 ### From Json String
 
 Be careful, after the version 2.1.2, inputTree is not an object anymore but a String.
 
-~~~~
+~~~html
 <Phylogram :inputTree="tree"></Phylogram>
-~~~~
+~~~
 
 Each node can have these attributes :
 
@@ -68,7 +68,7 @@ Each node can have these attributes :
 * length : the length of the branch before the node. If not, the length will be 0.
 * branchset : the list of the nodes starting from this node. If absent, the node will be a leaf of the tree.
 
-~~~~
+~~~javascript
  data () {
     return {
   tree: `{
@@ -122,7 +122,7 @@ Each node can have these attributes :
         ]
       }`
   ....
-~~~~
+~~~
 
 ## Generic layout
 
@@ -141,49 +141,49 @@ A cladogram does not represent the branch lengths instead of the phylogram.
 
 ![Phylogram](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/phylogram.png)
 
-~~~~
+~~~html
 <Phylogram :newick="newick"></Phylogram>
-~~~~
+~~~
 
 or
 
-~~~~
+~~~html
 <Phylogram :newick="newick" :branch-lengths="true" ></Phylogram>
-~~~~
+~~~
 
 or
 
-~~~~
+~~~html
 <Phylogram :newick="newick" branch-lengths ></Phylogram>
-~~~~
+~~~
 
 ### Display a cladogram
 
 ![Cladogram](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/cladogram.png)
 
-~~~~
+~~~html
 <Phylogram :newick="newick" :branch-lengths="false" ></Phylogram>
-~~~~
+~~~
 
 ## Display tree with right or smooth angles
 
 ### Display tree with right angles (default)
 
-~~~~
+~~~html
 <Phylogram :newick="newick" right-angle></Phylogram>
-~~~~
+~~~
 
-~~~~
+~~~html
 <Phylogram :newick="newick" :right-angle="true" ></Phylogram>
-~~~~
+~~~
 
 ### Display tree with smooth angles
 
 ![Smooth Phylogram](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/phylogramSmooth.png)
 
-~~~~
+~~~html
 <Phylogram :newick="newick" :right-angle="false" ></Phylogram>
-~~~~
+~~~
 
 ## Circular layout
 
@@ -191,57 +191,57 @@ or
 
 By default, the tree is displayed in a linear way. If you want to display the tree as a circle:
 
-~~~~
+~~~html
 <Phylogram :newick="newick" circular ></Phylogram>
-~~~~
+~~~
 
 ## Display leaves
 
 Leaves are displayed by default. To hide them:
 
-~~~~
+~~~html
 <Phylogram :newick="newick" :display-leaves="false" ></Phylogram>
-~~~~
+~~~
 
 ## Display inner nodes
 
 Inner nodes are hiddent by default. To show them:
 
-~~~~
+~~~html
 <Phylogram :newick="newick" :display-inner-nodes="true" ></Phylogram>
-~~~~
+~~~
 
 ##  Display leaf labels
 
 The leaf labels are displayed by default. To hide them:
 
-~~~~
+~~~html
 <Phylogram :newick="newick" :display-leaf-labels="false" ></Phylogram>
-~~~~
+~~~
 
 ## Display inner labels
 
 The inner labels are hidden by default. To show them:
 
-~~~~
+~~~html
 <Phylogram :newick="newick" :display-inner-labels="true" ></Phylogram>
-~~~~
+~~~
 
 ## Align labels
 
 By default, labels are displayed close to the nodes. If you want to right align them :
 
-~~~~
+~~~html
 <Phylogram :newick="newick" align-labels ></Phylogram>
-~~~~
+~~~
 
 ## Space for labels
 
 If you want to increase or reduce the width of the space assigned to the labels, use the label-width prop:
 
-~~~~
+~~~html
 <Phylogram :newick="newick" :label-width=400 ></Phylogram>
-~~~~
+~~~
 
 ## Display support values
 
@@ -249,20 +249,20 @@ Support values (e.g bootstrap values) can be read from newick string following t
 
 In the json object, the source node must have a key called "support":
 
-~~~
+~~~json
 "branchset": [
-          {
-            "id": "ABCD",
-            "support":85,
-            "length": 0.2,
-            "branchset": [
-              {
-                "length": 0.3,
-                "id": "AB",
-                "support":90,
-                "name": "AB",
-                "branchset": [
-                ...
+  {
+    "id": "ABCD",
+    "support":85,
+    "length": 0.2,
+    "branchset": [
+      {
+        "length": 0.3,
+        "id": "AB",
+        "support":90,
+        "name": "AB",
+        "branchset": [
+        ...
 ~~~
 
 ## Metadata
@@ -271,56 +271,90 @@ In the json object, the source node must have a key called "support":
 
 ![Color branches](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/colorBranches.png)
 
+Default branch colors can be set with the **defaultColors** props:
+
+~~~html
+<Phylogram :inputTree="tree" :default-colors="defaultColors">
 ~~~
+
+~~~json
+defaultColors: {
+  branch: 'grey',
+  selectedBranch: 'yellow'
+}
+~~~
+
+Colors for specific branches can also be set with the **branchStyles** props.
+
+~~~html
 <Phylogram :inputTree="tree" :branch-styles="branchStyles">
 ~~~
 
 The branches are identified by the node that they reach (type:'to') or that they start from (type:'from') or both (type:'both') (default)
 
-~~~
+~~~json
 branchStyles: {
-            CD: {
-              color: 'green',
-              type: 'from'
-            },
-            ABCD: {
-              color: 'orange',
-              type: 'to'
-            },
-            AB: {
-              color: 'brown',
-              type: 'both'
-            }
-          }
+  CD: {
+    color: 'green',
+    type: 'from'
+  },
+  ABCD: {
+    color: 'orange',
+    type: 'to'
+  },
+  AB: {
+    color: 'brown',
+    type: 'both'
+  }
+}
 ~~~
 
 ### Node styles
 
 ![Node Styles](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/nodeStyles.png)
 
-Size and color can be set for each leaf node
+Default fill and outline node colors can be set with the **defaultColors** props.
 
+~~~html
+<Phylogram :inputTree="tree" :branch-styles="branchStyles">
 ~~~
+
+~~~json
+defaultColors:{
+  "leaf_fill":"#B0C4DE",
+  "inner_fill":"#6495ED",
+  "root_fill":"#32CD32",
+  "selected_fill":"#B22222",
+  "leaf_stroke":"#4682B4",
+  "inner_stroke":"#4169E1",
+  "root_stroke":"#556B2F",
+  "selected_stroke":"#FF0000"
+}
+~~~
+
+Size and color can be set for each leaf node with the **nodeStyles** props.
+
+~~~html
 <Phylogram :inputTree="tree" :node-styles="nodeStyles">
 ~~~
 
-~~~
+~~~json
 nodeStyles: {
-            C: {
-              size: 3,
-              fill: 'orange'
-            },
-            B: {
-              size: 0.5,
-              stroke: 'red'
-            }
-          }
-        },
+    C: {
+      size: 3,
+      fill: 'orange'
+    },
+    B: {
+      size: 0.5,
+      stroke: 'red'
+    }
+  }
+}
 ~~~
 
 ### Label styles
 
-~~~
+~~~html
 <Phylogram :inputTree="tree" :label-styles="labelStyles">
 ~~~
 
@@ -328,28 +362,28 @@ nodeStyles: {
 
 Background, border and stroke colors can set for each label.
 
-~~~
+~~~html
 <Phylogram :inputTree="tree" :label-styles="labelStyles">
 ~~~
 
-~~~
-  labelStyles: {
-            A: {
-              color: 'orange',
-              background: 'darkgreen',
-              borderWidth: 2
-            },
-            C: {
-              background: 'yellow'
-            },
-            D: {
-              borderWidth: 1
-            },
-            E: {
-              borderWidth: 4,
-              borderColor: 'red'
-            }
-          },
+~~~json
+labelStyles: {
+  A: {
+    color: 'orange',
+    background: 'darkgreen',
+    borderWidth: 2
+  },
+  C: {
+    background: 'yellow'
+  },
+  D: {
+    borderWidth: 1
+  },
+  E: {
+    borderWidth: 4,
+    borderColor: 'red'
+  }
+}
 ~~~
 
 ### Display pies on nodes
@@ -358,43 +392,43 @@ Background, border and stroke colors can set for each label.
 
 Hover a part of the pie to display the corresponding values.
 
-~~~
+~~~html
 <Phylogram :inputTree="tree" :pies="pies">
 ~~~
 
 Be careful, the ids of the nodes must be well specified.
 
-~~~
+~~~json
 pies: {
-            A: {
-              data: [
-                { label: 'value 1', value: 10, color: 'blue' },
-                { label: 'value 2', value: 20, color: 'green' },
-                { label: 'value 3', value: 30, color: 'red' }
-              ],
-              size: 5
-            },
-            ABCD: {
-              data: [
-                { label: 'value 1', value: 50, color: 'blue' },
-                { label: 'value 2', value: 80, color: 'green' },
-                { label: 'value 3', value: 50, color: 'red' }
-              ],
-              size: 3
-            },
-            CD: {
-              data: [
-                { label: 'value 1', value: 90, color: 'blue' },
-                { label: 'value 2', value: 10, color: 'green' }
-              ],
-              size: 10
-            }
-          }
+  A: {
+    data: [
+      { label: 'value 1', value: 10, color: 'blue' },
+      { label: 'value 2', value: 20, color: 'green' },
+      { label: 'value 3', value: 30, color: 'red' }
+    ],
+    size: 5
+  },
+  ABCD: {
+    data: [
+      { label: 'value 1', value: 50, color: 'blue' },
+      { label: 'value 2', value: 80, color: 'green' },
+      { label: 'value 3', value: 50, color: 'red' }
+    ],
+    size: 3
+  },
+  CD: {
+    data: [
+      { label: 'value 1', value: 90, color: 'blue' },
+      { label: 'value 2', value: 10, color: 'green' }
+    ],
+    size: 10
+  }
+}
 ~~~
 
 If you want to hide pies :
 
-~~~
+~~~html
 <Phylogram :inputTree="tree" :pies="pies" :show-pies="false">
 ~~~
 
@@ -402,56 +436,56 @@ If you want to hide pies :
 
 ![Pies](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/glyphs.png)
 
-~~~
+~~~html
 <Phylogram :inputTree="tree" :glyphs="glyphs">
 ~~~
 
 The glyphs must be an array with this format :
 
-~~~
+~~~json
 glyphs: [
-            {
-              label: 'Good/Bad',
-              categories: [
-                {
-                  label: 'good',
-                  style: { fill: 'green' },
-                  ids: ['A', 'C']
-                },
-                {
-                  label: 'bad',
-                  style: { fill: 'red' },
-                  ids: ['D', 'E']
-                }
-              ]
-            },
-            {
-              label: 'Yes/No',
-              categories: [
-                {
-                  label: 'yes',
-                  style: { fill: 'cyan' },
-                  ids: ['B']
-                },
-                {
-                  label: 'no',
-                  style: { fill: 'purple' },
-                  ids: ['A', 'E']
-                }
-              ]
-            }
-          ]
+  {
+    label: 'Good/Bad',
+    categories: [
+      {
+        label: 'good',
+        style: { fill: 'green' },
+        ids: ['A', 'C']
+      },
+      {
+        label: 'bad',
+        style: { fill: 'red' },
+        ids: ['D', 'E']
+      }
+    ]
+  },
+  {
+    label: 'Yes/No',
+    categories: [
+      {
+        label: 'yes',
+        style: { fill: 'cyan' },
+        ids: ['B']
+      },
+      {
+        label: 'no',
+        style: { fill: 'purple' },
+        ids: ['A', 'E']
+      }
+    ]
+  }
+]
 ~~~
 
 If you want do hide glyphs:
 
-~~~
+~~~html
 <Phylogram :inputTree="tree" :glyphs="glyphs" :show-glyphs="false">
 ~~~
 
 If you don't want that a tooltip is displayed when a glyph is hovered:
 
-~~~
+~~~html
 <Phylogram :inputTree="tree" :glyphs="glyphs" :show-glyph-labels="false">
 ~~~
 
@@ -459,7 +493,7 @@ If you don't want that a tooltip is displayed when a glyph is hovered:
 
 Use the "selected" props and put the node ids separateb by commas.
 
-~~~
+~~~html
 <Phylogram :inputTree="tree" :selected="AB,E">
 ~~~
 
@@ -467,7 +501,7 @@ Use the "selected" props and put the node ids separateb by commas.
 
 Use the "selected" props and put the node ids separateb by commas.
 
-~~~
+~~~html
 <Phylogram :inputTree="tree" :collapsed="AB,CD">
 ~~~
 
@@ -476,13 +510,13 @@ Use the "selected" props and put the node ids separateb by commas.
 By default, branches are not ordered (layout-mode=0)
 To sort the branches by ascending length:
 
-~~~
+~~~html
 <Phylogram :inputTree="tree" :layout-mode="1">
 ~~~
 
 To sort the branches by descending length:
 
-~~~
+~~~html
 <Phylogram :inputTree="tree" :layout-mode="2">
 ~~~
 
@@ -502,33 +536,33 @@ To sort the branches by descending length:
 
 ## Project setup
 
-```
+~~~console
 npm install
-```
+~~~
 
 ### Compiles and hot-reloads for development
 
-```
+~~~console
 npm run serve
-```
+~~~
 
 ### Compiles and minifies for production
 
-```
+~~~console
 npm run build
-```
+~~~
 
 ### Run your unit tests
 
-```
+~~~console
 npm run test:unit
-```
+~~~
 
 ### Lints and fixes files
 
-```
+~~~console
 npm run lint
-```
+~~~
 
 ### Customize configuration
 
