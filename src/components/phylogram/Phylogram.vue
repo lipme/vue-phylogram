@@ -125,8 +125,7 @@
           </g>
           <g v-if="hasGlyphs && showGlyphs" transform="translate(10, 10)">
             <template v-for="node in d3Leaves">
-              <template v-for="(glyph, glyphIndex) in node.glyphs">
-                <component
+                <component v-for="(glyph, glyphIndex) in node.glyphs"
                   :is="glyphComponent"
                   :key="node.data.id + glyphIndex"
                   :x="node.x"
@@ -137,7 +136,6 @@
                   :show-label="showGlyphLabels"
                   :circular="circular"
                 ></component>
-              </template>
             </template>
           </g>
         </g>
@@ -299,6 +297,23 @@ export default {
     displaySupport: {
       type: Boolean,
       default: false
+    },
+    defaultColors: {
+      type: Object,
+      default: () => {
+        return {
+          leave_fill: 'lightsteelblue',
+          inner_fill: 'cornflowerblue',
+          root_fill: 'limegreen',
+          selected_fill: 'firebrick',
+          leave_stroke: 'steelblue',
+          inner_stroke: 'royalblue',
+          root_stroke: 'darkolivegreen',
+          selected_stroke: 'red',
+          branch: 'black',
+          selectedBranch: 'red'
+        }
+      }
     }
 
   },
@@ -350,6 +365,22 @@ export default {
   computed: {
     svgStyle () {
       return 'width: ' + this.width + 'px; height: ' + this.height + 'px;'
+    },
+    /**
+     * Merge the default colors indicated in the props with the default colors
+     */
+    defaultColorsMerged () {
+      const base = {
+        leaf_fill: 'lightsteelblue',
+        inner_fill: 'cornflowerblue',
+        root_fill: 'limegreen',
+        selected_fill: 'firebrick',
+        leaf_stroke: 'steelblue',
+        inner_stroke: 'royalblue',
+        root_stroke: 'darkolivegreen',
+        selected_stroke: 'red'
+      }
+      return { ...base, ...this.defaultColors }
     },
     /**
      * Tree computed from the newick string
@@ -771,7 +802,7 @@ export default {
     },
     getBranchColor (link) {
       if (link.selected) {
-        return 'red'
+        return this.defaultColors.selectedBranch
       }
 
       if (this.hasBranchStyles) {
@@ -796,32 +827,36 @@ export default {
           }
         }
       }
-      return 'black'
+      return this.defaultColors.branch
     },
-    getNodeFillColor (node) {
+    getNodeColor (node, type) {
       if (this.selectedNodes.includes(node.data.id)) {
-        return 'red'
+        // Get default color for selected nodes
+        if (`selected_${type}` in this.defaultColorsMerged) {
+          return this.defaultColorsMerged[`selected_${type}`]
+        }
       }
 
       if (this.hasNodeStyles) {
+        // Check if the node has a specific style
         if (node.data.id in this.nodeStyles) {
-          if ('color' in this.nodeStyles[node.data.id]) {
-            return this.nodeStyles[node.data.id].color
+          if (type in this.nodeStyles[node.data.id]) {
+            return this.nodeStyles[node.data.id][type]
           }
         }
       }
-      if (node.type === 'root') {
-        return 'greenyellow'
-      }
-      if (node.type === 'inner') {
-        return 'lightsalmon'
-      }
-      return 'steelblue'
+
+      // Otherwise, check the default color depending
+      // on the node type.
+      const color = `${node.type}_${type}` in this.defaultColorsMerged ? this.defaultColorsMerged[`${node.type}_${type}`] : undefined
+
+      return color
+    },
+    getNodeFillColor (node) {
+      return this.getNodeColor(node, 'fill')
     },
     getNodeStrokeColor (node) {
-      if (this.selectedNodes.includes(node.data.id)) {
-        return 'brown'
-      }
+      return this.getNodeColor(node, 'stroke')
     },
     getNodeSizeFactor (node) {
       if (this.hasNodeStyles) {
@@ -955,3 +990,6 @@ export default {
   }
 }
 </script>
+<style>
+
+</style>
