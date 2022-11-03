@@ -151,14 +151,40 @@
 
         <div class="tab">
           <input class="tab-input" name="accordion" type="radio" id="nodeColors">
-          <label class="tab-label" for="nodeColors">Default node colors</label>
+          <label class="tab-label" for="nodeColors">Default node fill colors</label>
           <div class="tab-content">
-            Choose a default color for nodes according to their types
+            Choose a default fill color for nodes according to their types
             <table>
               <tr><td>Leaves</td><td><input type="color" name="leaveFillColor" v-model="leaveFillColor" /></td></tr>
               <tr><td>Inner nodes</td><td><input type="color" name="innerNodeFillColor" v-model="innerNodeFillColor" /></td></tr>
               <tr><td>Root</td><td><input type="color" name="rootFillColor" v-model="rootFillColor" /></td></tr>
               <tr><td>Selected nodes</td><td><input type="color" name="selectedFillColor" v-model="selectedFillColor" /></td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="tab">
+          <input class="tab-input" name="accordion" type="radio" id="nodeOutlineColors">
+          <label class="tab-label" for="nodeOutlineColors">Default node outline colors</label>
+          <div class="tab-content">
+            Choose a default outline color for nodes according to their types
+            <table>
+              <tr>
+                <td>Leaves</td>
+                <td><input type="color" name="leaveStrokeColor" v-model="leaveStrokeColor" /></td>
+              </tr>
+              <tr>
+                <td>Inner nodes</td>
+                <td><input type="color" name="innerNodeStrokeColor" v-model="innerNodeStrokeColor" /></td>
+              </tr>
+              <tr>
+                <td>Root</td>
+                <td><input type="color" name="rootStrokeColor" v-model="rootStrokeColor" /></td>
+              </tr>
+              <tr>
+                <td>Selected nodes</td>
+                <td><input type="color" name="selectedStrokeColor" v-model="selectedStrokeColor" /></td>
+              </tr>
             </table>
           </div>
         </div>
@@ -289,10 +315,14 @@ export default {
       layoutMode: '0',
       showGlyphs: true,
       glyphType: 'rectangle',
-      leaveFillColor: '#4682B4',
-      innerNodeFillColor: '#FFA07A',
-      rootFillColor: '#ADFF2F',
-      selectedFillColor: '#FF0000',
+      leaveFillColor: '#B0C4DE',
+      innerNodeFillColor: '#6495ED',
+      rootFillColor: '#32CD32',
+      selectedFillColor: '#B22222',
+      leaveStrokeColor: '#4682B4',
+      innerNodeStrokeColor: '#4169E1',
+      rootStrokeColor: '#556B2F',
+      selectedStrokeColor: '#FF0000',
       metadatas: {
         inputTree: {
           pies: {
@@ -358,7 +388,7 @@ export default {
           nodeStyles: {
             C: {
               size: 3,
-              color: 'orange'
+              fill: 'orange'
             },
             B: {
               size: 0.5
@@ -532,10 +562,14 @@ export default {
     },
     nodeDefaultColors () {
       return {
-        leave_fill: this.leaveFillColor,
-        inner_node_fill: this.innerNodeFillColor,
+        leaf_fill: this.leaveFillColor,
+        inner_fill: this.innerNodeFillColor,
         root_fill: this.rootFillColor,
-        selected_fill: this.selectedFillColor
+        selected_fill: this.selectedFillColor,
+        leaf_stroke: this.leaveStrokeColor,
+        inner_stroke: this.innerNodeStrokeColor,
+        root_stroke: this.rootStrokeColor,
+        selected_stroke: this.selectedStrokeColor
       }
     }
   },

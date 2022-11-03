@@ -302,10 +302,14 @@ export default {
       type: Object,
       default: () => {
         return {
-          leave_fill: 'steelblue',
-          inner_node_fill: 'lightsalmon',
-          root_fill: 'greenyellow',
-          selected_fill: 'red'
+          leave_fill: 'lightsteelblue',
+          inner_fill: 'cornflowerblue',
+          root_fill: 'limegreen',
+          selected_fill: 'firebrick',
+          leave_stroke: 'steelblue',
+          inner_stroke: 'royalblue',
+          root_stroke: 'darkolivegreen',
+          selected_stroke: 'red'
         }
       }
     }
@@ -359,6 +363,22 @@ export default {
   computed: {
     svgStyle () {
       return 'width: ' + this.width + 'px; height: ' + this.height + 'px;'
+    },
+    /**
+     * Merge the default colors indicated in the props with the default colors
+     */
+    defaultColorsMerged () {
+      const base = {
+        leaf_fill: 'lightsteelblue',
+        inner_fill: 'cornflowerblue',
+        root_fill: 'limegreen',
+        selected_fill: 'firebrick',
+        leaf_stroke: 'steelblue',
+        inner_stroke: 'royalblue',
+        root_stroke: 'darkolivegreen',
+        selected_stroke: 'red'
+      }
+      return { ...base, ...this.defaultColors }
     },
     /**
      * Tree computed from the newick string
@@ -807,55 +827,34 @@ export default {
       }
       return 'black'
     },
-    getNodeFillColor (node) {
+    getNodeColor (node, type) {
       if (this.selectedNodes.includes(node.data.id)) {
         // Get default color for selected nodes
-        if ('selected_fill' in this.defaultColors) {
-          return this.defaultColors.selected_fill
+        if (`selected_${type}` in this.defaultColorsMerged) {
+          return this.defaultColorsMerged[`selected_${type}`]
         }
       }
 
       if (this.hasNodeStyles) {
         // Check if the node has a specific style
         if (node.data.id in this.nodeStyles) {
-          if ('color' in this.nodeStyles[node.data.id]) {
-            return this.nodeStyles[node.data.id].color
+          if (type in this.nodeStyles[node.data.id]) {
+            return this.nodeStyles[node.data.id][type]
           }
         }
       }
 
       // Otherwise, check the default color depending
       // on the node type.
-
-      let color
-
-      switch (node.type) {
-        case 'root':
-          if ('root_fill' in this.defaultColors) {
-            color = this.defaultColors.root_fill
-          }
-          break
-        case 'inner':
-          if ('inner_node_fill' in this.defaultColors) {
-            color = this.defaultColors.inner_node_fill
-          }
-          break
-        case 'leaf':
-          if ('leave_fill' in this.defaultColors) {
-            color = this.defaultColors.leave_fill
-          }
-          break
-        default:
-          color = undefined
-          break
-      }
+      const color = `${node.type}_${type}` in this.defaultColorsMerged ? this.defaultColorsMerged[`${node.type}_${type}`] : undefined
 
       return color
     },
+    getNodeFillColor (node) {
+      return this.getNodeColor(node, 'fill')
+    },
     getNodeStrokeColor (node) {
-      if (this.selectedNodes.includes(node.data.id)) {
-        return 'brown'
-      }
+      return this.getNodeColor(node, 'stroke')
     },
     getNodeSizeFactor (node) {
       if (this.hasNodeStyles) {

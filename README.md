@@ -1,12 +1,10 @@
 # vue-phylogram
 
-
 ## Synopsis
 
 Vue component for displaying phylogenetic trees
 
 ![Gif](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/exampleAnimated.gif)
-
 
 ## Installation
 
@@ -14,21 +12,21 @@ npm install --save vue-phylogram
 
 ## Features
 
- * Sources: json or newick
- * Zoom & Pan
- * Display branch lengths or not
- * Circular or linear layout
- * Metadata on nodes, branches and labels (size, color)
- * Display pies on nodes
- * Collapse nodes
+* Sources: json or newick
+* Zoom & Pan
+* Display branch lengths or not
+* Circular or linear layout
+* Metadata on nodes, branches and labels (size, color)
+* Display pies on nodes
+* Collapse nodes
 
 ## Browse the tree
 
- * Zoom with the mouse wheel
- * Drag & drop to move into the tree
- * Hover a node or a label to increase its size
- * Select/Deselect a node by clicking on it and by choosing "Select/Deselect" in the menu
- * Collapse/Expand a node by clicking on it  and by choosing "Collapse/Expand" in the menu
+* Zoom with the mouse wheel
+* Drag & drop to move into the tree
+* Hover a node or a label to increase its size
+* Select/Deselect a node by clicking on it and by choosing "Select/Deselect" in the menu
+* Collapse/Expand a node by clicking on it  and by choosing "Collapse/Expand" in the menu
 
 ## Import in a .vue file
 
@@ -42,7 +40,6 @@ The following tree can be represented by two formats : newick or json object.
 
 ![Simple tree](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/simpleExample.png)
 
-
 ### From newick
 
 ~~~~
@@ -52,8 +49,8 @@ The following tree can be represented by two formats : newick or json object.
 ~~~~
  data () {
     return {
-		newick : "(((A:0.2, B:0.3):0.3,(C:0.5, D:0.3):0.2):0.3, E:0.7):1.0"
-		....
+  newick : "(((A:0.2, B:0.3):0.3,(C:0.5, D:0.3):0.2):0.3, E:0.7):1.0"
+  ....
 ~~~~
 
 ### From Json String
@@ -65,16 +62,16 @@ Be careful, after the version 2.1.2, inputTree is not an object anymore but a St
 ~~~~
 
 Each node can have these attributes :
- * id : if not, will be computed. Be careful, to map metadata on nodes, they must have an id.
- * name : if not, the node label won't be displayed.
- * length : the length of the branch before the node. If not, the length will be 0.
- * branchset : the list of the nodes starting from this node. If absent, the node will be a leaf of the tree.
 
+* id : if not, will be computed. Be careful, to map metadata on nodes, they must have an id.
+* name : if not, the node label won't be displayed.
+* length : the length of the branch before the node. If not, the length will be 0.
+* branchset : the list of the nodes starting from this node. If absent, the node will be a leaf of the tree.
 
 ~~~~
  data () {
     return {
-		tree: `{
+  tree: `{
         "id": "ABCDE",
         "branchset": [
           {
@@ -124,19 +121,19 @@ Each node can have these attributes :
           }
         ]
       }`
-		....
+  ....
 ~~~~
 
 ## Generic layout
 
 These props set up the generic layout :
 
- * width (default : 600)
- * height (default : 400)
- * margin (default : {top:10, right;10, bottom:10, left:10})
- * labelWidth : space allowed to display the labels (default : 200)
+* width (default : 600)
+* height (default : 400)
+* margin (default : {top:10, right;10, bottom:10, left:10})
+* labelWidth : space allowed to display the labels (default : 200)
 
-## Display a cladogram or a phylogram
+##  Display a cladogram or a phylogram
 
 A cladogram does not represent the branch lengths instead of the phylogram.
 
@@ -168,12 +165,9 @@ or
 <Phylogram :newick="newick" :branch-lengths="false" ></Phylogram>
 ~~~~
 
-
-
 ## Display tree with right or smooth angles
 
 ### Display tree with right angles (default)
-
 
 ~~~~
 <Phylogram :newick="newick" right-angle></Phylogram>
@@ -183,9 +177,7 @@ or
 <Phylogram :newick="newick" :right-angle="true" ></Phylogram>
 ~~~~
 
-
-### Display tree with smooth angles 
-
+### Display tree with smooth angles
 
 ![Smooth Phylogram](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/phylogramSmooth.png)
 
@@ -196,7 +188,6 @@ or
 ## Circular layout
 
 ![Circular](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/circular.png)
-
 
 By default, the tree is displayed in a linear way. If you want to display the tree as a circle:
 
@@ -220,9 +211,10 @@ Inner nodes are hiddent by default. To show them:
 <Phylogram :newick="newick" :display-inner-nodes="true" ></Phylogram>
 ~~~~
 
-## Display leaf labels
+##  Display leaf labels
 
 The leaf labels are displayed by default. To hide them:
+
 ~~~~
 <Phylogram :newick="newick" :display-leaf-labels="false" ></Phylogram>
 ~~~~
@@ -230,10 +222,10 @@ The leaf labels are displayed by default. To hide them:
 ## Display inner labels
 
 The inner labels are hidden by default. To show them:
+
 ~~~~
 <Phylogram :newick="newick" :display-inner-labels="true" ></Phylogram>
 ~~~~
-
 
 ## Align labels
 
@@ -272,16 +264,12 @@ In the json object, the source node must have a key called "support":
                 "branchset": [
                 ...
 ~~~
-          
-          
-
 
 ## Metadata
 
 ### Branch colors
 
 ![Color branches](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/colorBranches.png)
-
 
 ~~~
 <Phylogram :inputTree="tree" :branch-styles="branchStyles">
@@ -320,16 +308,17 @@ Size and color can be set for each leaf node
 nodeStyles: {
             C: {
               size: 3,
-              color: 'orange'
+              fill: 'orange'
             },
             B: {
-              size: 0.5
+              size: 0.5,
+              stroke: 'red'
             }
           }
         },
 ~~~
 
-### Label styles 
+### Label styles
 
 ~~~
 <Phylogram :inputTree="tree" :label-styles="labelStyles">
@@ -363,7 +352,6 @@ Background, border and stroke colors can set for each label.
           },
 ~~~
 
-
 ### Display pies on nodes
 
 ![Pies](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/pies.png)
@@ -374,7 +362,7 @@ Hover a part of the pie to display the corresponding values.
 <Phylogram :inputTree="tree" :pies="pies">
 ~~~
 
-Be careful, the ids of the nodes must be well specified. 
+Be careful, the ids of the nodes must be well specified.
 
 ~~~
 pies: {
@@ -404,7 +392,7 @@ pies: {
           }
 ~~~
 
-If you want to hide pies : 
+If you want to hide pies :
 
 ~~~
 <Phylogram :inputTree="tree" :pies="pies" :show-pies="false">
@@ -467,7 +455,6 @@ If you don't want that a tooltip is displayed when a glyph is hovered:
 <Phylogram :inputTree="tree" :glyphs="glyphs" :show-glyph-labels="false">
 ~~~
 
-
 ## Select nodes from props
 
 Use the "selected" props and put the node ids separateb by commas.
@@ -488,53 +475,61 @@ Use the "selected" props and put the node ids separateb by commas.
 
 By default, branches are not ordered (layout-mode=0)
 To sort the branches by ascending length:
+
 ~~~
 <Phylogram :inputTree="tree" :layout-mode="1">
 ~~~
 
 To sort the branches by descending length:
+
 ~~~
 <Phylogram :inputTree="tree" :layout-mode="2">
 ~~~
 
 ## Events
 
- * select-nodes: when the user selects or deselect one node, returns the array of the selected node ids.
+* select-nodes: when the user selects or deselect one node, returns the array of the selected node ids.
 
- * collapse-nodes: when the user collapses a node or uncollapse a node, returns the array of the collapsed node ids.
+* collapse-nodes: when the user collapses a node or uncollapse a node, returns the array of the collapsed node ids.
 
- * click-node
- * right-click-node 
- * hover-node
- * click-outside : click outside the nodes
- * click-label
- * right-click-label
- * hover-label
+* click-node
+* right-click-node
+* hover-node
+* click-outside : click outside the nodes
+* click-label
+* right-click-label
+* hover-label
 
 ## Project setup
+
 ```
 npm install
 ```
 
 ### Compiles and hot-reloads for development
+
 ```
 npm run serve
 ```
 
 ### Compiles and minifies for production
+
 ```
 npm run build
 ```
 
 ### Run your unit tests
+
 ```
 npm run test:unit
 ```
 
 ### Lints and fixes files
+
 ```
 npm run lint
 ```
 
 ### Customize configuration
+
 See [Configuration Reference](https://cli.vuejs.org/config/).
