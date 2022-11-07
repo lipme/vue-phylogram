@@ -10,7 +10,7 @@ cache:
     - node_modules/
 
 before_script:
-  - apk --no-cache add --virtual native-deps g++ gcc libgcc libstdc++ linux-headers make python
+  - apk add g++ make py3-pip
   - npm install
 
 # Vos étapes de tests...
