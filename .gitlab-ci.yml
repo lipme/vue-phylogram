@@ -10,8 +10,9 @@ cache:
     - node_modules/
 
 before_script:
-  - apk add g++ make py3-pip
+  - apk add --no-cache --virtual .gyp python make g++
   - npm install
+  - apk del .gyp
 
 # Vos étapes de tests...
 
