@@ -434,6 +434,16 @@ export default {
                   label: 'bad',
                   style: { fill: 'red' },
                   ids: ['D', 'E']
+                },
+                {
+                  label: 'ugly',
+                  style: { fill: 'brown' },
+                  ids: ['D', 'E']
+                },
+                {
+                  label: 'sunny',
+                  style: { fill: 'yellow' },
+                  ids: ['D', 'E']
                 }
               ]
             },
