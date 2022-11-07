@@ -1,4 +1,4 @@
-image: node:lts
+image: node:latest
 
 stages:
   - build
@@ -10,7 +10,7 @@ cache:
     - node_modules/
 
 before_script:
-  - npm install
+  - npm ci
 
 # Vos étapes de tests...
 
