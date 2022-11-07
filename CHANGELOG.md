@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.1](https://github.com/lipme/vue-phylogram/compare/v3.2.1...v3.2.0) (2022-11-07)
+
+### Bug Fixes
+
+* Glyph and label positions
+  
 ## [3.2.0](https://github.com/lipme/vue-phylogram/compare/v3.2.0...v3.1.1) (2022-11-03)
 
 ### Features
