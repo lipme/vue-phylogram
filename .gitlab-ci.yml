@@ -1,15 +1,36 @@
-pages:
- image: node:latest
- stage: deploy
- script:
-  - npm install --progress=false
-  - npm run build
-  - rm -rf public
-  - mkdir public
-  - cp -r dist/* public
- artifacts:
-  expire_in: 1 day
+image: node:lts-alpine
+
+stages:
+  - build
+  - deploy
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
   paths:
-  - public
- only:
-  - develop
+    - node_modules/
+
+before_script:
+  - npm install
+
+# Vos étapes de tests...
+
+build:
+  stage: build
+  script:
+    - npm run build-npm
+  artifacts:
+    paths:
+      - dist
+
+publish_npm:
+  stage: deploy
+  needs:
+    - job: build
+      artifacts: true
+  dependencies:
+    - build
+  script:
+    - npm config set -- '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
+    - npm publish --access public
+  only:
+    - master
