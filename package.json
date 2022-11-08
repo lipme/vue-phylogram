@@ -83,8 +83,7 @@
     "execa": "latest",
     "husky": "^6.0.0",
     "lint-staged": "^11.0.0",
-    "node-sass": "^7.0.3",
-    "sass": "^1.55.0",
+    "sass": "^1.56.0",
     "sass-loader": "^10.3.1",
     "standard-version": "^9.3.0",
     "vue-template-compiler": "^2.6.11"
