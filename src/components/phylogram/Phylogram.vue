@@ -311,7 +311,7 @@ export default {
           root_stroke: 'darkolivegreen',
           selected_stroke: 'red',
           branch: 'black',
-          selectedBranch: 'red'
+          selected_branch: 'red'
         }
       }
     }
@@ -802,7 +802,7 @@ export default {
     },
     getBranchColor (link) {
       if (link.selected) {
-        return this.defaultColors.selectedBranch
+        return this.defaultColors.selected_branch
       }
 
       if (this.hasBranchStyles) {

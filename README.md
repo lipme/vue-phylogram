@@ -284,7 +284,7 @@ Default branch colors can be set with the **defaultColors** props:
 ```json
 defaultColors: {
   branch: 'grey',
-  selectedBranch: 'yellow'
+  selected_branch: 'yellow'
 }
 ```
 

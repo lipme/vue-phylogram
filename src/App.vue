@@ -595,7 +595,7 @@ export default {
         root_stroke: this.rootStrokeColor,
         selected_stroke: this.selectedStrokeColor,
         branch: this.branchColor,
-        selectedBranch: this.selectedBranchColor
+        selected_branch: this.selectedBranchColor
       }
     }
   },
