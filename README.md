@@ -29,8 +29,6 @@ npm install --save vue-phylogram
 * Zoom with the mouse wheel
 * Drag & drop to move into the tree
 * Hover a node or a label to increase its size
-* Select/Deselect a node by clicking on it and by choosing "Select/Deselect" in the menu
-* Collapse/Expand a node by clicking on it  and by choosing "Collapse/Expand" in the menu
 
 ## Import in a .vue file
 
