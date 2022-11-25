@@ -311,7 +311,9 @@ export default {
           root_stroke: 'darkolivegreen',
           selected_stroke: 'red',
           branch: 'black',
-          selectedBranch: 'red'
+          selected_branch: 'red',
+          label_color: 'black',
+          selected_label_color: 'red'
         }
       }
     }
@@ -750,7 +752,7 @@ export default {
     },
     getLabelColor (node) {
       if (this.isSelected(node)) {
-        return 'red'
+        return this.defaultColors.selected_label_color
       }
 
       if (this.hasLabelStyles) {
@@ -760,7 +762,7 @@ export default {
           }
         }
       }
-      return 'black'
+      return this.defaultColors.label_color
     },
     getLabelBackgroundColor (node) {
       if (this.hasLabelStyles) {
@@ -802,7 +804,7 @@ export default {
     },
     getBranchColor (link) {
       if (link.selected) {
-        return this.defaultColors.selectedBranch
+        return this.defaultColors.selected_branch
       }
 
       if (this.hasBranchStyles) {
