@@ -360,9 +360,18 @@ nodeStyles: {
 <Phylogram :inputTree="tree" :label-styles="labelStyles">
 ```
 
-![Label Styles](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/labelStyles.png)
+Default colors for all labels and labels of selected nodes are configurable in the defaultColors prop:
 
-Background, border and stroke colors can set for each label.
+```json
+defaultColors: {
+  label_color: 'black',
+  selected_label_color: 'red'
+}
+```
+
+Background, border and stroke colors can also be set for each label.
+
+![Label Styles](https://raw.githubusercontent.com/lipme/vue-phylogram/master/public/images/labelStyles.png)
 
 ```html
 <Phylogram :inputTree="tree" :label-styles="labelStyles">
