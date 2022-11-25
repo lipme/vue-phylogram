@@ -296,7 +296,7 @@ export default {
     },
     displaySupport: {
       type: Boolean,
-      default: true
+      default: false
     },
     defaultColors: {
       type: Object,
@@ -929,7 +929,9 @@ export default {
       })
     },
     positionLabel (node) {
-      const offset = this.hasGlyphs && this.showGlyphs ? this.glyphs.length * this.nodeWidth : 0
+      const nodeSize = this.nodeWidth
+
+      const offset = this.hasGlyphs && this.showGlyphs ? (node.glyphs.length) * nodeSize : 0
 
       return (this.alignLabels && node.type === 'leaf'
         ? (this.maxY + this.nodeWidth)
