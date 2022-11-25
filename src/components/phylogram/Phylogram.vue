@@ -311,7 +311,8 @@ export default {
           root_stroke: 'darkolivegreen',
           selected_stroke: 'red',
           branch: 'black',
-          selected_branch: 'red'
+          selected_branch: 'red',
+          label_color: 'black'
         }
       }
     }
@@ -760,7 +761,7 @@ export default {
           }
         }
       }
-      return 'black'
+      return this.defaultColors.label_color
     },
     getLabelBackgroundColor (node) {
       if (this.hasLabelStyles) {
