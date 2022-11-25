@@ -312,7 +312,8 @@ export default {
           selected_stroke: 'red',
           branch: 'black',
           selected_branch: 'red',
-          label_color: 'black'
+          label_color: 'black',
+          selected_label_color: 'red'
         }
       }
     }
@@ -751,7 +752,7 @@ export default {
     },
     getLabelColor (node) {
       if (this.isSelected(node)) {
-        return 'red'
+        return this.defaultColors.selected_label_color
       }
 
       if (this.hasLabelStyles) {
