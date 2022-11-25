@@ -190,6 +190,24 @@
         </div>
 
         <div class="tab">
+          <input class="tab-input" name="accordion" type="radio" id="labelColors">
+          <label class="tab-label" for="labelColors">Default label colors</label>
+          <div class="tab-content">
+            Choose a default outline color for labels
+            <table>
+              <tr>
+                <td>All labels</td>
+                <td><input type="color" name="labelColor" v-model="labelColor" /></td>
+              </tr>
+              <tr>
+                <td>Labels of selected nodes</td>
+                <td><input type="color" name="selectedLabelColor" v-model="selectedLabelColor" /></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="tab">
           <input class="tab-input" name="accordion" type="radio" id="branchColors">
           <label class="tab-label" for="branchColors">Default branch colors</label>
           <div class="tab-content">
@@ -344,6 +362,8 @@ export default {
       selectedStrokeColor: '#FF0000',
       branchColor: '#000000',
       selectedBranchColor: '#FF0000',
+      labelColor: '#000000',
+      selectedLabelColor: '#FF0000',
       metadatas: {
         inputTree: {
           pies: {
@@ -595,7 +615,9 @@ export default {
         root_stroke: this.rootStrokeColor,
         selected_stroke: this.selectedStrokeColor,
         branch: this.branchColor,
-        selected_branch: this.selectedBranchColor
+        selected_branch: this.selectedBranchColor,
+        label_color: this.labelColor,
+        selected_label_color: this.selectedLabelColor
       }
     }
   },
