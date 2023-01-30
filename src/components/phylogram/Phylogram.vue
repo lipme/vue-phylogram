@@ -29,7 +29,7 @@
       >
         <g :transform="translationString" id="groupphylo">
           <g transform="translate(10, 10)">
-            <Link
+            <TreeLink
               v-for="link in d3Links"
               :key="link.id"
               :source="link.source"
@@ -44,7 +44,7 @@
             />
           </g>
           <g transform="translate(10, 10)">
-            <Node
+            <TreeNode
               v-for="node in d3Nodes"
               :show="node.show"
               :key="node.id"
@@ -65,7 +65,7 @@
             transform="translate(10, 10)"
             v-if="displayLeafLabels || displayInnerLabels"
           >
-            <Label
+            <TreeLabel
               v-for="node in nodesWithDisplayedLabel"
               v-show="node.displayLabel"
               :key="node.id"
@@ -90,7 +90,7 @@
             v-if="alignLabels && displayLeafLabels"
             transform="translate(10, 10)"
           >
-            <Link
+            <TreeLink
               v-for="node in d3Leaves"
               :key="node.id"
               :source="{ x: node.x, y: node.y + nodeWidth * 1.5 }"
@@ -150,9 +150,9 @@ import Newick from '@/lib/newick.js'
 import * as d3 from 'd3'
 import SvgPanZoom from 'vue-svg-pan-zoom'
 
-import Node from '@/components/node'
-import Link from '@/components/link'
-import Label from '@/components/label'
+import TreeNode from '@/components/node'
+import TreeLink from '@/components/link'
+import TreeLabel from '@/components/label'
 import PieNode from '@/components/pieNode'
 import GlyphCircle from '@/components/glyph/GlyphCircle.vue'
 import GlyphRect from '@/components/glyph/GlyphRect.vue'
@@ -160,9 +160,9 @@ import GlyphRect from '@/components/glyph/GlyphRect.vue'
 export default {
   name: 'VuePhylogram',
   components: {
-    Node,
-    Link,
-    Label,
+    TreeNode,
+    TreeLink,
+    TreeLabel,
     PieNode,
     SvgPanZoom,
     GlyphCircle,
@@ -293,6 +293,10 @@ export default {
       validator: function (value) {
         return ['circle', 'rectangle'].indexOf(value) !== -1
       }
+    },
+    glyphMargin: {
+      type: Number,
+      default: 0
     },
     displaySupport: {
       type: Boolean,
@@ -532,6 +536,7 @@ export default {
               })
             })
           }
+          console.log(n)
 
           return n
         })
@@ -931,16 +936,16 @@ export default {
     positionLabel (node) {
       const nodeSize = this.nodeWidth
 
-      const offset = this.hasGlyphs && this.showGlyphs ? (node.glyphs.length) * nodeSize : 0
+      const offset = this.hasGlyphs && this.showGlyphs ? (node.glyphs.length) * (nodeSize + this.glyphMargin) : 0
 
       return (this.alignLabels && node.type === 'leaf'
         ? (this.maxY + this.nodeWidth)
         : node.y + this.nodeWidth * node.sizeFactor + this.nodeWidth) + offset
     },
     positionGlyph (node, index) {
-      const offset = index * this.nodeWidth
+      const offset = index * (this.nodeWidth + this.glyphMargin)
       return (this.alignLabels && node.type === 'leaf'
-        ? (this.maxY + this.nodeWidth)
+        ? (this.maxY + this.nodeWidth * node.sizeFactor)
         : node.y + this.nodeWidth * node.sizeFactor + this.nodeWidth) + offset
     },
     registerSvgPanZoom (svgpanzoom) {

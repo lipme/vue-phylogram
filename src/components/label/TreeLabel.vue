@@ -64,7 +64,7 @@
 
 <script>
 export default {
-  name: 'Label',
+  name: 'TreeLabel',
   props: {
     size: {
       type: Number,

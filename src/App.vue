@@ -225,6 +225,15 @@
           </div>
         </div>
 
+        <div class="tab">
+          <input class="tab-input" name="accordion" type="radio" id="glyphOptions">
+          <label class="tab-label" for="glyphOptions">Margin between each glyph</label>
+          <div class="tab-content">
+            Select the margin
+            <input type="number" name="glyphMargin" v-model.number="glyphMargin" />
+          </div>
+        </div>
+
         <div class="tab" v-if="displayFromTreeObject">
           <input class="tab-input" name="accordion" type="radio" id="nodeStyles">
           <label class="tab-label" for="nodeStyles">Specific node styles (node-styles props)</label>
@@ -275,6 +284,7 @@
         :layout-mode="layoutMode"
         :displaySupport="displaySupport"
         :defaultColors="defaultColors"
+        :glyph-margin="glyphMargin"
         @click-node="clickNodeFn"
         @click-outside="clickOutside"
       ></Phylogram>
@@ -309,6 +319,7 @@
         :showGlyphs="showGlyphs"
         :displaySupport="displaySupport"
         :defaultColors="defaultColors"
+        :glyph-margin="glyphMargin"
         @click-node="clickNodeFn"
         @click-outside="clickOutside"
       ></Phylogram>
@@ -567,7 +578,8 @@ export default {
       treeType: 'jsonExample',
       newickProxy: null,
       selected: 'AB,E',
-      collapsed: 'AB'
+      collapsed: 'AB',
+      glyphMargin: 5
     }
   },
   // watch: {

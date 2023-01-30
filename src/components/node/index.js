@@ -1,3 +1,3 @@
-import Node from './Node.vue'
+import TreeNode from './TreeNode.vue'
 
-export default Node
+export default TreeNode
