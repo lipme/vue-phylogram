@@ -150,7 +150,7 @@ import Newick from '@/lib/newick.js'
 import * as d3 from 'd3'
 import SvgPanZoom from 'vue-svg-pan-zoom'
 
-import Node from '@/components/node'
+import TreeNode from '@/components/node'
 import TreeLink from '@/components/link'
 import TreeLabel from '@/components/label'
 import PieNode from '@/components/pieNode'
@@ -160,7 +160,7 @@ import GlyphRect from '@/components/glyph/GlyphRect.vue'
 export default {
   name: 'VuePhylogram',
   components: {
-    Node,
+    TreeNode,
     TreeLink,
     TreeLabel,
     PieNode,
@@ -293,6 +293,10 @@ export default {
       validator: function (value) {
         return ['circle', 'rectangle'].indexOf(value) !== -1
       }
+    },
+    glyphMargin: {
+      type: Number,
+      default: 0
     },
     displaySupport: {
       type: Boolean,
@@ -532,6 +536,7 @@ export default {
               })
             })
           }
+          console.log(n)
 
           return n
         })
@@ -931,16 +936,16 @@ export default {
     positionLabel (node) {
       const nodeSize = this.nodeWidth
 
-      const offset = this.hasGlyphs && this.showGlyphs ? (node.glyphs.length) * nodeSize : 0
+      const offset = this.hasGlyphs && this.showGlyphs ? (node.glyphs.length) * (nodeSize + this.glyphMargin) : 0
 
       return (this.alignLabels && node.type === 'leaf'
         ? (this.maxY + this.nodeWidth)
         : node.y + this.nodeWidth * node.sizeFactor + this.nodeWidth) + offset
     },
     positionGlyph (node, index) {
-      const offset = index * this.nodeWidth
+      const offset = index * (this.nodeWidth + this.glyphMargin)
       return (this.alignLabels && node.type === 'leaf'
-        ? (this.maxY + this.nodeWidth)
+        ? (this.maxY + this.nodeWidth * node.sizeFactor)
         : node.y + this.nodeWidth * node.sizeFactor + this.nodeWidth) + offset
     },
     registerSvgPanZoom (svgpanzoom) {

@@ -500,6 +500,11 @@ If you don't want that a tooltip is displayed when a glyph is hovered:
 <Phylogram :inputTree="tree" :glyphs="glyphs" :show-glyph-labels="false">
 ```
 
+If you want to add margin between each glyph:
+```html
+<Phylogram :inputTree="tree" :glyphs="glyphs" glyph-margin="5">
+```
+
 ## Select nodes from props
 
 Use the "selected" props and put the node ids separateb by commas.
