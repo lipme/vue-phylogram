@@ -209,7 +209,7 @@ export default {
         })
         .projection(function (d) {
           const r = d.y
-          var a = ((d.x - 90) / 180) * Math.PI
+          const a = ((d.x - 90) / 180) * Math.PI
           return [r * Math.cos(a), r * Math.sin(a)]
         })
     },

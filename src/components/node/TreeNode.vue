@@ -29,7 +29,7 @@
 
 <script>
 export default {
-  name: 'node',
+  name: 'TreeNode',
   props: {
     size: {
       type: Number,

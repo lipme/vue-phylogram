@@ -29,7 +29,7 @@
       >
         <g :transform="translationString" id="groupphylo">
           <g transform="translate(10, 10)">
-            <Link
+            <TreeLink
               v-for="link in d3Links"
               :key="link.id"
               :source="link.source"
@@ -44,7 +44,7 @@
             />
           </g>
           <g transform="translate(10, 10)">
-            <Node
+            <TreeNode
               v-for="node in d3Nodes"
               :show="node.show"
               :key="node.id"
@@ -65,7 +65,7 @@
             transform="translate(10, 10)"
             v-if="displayLeafLabels || displayInnerLabels"
           >
-            <Label
+            <TreeLabel
               v-for="node in nodesWithDisplayedLabel"
               v-show="node.displayLabel"
               :key="node.id"
@@ -90,7 +90,7 @@
             v-if="alignLabels && displayLeafLabels"
             transform="translate(10, 10)"
           >
-            <Link
+            <TreeLink
               v-for="node in d3Leaves"
               :key="node.id"
               :source="{ x: node.x, y: node.y + nodeWidth * 1.5 }"
@@ -151,8 +151,8 @@ import * as d3 from 'd3'
 import SvgPanZoom from 'vue-svg-pan-zoom'
 
 import Node from '@/components/node'
-import Link from '@/components/link'
-import Label from '@/components/label'
+import TreeLink from '@/components/link'
+import TreeLabel from '@/components/label'
 import PieNode from '@/components/pieNode'
 import GlyphCircle from '@/components/glyph/GlyphCircle.vue'
 import GlyphRect from '@/components/glyph/GlyphRect.vue'
@@ -161,8 +161,8 @@ export default {
   name: 'VuePhylogram',
   components: {
     Node,
-    Link,
-    Label,
+    TreeLink,
+    TreeLabel,
     PieNode,
     SvgPanZoom,
     GlyphCircle,

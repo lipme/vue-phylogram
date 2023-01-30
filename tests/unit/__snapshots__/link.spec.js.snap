@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Link component circular mode and smooth mode set correctly 1`] = `
+exports[`TreeLink component circular mode and smooth mode set correctly 1`] = `
 <path
   class="link"
   d="M3.4202014332566884,-9.396926207859083C11.970705016398409,-32.88924172750679,22.49756633902888,-26.81155550916423,38.56725658119236,-45.96266658713868"
@@ -20,7 +20,7 @@ exports[`Link component circular mode and smooth mode set correctly 1`] = `
 </path>
 `;
 
-exports[`Link component circular mode set correctly 1`] = `
+exports[`TreeLink component circular mode set correctly 1`] = `
 <path
   class="link"
   d="M3.4202014332566884,-9.396926207859083 A10,10 0 0,1 6.427876096865393,-7.66044443118978L38.56725658119236,-45.96266658713868"
@@ -40,7 +40,7 @@ exports[`Link component circular mode set correctly 1`] = `
 </path>
 `;
 
-exports[`Link component color set correctly 1`] = `
+exports[`TreeLink component color set correctly 1`] = `
 <path
   class="link"
   d="M10,20 10,40 60,40"
@@ -60,7 +60,7 @@ exports[`Link component color set correctly 1`] = `
 </path>
 `;
 
-exports[`Link component dashed mode set correctly 1`] = `
+exports[`TreeLink component dashed mode set correctly 1`] = `
 <path
   class="link"
   d="M10,20 10,40 60,40"
@@ -80,7 +80,7 @@ exports[`Link component dashed mode set correctly 1`] = `
 </path>
 `;
 
-exports[`Link component default link renders correctly 1`] = `
+exports[`TreeLink component default link renders correctly 1`] = `
 <path
   class="link"
   d="M10,20 10,40 60,40"
@@ -100,7 +100,7 @@ exports[`Link component default link renders correctly 1`] = `
 </path>
 `;
 
-exports[`Link component smooth mode set correctly 1`] = `
+exports[`TreeLink component smooth mode set correctly 1`] = `
 <path
   class="link"
   d="M10,20C35,20,35,40,60,40"
@@ -120,7 +120,7 @@ exports[`Link component smooth mode set correctly 1`] = `
 </path>
 `;
 
-exports[`Link component source set correctly 1`] = `
+exports[`TreeLink component source set correctly 1`] = `
 <path
   class="link"
   d="M1,2 1,40 60,40"
@@ -140,7 +140,7 @@ exports[`Link component source set correctly 1`] = `
 </path>
 `;
 
-exports[`Link component target set correctly 1`] = `
+exports[`TreeLink component target set correctly 1`] = `
 <path
   class="link"
   d="M10,20 10,4 6,4"
@@ -160,7 +160,7 @@ exports[`Link component target set correctly 1`] = `
 </path>
 `;
 
-exports[`Link component width set correctly 1`] = `
+exports[`TreeLink component width set correctly 1`] = `
 <path
   class="link"
   d="M10,20 10,40 60,40"

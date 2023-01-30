@@ -1,3 +1,3 @@
-import Link from './Link.vue'
+import TreeLink from './TreeLink.vue'
 
-export default Link
+export default TreeLink

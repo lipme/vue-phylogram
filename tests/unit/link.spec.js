@@ -11,11 +11,11 @@
 // See the License for the specific language governing permissions and
 //    limitations under the License.
 import { shallowMount } from '@vue/test-utils'
-import Link from '@/components/link'
+import TreeLink from '@/components/link'
 
-describe('Link component', () => {
+describe('TreeLink component', () => {
   it('default link renders correctly', () => {
-    const comp = shallowMount(Link, {
+    const comp = shallowMount(TreeLink, {
       propsData: {
       }
     })
@@ -23,7 +23,7 @@ describe('Link component', () => {
     expect(comp.element).toMatchSnapshot()
   })
   it('color set correctly', () => {
-    const comp = shallowMount(Link, {
+    const comp = shallowMount(TreeLink, {
       propsData: {
         stroke: 'red'
       }
@@ -32,7 +32,7 @@ describe('Link component', () => {
     expect(comp.element).toMatchSnapshot()
   })
   it('width set correctly', () => {
-    const comp = shallowMount(Link, {
+    const comp = shallowMount(TreeLink, {
       propsData: {
         strokeWidth: 1
       }
@@ -41,7 +41,7 @@ describe('Link component', () => {
     expect(comp.element).toMatchSnapshot()
   })
   it('smooth mode set correctly', () => {
-    const comp = shallowMount(Link, {
+    const comp = shallowMount(TreeLink, {
       propsData: {
         rightAngle: false
       }
@@ -50,7 +50,7 @@ describe('Link component', () => {
     expect(comp.element).toMatchSnapshot()
   })
   it('circular mode set correctly', () => {
-    const comp = shallowMount(Link, {
+    const comp = shallowMount(TreeLink, {
       propsData: {
         circular: true
       }
@@ -59,7 +59,7 @@ describe('Link component', () => {
     expect(comp.element).toMatchSnapshot()
   })
   it('circular mode and smooth mode set correctly', () => {
-    const comp = shallowMount(Link, {
+    const comp = shallowMount(TreeLink, {
       propsData: {
         circular: true,
         rightAngle: false
@@ -69,7 +69,7 @@ describe('Link component', () => {
     expect(comp.element).toMatchSnapshot()
   })
   it('source set correctly', () => {
-    const comp = shallowMount(Link, {
+    const comp = shallowMount(TreeLink, {
       propsData: {
         source: {
           x: 2,
@@ -81,7 +81,7 @@ describe('Link component', () => {
     expect(comp.element).toMatchSnapshot()
   })
   it('target set correctly', () => {
-    const comp = shallowMount(Link, {
+    const comp = shallowMount(TreeLink, {
       propsData: {
         target: {
           x: 4,
@@ -93,7 +93,7 @@ describe('Link component', () => {
     expect(comp.element).toMatchSnapshot()
   })
   it('dashed mode set correctly', () => {
-    const comp = shallowMount(Link, {
+    const comp = shallowMount(TreeLink, {
       propsData: {
         dashed: true
       }

@@ -11,16 +11,16 @@
 // See the License for the specific language governing permissions and
 //    limitations under the License.
 import { shallowMount } from '@vue/test-utils'
-import Node from '@/components/node'
+import TreeNode from '@/components/node'
 
-describe('Node component', () => {
+describe('TreeNode component', () => {
   it('default node renders correctly', () => {
-    const comp = shallowMount(Node)
+    const comp = shallowMount(TreeNode)
 
     expect(comp.element).toMatchSnapshot()
   })
   it('node size set correctly', () => {
-    const comp = shallowMount(Node, {
+    const comp = shallowMount(TreeNode, {
       propsData: {
         size: 10
       }
@@ -29,7 +29,7 @@ describe('Node component', () => {
     expect(comp.element).toMatchSnapshot()
   })
   it('node x set correctly', () => {
-    const comp = shallowMount(Node, {
+    const comp = shallowMount(TreeNode, {
       propsData: {
         x: 100
       }
@@ -38,7 +38,7 @@ describe('Node component', () => {
     expect(comp.element).toMatchSnapshot()
   })
   it('node y set correctly', () => {
-    const comp = shallowMount(Node, {
+    const comp = shallowMount(TreeNode, {
       propsData: {
         y: 100
       }
@@ -47,7 +47,7 @@ describe('Node component', () => {
     expect(comp.element).toMatchSnapshot()
   })
   it('node position in circular mode set correctly', () => {
-    const comp = shallowMount(Node, {
+    const comp = shallowMount(TreeNode, {
       propsData: {
         circular: true
       }
@@ -56,7 +56,7 @@ describe('Node component', () => {
     expect(comp.element).toMatchSnapshot()
   })
   it('show mode set correctly', () => {
-    const comp = shallowMount(Node, {
+    const comp = shallowMount(TreeNode, {
       propsData: {
         show: false
       }
@@ -65,7 +65,7 @@ describe('Node component', () => {
     expect(comp.element).toMatchSnapshot()
   })
   it('stroke color set correctly', () => {
-    const comp = shallowMount(Node, {
+    const comp = shallowMount(TreeNode, {
       propsData: {
         strokeColor: 'black'
       }
@@ -74,7 +74,7 @@ describe('Node component', () => {
     expect(comp.element).toMatchSnapshot()
   })
   it('fill color set correctly', () => {
-    const comp = shallowMount(Node, {
+    const comp = shallowMount(TreeNode, {
       propsData: {
         fill: 'black'
       }
@@ -83,7 +83,7 @@ describe('Node component', () => {
     expect(comp.element).toMatchSnapshot()
   })
   it('collapsed mode set correctly', () => {
-    const comp = shallowMount(Node, {
+    const comp = shallowMount(TreeNode, {
       propsData: {
         collapsed: true
       }

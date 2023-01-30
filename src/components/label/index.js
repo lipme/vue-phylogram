@@ -1,3 +1,3 @@
-import Label from './Label.vue'
+import TreeLabel from './TreeLabel.vue'
 
-export default Label
+export default TreeLabel

@@ -11,11 +11,11 @@
 // See the License for the specific language governing permissions and
 //    limitations under the License.
 import { shallowMount } from '@vue/test-utils'
-import Label from '@/components/label'
+import TreeLabel from '@/components/label'
 
 describe('Label component', () => {
   it('default label renders correctly', () => {
-    const comp = shallowMount(Label, {
+    const comp = shallowMount(TreeLabel, {
       propsData: {
       }
     })
@@ -23,7 +23,7 @@ describe('Label component', () => {
     expect(comp.element).toMatchSnapshot()
   })
   it('size set correctly', () => {
-    const comp = shallowMount(Label, {
+    const comp = shallowMount(TreeLabel, {
       propsData: {
         size: 1
       }
@@ -32,7 +32,7 @@ describe('Label component', () => {
     expect(comp.element).toMatchSnapshot()
   })
   it('x set correctly', () => {
-    const comp = shallowMount(Label, {
+    const comp = shallowMount(TreeLabel, {
       propsData: {
         x: 1
       }
@@ -41,7 +41,7 @@ describe('Label component', () => {
     expect(comp.element).toMatchSnapshot()
   })
   it('y set correctly', () => {
-    const comp = shallowMount(Label, {
+    const comp = shallowMount(TreeLabel, {
       propsData: {
         y: 1
       }
@@ -50,7 +50,7 @@ describe('Label component', () => {
     expect(comp.element).toMatchSnapshot()
   })
   it('label set correctly', () => {
-    const comp = shallowMount(Label, {
+    const comp = shallowMount(TreeLabel, {
       propsData: {
         label: 'label'
       }
@@ -59,7 +59,7 @@ describe('Label component', () => {
     expect(comp.element).toMatchSnapshot()
   })
   it('circular mode set correctly', () => {
-    const comp = shallowMount(Label, {
+    const comp = shallowMount(TreeLabel, {
       propsData: {
         circular: true
       }
@@ -68,7 +68,7 @@ describe('Label component', () => {
     expect(comp.element).toMatchSnapshot()
   })
   it('color set correctly', () => {
-    const comp = shallowMount(Label, {
+    const comp = shallowMount(TreeLabel, {
       propsData: {
         color: 'red'
       }
@@ -77,7 +77,7 @@ describe('Label component', () => {
     expect(comp.element).toMatchSnapshot()
   })
   it('background not set when length label is null', () => {
-    const comp = shallowMount(Label, {
+    const comp = shallowMount(TreeLabel, {
       propsData: {
         background: 'red'
       }
@@ -86,7 +86,7 @@ describe('Label component', () => {
     expect(comp.element).toMatchSnapshot()
   })
   it('background set correctly', () => {
-    const comp = shallowMount(Label, {
+    const comp = shallowMount(TreeLabel, {
       propsData: {
         background: 'red',
         label: 'label'
@@ -96,7 +96,7 @@ describe('Label component', () => {
     expect(comp.element).toMatchSnapshot()
   })
   it('borderWidth has no effect when no label', () => {
-    const comp = shallowMount(Label, {
+    const comp = shallowMount(TreeLabel, {
       propsData: {
         borderWidth: 10
       }
@@ -105,7 +105,7 @@ describe('Label component', () => {
     expect(comp.element).toMatchSnapshot()
   })
   it('borderWidth set correctly', () => {
-    const comp = shallowMount(Label, {
+    const comp = shallowMount(TreeLabel, {
       propsData: {
         borderWidth: 10,
         label: 'label'
@@ -115,7 +115,7 @@ describe('Label component', () => {
     expect(comp.element).toMatchSnapshot()
   })
   it('borderColor has no effect when no label', () => {
-    const comp = shallowMount(Label, {
+    const comp = shallowMount(TreeLabel, {
       propsData: {
         borderColor: 'red'
       }
@@ -124,7 +124,7 @@ describe('Label component', () => {
     expect(comp.element).toMatchSnapshot()
   })
   it('borderColor set correctly', () => {
-    const comp = shallowMount(Label, {
+    const comp = shallowMount(TreeLabel, {
       propsData: {
         borderColor: 'red',
         borderWidth: 10,
@@ -135,7 +135,7 @@ describe('Label component', () => {
     expect(comp.element).toMatchSnapshot()
   })
   it('font-weight set correctly', () => {
-    const comp = shallowMount(Label, {
+    const comp = shallowMount(TreeLabel, {
       propsData: {
         fontWeight: 'bold'
       }
