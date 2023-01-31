@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [3.4.1](https://github.com/lipme/vue-phylogram/compare/v3.4.1...v3.4.0) (2023-01-30)
+## [3.4.1](https://github.com/lipme/vue-phylogram/compare/v3.4.2...v3.4.) (2023-01-31)
+
+### Fix
+
+* Fix npm build
+
+## [3.4.1](https://github.com/lipme/vue-phylogram/compare/v3.4.1...v3.4.0) (2023-01-3)
 
 ### Fix
 
