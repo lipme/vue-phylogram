@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.4.1](https://github.com/lipme/vue-phylogram/compare/v3.4.1...v3.4.0) (2023-01-30)
+
+### Fix
+
+* Fix broken dependencies
+
+## [3.4.0](https://github.com/lipme/vue-phylogram/compare/v3.4.0...v3.3.1) (2023-01-30)
+
+### Feature
+
+* Props glyphMargin to set a margin between glyphs
+
 ## [3.3.1](https://github.com/lipme/vue-phylogram/compare/v3.3.1...v3.3.0) (2022-11-07)
 
 ### Bug fix

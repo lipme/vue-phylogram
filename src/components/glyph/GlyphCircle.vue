@@ -1,5 +1,5 @@
 <template>
-  <circle :r="size/2" :style="circleStyle" :transform="transformAttribute">
+  <circle :r="size/2" :style="glyphStyle" :transform="transformAttribute">
     <title v-if="showLabel">{{ label }}</title>
     <animateTransform attributeName="transform"
              type="scale"
