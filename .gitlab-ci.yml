@@ -10,6 +10,7 @@ cache:
     - node_modules/
 
 before_script:
+  - npm config set legacy-peer-deps=true --location=project
   - npm ci
 
 # Vos étapes de tests...
