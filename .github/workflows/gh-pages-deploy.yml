@@ -11,7 +11,9 @@
           - uses: actions/checkout@v2
           - uses: actions/setup-node@v2
             with:
-              node-version: '16'
+              node-version: '18'
+          - name: Config npm
+            run:  npm config set legacy-peer-deps=true --location=project
           - name: Install packages
             run: npm i
           - name: Set Creds
