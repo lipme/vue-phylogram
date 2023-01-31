@@ -30,3 +30,5 @@ Test.vue
 
 bigTree*.js
 
+.npmrc
+
